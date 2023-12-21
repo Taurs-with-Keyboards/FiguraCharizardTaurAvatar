@@ -20,15 +20,15 @@ local skinParts = {
 	upperRoot.Body.Body,
 	upperRoot.Body.BodyLayer,
 	
-	model.RightArm.Default,
-	model.RightArm.Slim,
-	upperRoot.RightArm.Default,
-	upperRoot.RightArm.Slim,
+	model.RightArmFP.rightArmDefaultFP,
+	model.RightArmFP.rightArmSlimFP,
+	upperRoot.RightArm.rightArmDefault,
+	upperRoot.RightArm.rightArmSlim,
 	
-	model.LeftArm.Default,
-	model.LeftArm.Slim,
-	upperRoot.LeftArm.Default,
-	upperRoot.LeftArm.Slim,
+	model.LeftArmFP.leftArmDefaultFP,
+	model.LeftArmFP.leftArmSlimFP,
+	upperRoot.LeftArm.leftArmDefault,
+	upperRoot.LeftArm.leftArmSlim,
 	
 	model.Portrait.Head,
 	model.Portrait.HatLayer,
@@ -48,15 +48,15 @@ function events.TICK()
 	-- Model shape
 	local slimShape = (vanillaSkin and vanillaAvatarType == "SLIM") or (slim and not vanillaSkin)
 	
-	model.LeftArm.Default:visible(not slimShape)
-	model.RightArm.Default:visible(not slimShape)
-	upperRoot.LeftArm.Default:visible(not slimShape)
-	upperRoot.RightArm.Default:visible(not slimShape)
+	model.LeftArmFP.leftArmDefaultFP:visible(not slimShape)
+	model.RightArmFP.rightArmDefaultFP:visible(not slimShape)
+	upperRoot.LeftArm.leftArmDefault:visible(not slimShape)
+	upperRoot.RightArm.rightArmDefault:visible(not slimShape)
 	
-	model.LeftArm.Slim:visible(slimShape)
-	model.RightArm.Slim:visible(slimShape)
-	upperRoot.LeftArm.Slim:visible(slimShape)
-	upperRoot.RightArm.Slim:visible(slimShape)
+	model.LeftArmFP.leftArmSlimFP:visible(slimShape)
+	model.RightArmFP.rightArmSlimFP:visible(slimShape)
+	upperRoot.LeftArm.leftArmSlim:visible(slimShape)
+	upperRoot.RightArm.rightArmSlim:visible(slimShape)
 	
 	-- Skin textures
 	for _, part in ipairs(skinParts) do
@@ -71,8 +71,6 @@ function events.TICK()
 	-- Disables lower body if player is in spectator mode
 	lowerRoot:parentType(player:getGamemode() == "SPECTATOR" and "BODY" or "NONE")
 	
-	-- Eyes toggle
-	--upperRoot.Head.Eyes:visible(not vanillaSkin)
 end
 
 -- Show/hide skin layers depending on Skin Customization settings
@@ -82,46 +80,57 @@ local layerParts = {
 	},
 	JACKET = {
 		upperRoot.Body.BodyLayer,
-		lowerRoot.Upper.MergeLayer,
-		lowerRoot.Upper.TorsoLayer,
-		lowerRoot.LowerLayer,
-		lowerRoot.Tail.Layer,
-		lowerRoot.Tail.Tail.Layer,
-		lowerRoot.Tail.Tail.Tail.Layer,
 	},
 	RIGHT_SLEEVE = {
-		upperRoot.RightArm.Default.ArmLayer,
-		upperRoot.RightArm.Slim.ArmLayer,
-		lowerRoot.Upper.ArmRight.Layer,
-		lowerRoot.Upper.ArmRight.Forearm.Layer,
-		lowerRoot.Upper.ArmRight.Forearm.Hand.FingerF.Layer,
-		lowerRoot.Upper.ArmRight.Forearm.Hand.FingerM.Layer,
-		lowerRoot.Upper.ArmRight.Forearm.Hand.FingerB.Layer,
+		model.RightArmFP.rightArmDefaultFP.ArmLayer,
+		model.RightArmFP.rightArmSlimFP.ArmLayer,
+		upperRoot.RightArm.rightArmDefault.ArmLayer,
+		upperRoot.RightArm.rightArmSlim.ArmLayer,
+		lowerRoot.Midsection.LowerRightArm.ArmLayer,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.ArmLayer,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerF.FingerLayer,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerM.FingerLayer,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerB.FingerLayer,
 	},
 	LEFT_SLEEVE = {
-		upperRoot.LeftArm.Default.ArmLayer,
-		upperRoot.LeftArm.Slim.ArmLayer,
-		lowerRoot.Upper.ArmLeft.Layer,
-		lowerRoot.Upper.ArmLeft.Forearm.Layer,
-		lowerRoot.Upper.ArmLeft.Forearm.Hand.FingerF.Layer,
-		lowerRoot.Upper.ArmLeft.Forearm.Hand.FingerM.Layer,
-		lowerRoot.Upper.ArmLeft.Forearm.Hand.FingerB.Layer,
+		model.LeftArmFP.leftArmDefaultFP.ArmLayer,
+		model.LeftArmFP.leftArmSlimFP.ArmLayer,
+		upperRoot.LeftArm.leftArmDefault.ArmLayer,
+		upperRoot.LeftArm.leftArmSlim.ArmLayer,
+		lowerRoot.Midsection.LowerLeftArm.ArmLayer,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.ArmLayer,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerF.FingerFLayer,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerM.FingerLayer,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerB.FingerLayer,
 	},
 	RIGHT_PANTS_LEG = {
-		lowerRoot.LegRight.Layer,
-		lowerRoot.LegRight.Foot.Layer,
+		lowerRoot.rightLeg.LegLayer,
+		lowerRoot.rightLeg.RightFoot.FootLayer,
 	},
 	LEFT_PANTS_LEG = {
-		lowerRoot.LegLeft.Layer,
-		lowerRoot.LegLeft.Foot.Layer,
+		lowerRoot.leftLeg.LegLayer,
+		lowerRoot.leftLeg.LeftFoot.FootLayer,
 	},
 	CAPE = {
 		--upperRoot.Body.Cape,
 	},
+	LOWER_BODY = {
+		lowerRoot.Midsection.MergeLayer,
+		lowerRoot.Midsection.TorsoLayer,
+		lowerRoot.LowerLayer,
+		lowerRoot.Tail1.TailLayer,
+		lowerRoot.Tail1.Tail2.TailLayer,
+		lowerRoot.Tail1.Tail2.Tail3.TailLayer,
+	},
 }
 function events.TICK()
 	for playerPart, parts in pairs(layerParts) do
-		local enabled = player:isSkinLayerVisible(playerPart)
+		local enabled = enabled
+		if playerPart == "LOWER_BODY" then
+			enabled = player:isSkinLayerVisible("RIGHT_PANTS_LEG") or player:isSkinLayerVisible("LEFT_PANTS_LEG")
+		else
+			enabled = player:isSkinLayerVisible(playerPart)
+		end
 		for _, part in ipairs(parts) do
 			part:visible(enabled)
 		end

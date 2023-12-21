@@ -1,6 +1,6 @@
 -- Model setup
 local model    = models.CharizardTaur
-local fireRoot = model.Player.LowerBody.Tail.Tail.Tail
+local fireRoot = model.Player.LowerBody.Tail1.Tail2.Tail3
 
 -- Variable setup
 local squapi  = require("lib.SquAPI")

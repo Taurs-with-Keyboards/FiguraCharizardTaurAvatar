@@ -11,70 +11,120 @@ kattArmor.Armor.Leggings:setLayer(1)
 
 -- Armor parts
 kattArmor.Armor.Helmet
-	:addParts(upperRoot.Head.Armor.Helmet)
-	:addTrimParts()
+	:addParts(upperRoot.Head.headArmor.Helmet)
+	:addTrimParts(upperRoot.Head.headArmor.HelmetTrim)
 kattArmor.Armor.Chestplate
 	:addParts(
-		upperRoot.Body.Armor.Chestplate,
-		upperRoot.Body.Armor.Belt,
-		model.RightArm.Armor.Chestplate,
-		model.LeftArm.Armor.Chestplate,
-		upperRoot.RightArm.Armor.Chestplate,
-		upperRoot.LeftArm.Armor.Chestplate,
-		lowerRoot.Upper.Armor.ChestplateMerge,
-		lowerRoot.Upper.Armor.ChestplateTorso,
-		lowerRoot.Upper.ArmRight.Armor.Chestplate,
-		lowerRoot.Upper.ArmRight.Forearm.Armor.Chestplate,
-		lowerRoot.Upper.ArmRight.Forearm.Hand.FingerF.Armor.Chestplate,
-		lowerRoot.Upper.ArmRight.Forearm.Hand.FingerM.Armor.Chestplate,
-		lowerRoot.Upper.ArmRight.Forearm.Hand.FingerB.Armor.Chestplate,
-		lowerRoot.Upper.ArmLeft.Armor.Chestplate,
-		lowerRoot.Upper.ArmLeft.Forearm.Armor.Chestplate,
-		lowerRoot.Upper.ArmLeft.Forearm.Hand.FingerF.Armor.Chestplate,
-		lowerRoot.Upper.ArmLeft.Forearm.Hand.FingerM.Armor.Chestplate,
-		lowerRoot.Upper.ArmLeft.Forearm.Hand.FingerB.Armor.Chestplate,
-		lowerRoot.Armor.Chestplate
+		upperRoot.Body.bodyArmor.Chestplate,
+		upperRoot.Body.bodyArmor.Belt,
+		upperRoot.RightArm.rightArmArmor.Chestplate,
+		upperRoot.LeftArm.leftArmArmor.Chestplate,
+		model.RightArmFP.rightArmArmorFP.Chestplate,
+		model.LeftArmFP.leftArmArmorFP.Chestplate,
+		lowerRoot.Midsection.MidsectionArmor.MergeChestplate,
+		lowerRoot.Midsection.MidsectionArmor.TorsoChestplate,
+		lowerRoot.Midsection.LowerRightArm.LowerRightArmArmor.Chestplate,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightForearmArmor.Chestplate,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerF.RightFingerFArmor.Chestplate,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerM.RightFingerMArmor.Chestplate,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerB.RightFingerBArmor.Chestplate,
+		lowerRoot.Midsection.LowerLeftArm.LowerLeftArmArmor.Chestplate,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftForearmArmor.Chestplate,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerF.LeftFingerFArmor.Chestplate,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerM.LeftFingerMArmor.Chestplate,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerB.LeftFingerBArmor.Chestplate,
+		lowerRoot.LowerBodyArmor.Chestplate
 	)
 	:addTrimParts(
-	
+		upperRoot.Body.bodyArmor.ChestplateTrim,
+		upperRoot.Body.bodyArmor.BeltTrim,
+		upperRoot.RightArm.rightArmArmor.ChestplateTrim,
+		upperRoot.LeftArm.leftArmArmor.ChestplateTrim,
+		model.RightArmFP.rightArmArmorFP.ChestplateTrim,
+		model.LeftArmFP.leftArmArmorFP.ChestplateTrim,
+		lowerRoot.Midsection.MidsectionArmor.MergeChestplateTrim,
+		lowerRoot.Midsection.MidsectionArmor.TorsoChestplateTrim,
+		lowerRoot.Midsection.LowerRightArm.LowerRightArmArmor.ChestplateTrim,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightForearmArmor.ChestplateTrim,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerF.RightFingerFArmor.ChestplateTrim,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerM.RightFingerMArmor.ChestplateTrim,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerB.RightFingerBArmor.ChestplateTrim,
+		lowerRoot.Midsection.LowerLeftArm.LowerLeftArmArmor.ChestplateTrim,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftForearmArmor.ChestplateTrim,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerF.LeftFingerFArmor.ChestplateTrim,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerM.LeftFingerMArmor.ChestplateTrim,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerB.LeftFingerBArmor.ChestplateTrim,
+		lowerRoot.LowerBodyArmor.ChestplateTrim
 	)
 kattArmor.Armor.Leggings
 	:addParts(
-		lowerRoot.Upper.Armor.Leggings,
-		lowerRoot.Armor.Leggings,
-		lowerRoot.LegRight.Armor.Leggings,
-		lowerRoot.LegLeft.Armor.Leggings,
-		lowerRoot.Tail.Armor.Leggings,
-		lowerRoot.Tail.Tail.Armor.Leggings,
-		lowerRoot.Tail.Tail.Tail.Armor.Leggings
+		lowerRoot.Midsection.MidsectionArmor.Leggings,
+		lowerRoot.LowerBodyArmor.Leggings,
+		lowerRoot.Tail1.Tail1Armor.Leggings,
+		lowerRoot.Tail1.Tail2.Tail2Armor.Leggings,
+		lowerRoot.Tail1.Tail2.Tail3.Tail3Armor.Leggings,
+		lowerRoot.rightLeg.rightLegArmor.Leggings,
+		lowerRoot.leftLeg.leftLegArmor.Leggings
 	)
 	:addTrimParts(
-
+		lowerRoot.Midsection.MidsectionArmor.LeggingsTrim,
+		lowerRoot.LowerBodyArmor.LeggingsTrim,
+		lowerRoot.Tail1.Tail1Armor.LeggingsTrim,
+		lowerRoot.Tail1.Tail2.Tail2Armor.LeggingsTrim,
+		lowerRoot.Tail1.Tail2.Tail3.Tail3Armor.LeggingsTrim,
+		lowerRoot.rightLeg.rightLegArmor.LeggingsTrim,
+		lowerRoot.leftLeg.leftLegArmor.LeggingsTrim
 	)
 kattArmor.Armor.Boots
 	:addParts(
-		lowerRoot.LegRight.Foot.Armor.Boot,
-		lowerRoot.LegLeft.Foot.Armor.Boot
+		lowerRoot.rightLeg.RightFoot.RightFootArmor.Boot,
+		lowerRoot.leftLeg.LeftFoot.LeftFootArmor.Boot
 	)
 	:addTrimParts(
-
+		lowerRoot.rightLeg.RightFoot.RightFootArmor.BootTrim,
+		lowerRoot.leftLeg.LeftFoot.LeftFootArmor.BootTrim
 	)
 
 -- Leather armor
 kattArmor.Materials.leather
 	:setTexture(textures["textures.armor.leatherArmor"])
-	-- :addParts(kattArmor.Armor.Helmet,
-		
-	-- )
-	-- :addParts(kattArmor.Armor.Chestplate,
-		
-	-- )
-	-- :addParts(kattArmor.Armor.Leggings,
-		
-	-- )
-	-- :addParts(kattArmor.Armor.Boots,
-		
-	-- )
+	:addParts(kattArmor.Armor.Helmet,
+		upperRoot.Head.headArmor.HelmetLeather
+	)
+	:addParts(kattArmor.Armor.Chestplate,
+		upperRoot.Body.bodyArmor.ChestplateLeather,
+		upperRoot.Body.bodyArmor.BeltLeather,
+		upperRoot.RightArm.rightArmArmor.ChestplateLeather,
+		upperRoot.LeftArm.leftArmArmor.ChestplateLeather,
+		model.RightArmFP.rightArmArmorFP.ChestplateLeather,
+		model.LeftArmFP.leftArmArmorFP.ChestplateLeather,
+		lowerRoot.Midsection.MidsectionArmor.MergeChestplateLeather,
+		lowerRoot.Midsection.MidsectionArmor.TorsoChestplateLeather,
+		lowerRoot.Midsection.LowerRightArm.LowerRightArmArmor.ChestplateLeather,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightForearmArmor.ChestplateLeather,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerF.RightFingerFArmor.ChestplateLeather,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerM.RightFingerMArmor.ChestplateLeather,
+		lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerB.RightFingerBArmor.ChestplateLeather,
+		lowerRoot.Midsection.LowerLeftArm.LowerLeftArmArmor.ChestplateLeather,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftForearmArmor.ChestplateLeather,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerF.LeftFingerFArmor.ChestplateLeather,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerM.LeftFingerMArmor.ChestplateLeather,
+		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerB.LeftFingerBArmor.ChestplateLeather,
+		lowerRoot.LowerBodyArmor.ChestplateLeather
+	)
+	:addParts(kattArmor.Armor.Leggings,
+		lowerRoot.Midsection.MidsectionArmor.LeggingsLeather,
+		lowerRoot.LowerBodyArmor.LeggingsLeather,
+		lowerRoot.Tail1.Tail1Armor.LeggingsLeather,
+		lowerRoot.Tail1.Tail2.Tail2Armor.LeggingsLeather,
+		lowerRoot.Tail1.Tail2.Tail3.Tail3Armor.LeggingsLeather,
+		lowerRoot.rightLeg.rightLegArmor.LeggingsLeather,
+		lowerRoot.leftLeg.leftLegArmor.LeggingsLeather
+	)
+	:addParts(kattArmor.Armor.Boots,
+		lowerRoot.rightLeg.RightFoot.RightFootArmor.BootLeather,
+		lowerRoot.leftLeg.LeftFoot.LeftFootArmor.BootLeather
+	)
 
 -- Chainmail armor
 kattArmor.Materials.chainmail
@@ -100,6 +150,7 @@ kattArmor.Materials.netherite
 kattArmor.Materials.turtle
 	:setTexture(textures["textures.armor.turtleHelmet"])
 	:setEmissiveTexture(textures["textures.armor.turtleHelmet_e"])
+
 -- Trims
 -- Coast
 kattArmor.TrimPatterns.coast

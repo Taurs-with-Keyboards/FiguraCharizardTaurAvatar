@@ -3,6 +3,14 @@ local model     = models.CharizardTaur
 local upperRoot = model.Player.UpperBody
 local lowerRoot = model.Player.LowerBody
 
+-- Arms setup
+local upperRightArm = upperRoot.RightArm
+local upperLeftArm  = upperRoot.LeftArm
+local fakeLeftArm   = model.LeftArmFP
+local fakeRightArm  = model.RightArmFP
+local lowerRightArm = lowerRoot.Midsection.LowerRightArm
+local lowerLeftArm  = lowerRoot.Midsection.LowerLeftArm
+
 -- Config setup
 config:name("CharizardTaur")
 local lowerArms = config:load("AvatarLowerArms") or false
@@ -18,14 +26,6 @@ local mRCurrent, mRNextTick, mRTarget, mRCurrentPos = vec(1, 1, 1), vec(1, 1, 1)
 local mLCurrent, mLNextTick, mLTarget, mLCurrentPos = vec(1, 1, 1), vec(1, 1, 1), vec(1, 1, 1), vec(1, 1, 1)
 local aRCurrent, aRNextTick, aRTarget, aRCurrentPos = vec(0, 0, 0), vec(0, 0, 0), vec(0, 0, 0), vec(0, 0, 0)
 local aLCurrent, aLNextTick, aLTarget, aLCurrentPos = vec(0, 0, 0), vec(0, 0, 0), vec(0, 0, 0), vec(0, 0, 0)
-
--- Arms setup
-local upperRightArm = upperRoot.RightArm
-local upperLeftArm  = upperRoot.LeftArm
-local fakeLeftArm   = model.LeftArm
-local fakeRightArm  = model.RightArm
-local lowerRightArm = lowerRoot.Upper.ArmRight
-local lowerLeftArm  = lowerRoot.Upper.ArmLeft
 
 local lastFrozen = 0
 local isFreezing = false
@@ -92,8 +92,8 @@ function events.RENDER(delta, context)
 		
 	fakeLeftArm:visible(firstPerson)
 	
-	upperRightArm.RightItemPivot:visible(not lowerArms)
-	upperLeftArm.LeftItemPivot:visible(not lowerArms)
+	--upperRightArm.RightItemPivot:visible(not lowerArms)
+	--upperLeftArm.LeftItemPivot:visible(not lowerArms)
 	
 	local spyglassR = using and usingR == "SPYGLASS"
 	local spyglassL = using and usingL == "SPYGLASS"
@@ -124,14 +124,14 @@ function events.RENDER(delta, context)
 	lowerRightArm:offsetRot(rightApply * lRCurrentPos)
 	lowerLeftArm:offsetRot(leftApply * lLCurrentPos)
 	
-	lowerRightArm.Forearm.Hand.FingerM.RightItemPivot:visible(lowerArms)
-	lowerLeftArm.Forearm.Hand.FingerM.LeftItemPivot:visible(lowerArms)
+	--lowerRightArm.Forearm.Hand.FingerM.RightItemPivot:visible(lowerArms)
+	--lowerLeftArm.Forearm.Hand.FingerM.LeftItemPivot:visible(lowerArms)
 	
 	local body = vanilla_model.BODY:getOriginRot()._yz
 	
-	lowerRoot.Upper:offsetRot(body)
-	lowerRoot.Upper.WingRight:offsetRot(-body)
-	lowerRoot.Upper.WingLeft:offsetRot(-body)
+	lowerRoot.Midsection:offsetRot(body)
+	lowerRoot.Midsection.RightWing1:offsetRot(-body)
+	lowerRoot.Midsection.LeftWing1:offsetRot(-body)
 end
 
 -- Arm Movement toggler

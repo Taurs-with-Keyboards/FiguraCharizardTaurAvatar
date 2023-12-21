@@ -73,7 +73,7 @@ carrier.rider.controller.setAimEnabled(false)
 -- GSCarrier vehicle
 carrier.vehicle.addTag("gscarrier:taur", "gscarrier:land", "gscarrier:air")
 
-carrier.vehicle.newSeat("Seat1", models.CharizardTaur.Player.LowerBody.Upper.Seat1, {
+carrier.vehicle.newSeat("Seat1", models.CharizardTaur.Player.LowerBody.Midsection.Seat1, {
 	priority = 1,
 	tags = {["gscarrier:piggyback"] = true}
 })
