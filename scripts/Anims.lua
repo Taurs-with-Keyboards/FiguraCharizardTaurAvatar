@@ -8,9 +8,9 @@ local anims = animations.CharizardTaur
 local t = {}
 t.time = 0
 
-local pose  = require("scripts.Posing")
-local ticks = require("scripts.WaterTicks")
-local g     = require("scripts.GroundCheck")
+local pose   = require("scripts.Posing")
+local ticks  = require("scripts.WaterTicks")
+local ground = require("lib.GroundCheck")
 
 local time  = 0
 local _time = 0
@@ -30,11 +30,13 @@ function events.RENDER(delta, context)
 	local walking    = vel.zx:length() ~= 0
 	local inWater    = ticks.water     < 20
 	local underwater = ticks.under     < 20
+	local onGround   = ground()
 	
-	local groundIdle =             (g.ground or inWater) and not pose.swim
-	local groundWalk = walking and (g.ground or inWater) and not pose.swim
-	local airIdle    = not (pose.elytra or inWater) and not g.ground
-	local airFlying  =     (pose.elytra or pose.swim) and not g.ground
+	
+	local groundIdle =             (onGround or inWater) and not pose.swim
+	local groundWalk = walking and (onGround or inWater) and not pose.swim
+	local airIdle    = not (pose.elytra or inWater) and not onGround
+	local airFlying  =     (pose.elytra or pose.swim) and not onGround
 	local sleep      =      pose.sleep
 	
 	anims.groundIdle:setPlaying(groundIdle)
