@@ -14,7 +14,7 @@ local tailSegments = {
 	lowerRoot.Tail.Tail.Tail.Fire
 }
 
-squapi.torso(upperRoot, 0.3, _, false)
+squapi.smoothTorso(upperRoot, 0.3, _, false)
 
 squapi.crouch(anims.crouch)
 squapi.tails(tailSegments, 3, 10, 20, 0.75, 0.25, 0, 0, 1, .0005, .05, 25, nil, nil)
