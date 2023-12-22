@@ -3,37 +3,47 @@ local model    = models.CharizardTaur
 local fireRoot = model.Player.LowerBody.Tail1.Tail2.Tail3
 
 -- Variable setup
-local squapi  = require("lib.SquAPI")
 local origins = require("lib.OriginsAPI")
 local timer   = 200
-local fire    = true
-local fireCurrent, fireNextTick, fireTarget, fireCurrentPos = 1, 1, 1, 1
+
+local scaleCurrent, scaleNextTick, scaleTarget, scaleCurrentPos = 1, 1, 1, 1
+local glowCurrent,  glowNextTick,  glowTarget,  glowCurrentPos  = 1, 1, 1, 1
 
 function events.TICK()
+	
 	-- Increase Timer
 	timer = timer + 1
 	if player:isWet() then timer = 0 end
 	if player:isOnFire() then timer = 200 end
 	
-	fire = timer >= 200
-	
+	-- Sets model light to match fire tail
 	if origins.hasPower(player, "origins:charizard_light") then
 		model:light(fire and 15 or nil)
 	else
 		model:light(nil)
 	end
 	
-	-- Fire lerp
-	fireCurrent  = fireNextTick
-	fireNextTick = math.lerp(fireNextTick, fireTarget, 0.25)
+	if timer <= 200 then
+		scaleCurrent, scaleNextTick, scaleTarget, scaleCurrentPos = 0, 0, 0, 0
+	end
+	
+	-- Lerps
+	scaleCurrent, glowCurrent = scaleNextTick, glowNextTick
+	scaleNextTick = math.lerp(scaleNextTick, scaleTarget, 0.05)
+	glowNextTick  = math.lerp(glowNextTick,  glowTarget,  0.25)
 end
 
 function events.RENDER(delta, context)
-	-- Fire target and lerp
-	fireTarget     = fire and 1 or 0
-	fireCurrentPos = math.lerp(fireCurrent, fireNextTick, delta)
 	
-	-- Apply fire
-	fireRoot:secondaryColor(fireCurrentPos)
-	fireRoot.Fire:visible(fire)
+	log(player:getExperienceLevel())
+	local exp = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.5, 1.5)
+	
+	scaleTarget = timer <= 200 and 0 or exp
+	scaleCurrentPos = math.lerp(scaleCurrent, scaleNextTick, delta)
+	
+	glowTarget  = 1
+	glowCurrentPos  = math.lerp(glowCurrent,  glowNextTick,  delta)
+	
+	fireRoot.Fire
+		:scale(scaleCurrentPos)
 end
