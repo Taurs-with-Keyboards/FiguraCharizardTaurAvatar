@@ -13,7 +13,6 @@ local eyePos = false
 local pose      = require("scripts.Posing")
 local ball      = require("scripts.Pokeball")
 local vehicle   = require("scripts.Vehicles")
-local collision = false
 
 -- Startup camera pos
 local trueHeadPos = 0
@@ -54,21 +53,8 @@ function events.POST_RENDER(delta, context)
 			rotOffset = rotOffset._yz
 		end
 		
-		-- Block gathering/collision checking (checks for full blocks)
-		local blockPos = playerPos + posOffset + vec(0, player:getEyeHeight() - ((3/16) * offsetScale.y), 0)
-		local range    = eyePos and 1 or 0.25
-		local blocks   = world.getBlocks(blockPos.x - range, blockPos.y, blockPos.z - range, blockPos.x + range, blockPos.y + 0.5, blockPos.z + range)
-		for _, block in ipairs(blocks) do
-			if block:isSolidBlock() then
-				collision = true
-				break
-			else
-				collision = false
-			end
-		end
-		
 		-- Renders offset & rotation
-		local posOffsetApply = not collision and not player:riptideSpinning()
+		local posOffsetApply = not player:riptideSpinning()
 		renderer:offsetCameraPivot(camPos and posOffsetApply and posOffset or 0)
 			:offsetCameraRot(camRot and rotOffset or 0)
 			:eyeOffset(eyePos and camPos and posOffsetApply and posOffset or 0)
@@ -148,7 +134,7 @@ t.rotPage = action_wheel:newAction("CameraRot")
 	:toggled(camRot)
 	
 t.eyePage = action_wheel:newAction("OffsetEye")
-	:title("§6§lEye Position Toggle\n\n§3Sets the eye position to match the avatar's head.\nRequires camera position toggle.\n\n§4§lWARNING: §cThis feature is dangerous!\nIt can and will be flagged on servers with anticheat!\nFurthermore, \"In Wall\" damage is likely, so the x-ray prevention range is increased.\nThis setting will §c§lNOT §cbe saved between sessions for your safety.\n\nPlease use with extreme caution!")
+	:title("§6§lEye Position Toggle\n\n§3Sets the eye position to match the avatar's head.\nRequires camera position toggle.\n\n§4§lWARNING: §cThis feature is dangerous!\nIt can and will be flagged on servers with anticheat!\nFurthermore, \"In Wall\" damage is possible.\nThis setting will §c§lNOT §cbe saved between sessions for your safety.\n\nPlease use with extreme caution!")
 	:hoverColor(vectors.hexToRGB("FF0000"))
 	:toggleColor(vectors.hexToRGB("7F0000"))
 	:item("minecraft:ender_pearl")
