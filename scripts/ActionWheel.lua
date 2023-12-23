@@ -31,10 +31,13 @@ mainPage
 -- Avatar actions
 do
 	local avatar = require("scripts.Player")
+	local arms   = require("scripts.Arms")
 	avatPage
 		:action( 1, avatar.vanillaSkinPage)
 		:action( 2, avatar.modelPage)
-		:action( 3, backPage)
+		:action( 3, arms.movePage)
+		:action( 4, arms.holdPage)
+		:action( 5, backPage)
 end
 
 -- Camera actions

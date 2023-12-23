@@ -35,7 +35,6 @@ end
 
 function events.RENDER(delta, context)
 	
-	log(player:getExperienceLevel())
 	local exp = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.5, 1.5)
 	
 	scaleTarget = timer <= 200 and 0 or exp

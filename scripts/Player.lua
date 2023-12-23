@@ -22,13 +22,13 @@ local skinParts = {
 	
 	model.RightArmFP.rightArmDefaultFP,
 	model.RightArmFP.rightArmSlimFP,
-	upperRoot.RightArm.rightArmDefault,
-	upperRoot.RightArm.rightArmSlim,
+	upperRoot.Body.RightArm.rightArmDefault,
+	upperRoot.Body.RightArm.rightArmSlim,
 	
 	model.LeftArmFP.leftArmDefaultFP,
 	model.LeftArmFP.leftArmSlimFP,
-	upperRoot.LeftArm.leftArmDefault,
-	upperRoot.LeftArm.leftArmSlim,
+	upperRoot.Body.LeftArm.leftArmDefault,
+	upperRoot.Body.LeftArm.leftArmSlim,
 	
 	model.Portrait.Head,
 	model.Portrait.HatLayer,
@@ -50,13 +50,13 @@ function events.TICK()
 	
 	model.LeftArmFP.leftArmDefaultFP:visible(not slimShape)
 	model.RightArmFP.rightArmDefaultFP:visible(not slimShape)
-	upperRoot.LeftArm.leftArmDefault:visible(not slimShape)
-	upperRoot.RightArm.rightArmDefault:visible(not slimShape)
+	upperRoot.Body.LeftArm.leftArmDefault:visible(not slimShape)
+	upperRoot.Body.RightArm.rightArmDefault:visible(not slimShape)
 	
 	model.LeftArmFP.leftArmSlimFP:visible(slimShape)
 	model.RightArmFP.rightArmSlimFP:visible(slimShape)
-	upperRoot.LeftArm.leftArmSlim:visible(slimShape)
-	upperRoot.RightArm.rightArmSlim:visible(slimShape)
+	upperRoot.Body.LeftArm.leftArmSlim:visible(slimShape)
+	upperRoot.Body.RightArm.rightArmSlim:visible(slimShape)
 	
 	-- Skin textures
 	for _, part in ipairs(skinParts) do
@@ -84,8 +84,8 @@ local layerParts = {
 	RIGHT_SLEEVE = {
 		model.RightArmFP.rightArmDefaultFP.ArmLayer,
 		model.RightArmFP.rightArmSlimFP.ArmLayer,
-		upperRoot.RightArm.rightArmDefault.ArmLayer,
-		upperRoot.RightArm.rightArmSlim.ArmLayer,
+		upperRoot.Body.RightArm.rightArmDefault.ArmLayer,
+		upperRoot.Body.RightArm.rightArmSlim.ArmLayer,
 		lowerRoot.Midsection.LowerRightArm.ArmLayer,
 		lowerRoot.Midsection.LowerRightArm.RightForearm.ArmLayer,
 		lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerF.FingerLayer,
@@ -95,8 +95,8 @@ local layerParts = {
 	LEFT_SLEEVE = {
 		model.LeftArmFP.leftArmDefaultFP.ArmLayer,
 		model.LeftArmFP.leftArmSlimFP.ArmLayer,
-		upperRoot.LeftArm.leftArmDefault.ArmLayer,
-		upperRoot.LeftArm.leftArmSlim.ArmLayer,
+		upperRoot.Body.LeftArm.leftArmDefault.ArmLayer,
+		upperRoot.Body.LeftArm.leftArmSlim.ArmLayer,
 		lowerRoot.Midsection.LowerLeftArm.ArmLayer,
 		lowerRoot.Midsection.LowerLeftArm.LeftForearm.ArmLayer,
 		lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerF.FingerFLayer,
