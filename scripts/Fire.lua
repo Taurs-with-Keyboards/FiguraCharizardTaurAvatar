@@ -23,7 +23,7 @@ function events.TICK()
 		model:light(nil)
 	end
 	
-	if timer <= 200 then
+	if timer < 200 then
 		scaleCurrent, scaleNextTick, scaleTarget, scaleCurrentPos = 0, 0, 0, 0
 	end
 	
@@ -37,7 +37,7 @@ function events.RENDER(delta, context)
 	
 	local exp = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.5, 1.5)
 	
-	scaleTarget = timer <= 200 and 0 or exp
+	scaleTarget = timer < 200 and 0 or exp
 	scaleCurrentPos = math.lerp(scaleCurrent, scaleNextTick, delta)
 	
 	glowTarget  = 1
