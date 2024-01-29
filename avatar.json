@@ -1,8 +1,18 @@
 {
-  "name": "Charizard Taur",
-  "description": "\"Flames hot enough to melt boulders.\"",
-  "authors": ["Total (Avatar Maker)\n","Dragonearuss (Avatar Maker, Original Idea)\n","Katt (Custom armor API, Crosshair API)\n","Grandpa Scout\n(Animation Blending API, Carrier API)\n","Jimmy (Animation code)\n","Psycho Breadstick (QA, Origin)\n","Squishy (Squishy API)\n","The Cobblemon Team (Original models,\nanimations, textures, icons, and sounds)\n","The Pokemon Company (Charizard design)"],
-  "version": "0.1.2",
-  "color": "D8741E",
-  "autoAnims":["CharizardTaur.groundIdle"]
+	"name": "Charizard Taur",
+	"description": "\"Flames hot enough to melt boulders.\"",
+	"authors": [
+		"\nDragonearuss (Co-Maker, Original Idea)\n",
+		"Psycho Breadstick (QA, Origin)\n",
+		"Katt (Updated scripts, APIs)\n",
+		"Grandpa Scout\n(APIs)\n",
+		"Jimmy (Animation code)\n",
+		"Squishy (APIs)\n",
+		"4P5 (APIs, Better Action Wheel)\n",
+		"The Cobblemon Team (Original models,\nanimations, textures, icons, and sounds)\n",
+		"The Pokemon Company (Charizard design)\n",
+		"Total (Avatar Maker)\n"
+	],
+	"version": "0.1.2",
+	"color": "D8741E"
 }
