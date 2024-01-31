@@ -1,76 +1,84 @@
--- Model setup
-local model     = models.CharizardTaur
-local upperRoot = model.Player.UpperBody
+-- Required scripts
+require("lib.GSAnimBlend")
+local model      = require("scripts.ModelParts")
+local waterTicks = require("scripts.WaterTicks")
+local pose       = require("scripts.Posing")
+local ground     = require("lib.GroundCheck")
 
--- Animation setup
+-- Animations setup
 local anims = animations.CharizardTaur
 
-local t = {}
-t.time = 0
-
-local pose   = require("scripts.Posing")
-local ticks  = require("scripts.WaterTicks")
-local ground = require("lib.GroundCheck")
-
-local time  = 0
-local _time = 0
-
 function events.TICK()
-	_time = time
 	
-	local fbVel     = math.clamp(player:getVelocity():dot((player:getLookDir().x_z):normalize()),         -0.25, 0.25)
-	local lrVel     = math.clamp(math.abs(player:getVelocity():cross(player:getLookDir().x_z:normalize()).y), 0, 0.25)
-	local animSpeed = (fbVel >= -0.05 and math.max(fbVel, lrVel) or math.min(fbVel, lrVel)) * 0.0025
+	-- Player variables
+	local vel = player:getVelocity()
 	
-	time  = time + (animSpeed + (fbVel > -0.05 and 0.0005 or -0.0005))
-end
-
-function events.RENDER(delta, context)
-	local vel        = player:getVelocity()
-	local walking    = vel.zx:length() ~= 0
-	local inWater    = ticks.water     < 20
-	local underwater = ticks.under     < 20
+	-- Animation variables
+	local walking    = vel.xz:length() ~= 0
+	local inWater    = waterTicks.water < 20
+	local underwater = waterTicks.under < 20
 	local onGround   = ground()
 	
-	
-	local groundIdle =             (onGround or inWater) and not pose.swim
-	local groundWalk = walking and (onGround or inWater) and not pose.swim
+	-- Animation states
+	local groundIdle =             (onGround or inWater) and not pose.swim and not pose.sleep
+	local groundWalk = walking and (onGround or inWater) and not pose.swim and not pose.sleep
 	local airIdle    = not (pose.elytra or inWater) and not onGround
 	local airFlying  =     (pose.elytra or pose.swim) and not onGround
 	local sleep      =      pose.sleep
 	
-	anims.groundIdle:setPlaying(groundIdle)
-	anims.groundWalk:setPlaying(groundWalk)
-	anims.airIdle:setPlaying(airIdle)
-	anims.airFlying:setPlaying(airFlying)
-	anims.sleep:setPlaying(sleep)
+	-- Animations
+	anims.groundIdle:playing(groundIdle)
+	anims.groundWalk:playing(groundWalk)
+	anims.airIdle:playing(airIdle)
+	anims.airFlying:playing(airFlying)
+	anims.sleep:playing(sleep)
 	
-	t.time = math.lerp(_time, time, delta)
+end
+
+function events.RENDER(delta, context)
+	
+	-- Player variables
+	local vel = player:getVelocity()
+	local dir = player:getLookDir()
+	
+	-- Directional velocity
+	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
+	local lrVel = player:getVelocity():cross(dir.x_z:normalize()).y
+	local udVel = player:getVelocity().y
+	
+	anims.groundWalk:speed(math.clamp((fbVel < -0.1 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 6.5, -2, 2))
+	anims.airFlying:speed(math.min(vel:length(), 2))
+	
+	if context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL" then
+		models:scale(0.6)
+	end
+	
+end
+
+function events.POST_RENDER(delta, context)
+	
+	models:scale(1)
+	
+end
+
+-- GS Blending Setup
+local blendAnims = {
+	{ anim = anims.groundIdle, ticks = 7  },
+	{ anim = anims.groundWalk, ticks = 7  },
+	{ anim = anims.airIdle,    ticks = 7  },
+	{ anim = anims.airFlying,  ticks = 7  }
+}
+	
+for _, blend in ipairs(blendAnims) do
+	blend.anim:blendTime(blend.ticks):onBlend("easeOutQuad")
 end
 
 -- Fixing spyglass jank
 function events.RENDER(delta, context)
-	if context == "RENDER" or context == "FIRST_PERSON" or (not client.isHudEnabled() and context ~= "MINECRAFT_GUI") then
-		local rot = vanilla_model.HEAD:getOriginRot()
-		rot.x = math.clamp(rot.x, -90, 30)
-		upperRoot.Spyglass:rot(rot)
-			:pos(pose.crouch and vec(0, -4, 0) or nil)
-	end
-end
-
--- GS Blending Setup
-do
-	require("lib.GSAnimBlend")
 	
-	anims.groundIdle:blendTime(7)
-	anims.groundWalk:blendTime(7)
-	anims.airIdle:blendTime(7)
-	anims.airFlying:blendTime(7)
+	local rot = vanilla_model.HEAD:getOriginRot()
+	rot.x = math.clamp(rot.x, -90, 30)
+	model.upper.Spyglass:rot(rot)
+		:pos(pose.crouch and vec(0, -4, 0) or nil)
 	
-	anims.groundIdle:onBlend("easeOutQuad")
-	anims.groundWalk:onBlend("easeOutQuad")
-	anims.airIdle:onBlend("easeOutQuad")
-	anims.airFlying:onBlend("easeOutQuad")
 end
-
-return t

@@ -1,31 +1,64 @@
--- Models setup
-local pokeball = models.Pokeball
-local model    = models.CharizardTaur
+-- Required scripts
+local model  = require("scripts.ModelParts")
+local squapi = require("lib.SquAPI")
 
--- Animation setup
+-- Animations setup
 local anims = animations.Pokeball
-
--- Table setup
-local t = {}
 
 -- Config setup
 config:name("CharizardTaur")
 local toggle = config:load("PokeballToggle") or false
 
--- Variables
+-- Variables setup
+local vehicle
+local vType
+local isRider
+local hasRider
 local isInBall  = toggle
 local wasInBall = toggle
-local staticRot = 0
-t.scale         = 0
-local vehicle   = require("scripts.Vehicles")
+local staticYaw = 0
 
--- Lerping variables
-local startScale = toggle and 0 or 1
-local scaleCurrent, scaleNextTick, scaleTarget, scaleCurrentPos = startScale, startScale, startScale, startScale
-local posCurrent,   posNextTick,   posTarget,   posCurrentPos   = 0, 0, 0, 0
+-- Lerp scale table
+local scale = {
+	current    = 0,
+	nextTick   = 0,
+	target     = 0,
+	currentPos = 0
+}
+
+-- Lerp pos table
+local pos = {
+	current    = 0,
+	nextTick   = 0,
+	target     = 0,
+	currentPos = 0
+}
+
+-- Set lerp start on init
+function events.ENTITY_INIT()
+	
+	staticYaw = -player:getBodyYaw()
+	
+	local apply = toggle and 0 or 1
+	for k, v in pairs(scale) do
+		scale[k] = apply
+	end
+	
+end
+
 function events.TICK()
+	
+	-- Variables
+	vehicle  = player:getVehicle() or false
+	vType     = vehicle and vehicle:getType() or false
+	isRider  = vehicle and vehicle:getControllingPassenger() and vehicle:getControllingPassenger():getName() ~= player:getName()
+	hasRider = (vehicle and #vehicle:getPassengers() > 1 and not isRider) or #player:getPassengers() > 0
+	
 	-- Pokeball check
-	isInBall = ((toggle and not vehicle.isVehicle) or (vehicle.vehicle and not(vehicle.boat or vehicle.chest_boat) or (vehicle.isPassenger or vehicle.player))) or false
+	isInBall =
+		toggle and not hasRider
+		or vehicle and (vType ~= "minecraft:boat" and vType ~= "minecraft:chest_boat")
+		or isRider
 	
 	-- Compare states
 	if isInBall ~= wasInBall then
@@ -34,7 +67,7 @@ function events.TICK()
 		if not isInBall then sounds:stopSound() sounds:playSound("cobblemon:poke_ball.send_out", player:getPos(), 0.15) end
 		
 		if isInBall then 
-			staticRot = -player:getRot().y
+			staticYaw = -player:getBodyYaw()
 		end
 		
 		-- Animations
@@ -43,151 +76,181 @@ function events.TICK()
 	end
 	
 	-- Pos lerp
-	posCurrent  = posNextTick
-	posNextTick = math.lerp(posNextTick, posTarget, 0.25)
+	pos.current  = pos.nextTick
+	pos.nextTick = math.lerp(pos.nextTick, pos.target, 0.25)
 	
 	-- Scaling lerp
-	scaleCurrent  = scaleNextTick
-	scaleNextTick = math.lerp(scaleNextTick, scaleTarget, 0.2)
+	scale.current  = scale.nextTick
+	scale.nextTick = math.lerp(scale.nextTick, scale.target, 0.2)
 	
 	-- Store previous states
 	wasInBall = isInBall
+	
 end
 
 -- Rendering stuff
 function events.RENDER(delta, context)
-	if context == "FIRST_PERSON" or context == "RENDER" or (not client.isHudEnabled() and context ~= "MINECRAFT_GUI") then
-		-- Vehicle pos table
-		local statePos = {
-			{ state = vehicle.player,        pos = 10  },
-			{ state = (vehicle.boat or vehicle.chest_boat) and
-				vehicle.isPassenger,         pos = 14  },
-			{ state = vehicle.boat,          pos = 8   },
-			{ state = vehicle.chest_boat,    pos = 0   },
-			{ state = vehicle.minecart,      pos = 9   },
-			{ state = vehicle.horse,         pos = 10  },
-			{ state = vehicle.donkey,        pos = 10  },
-			{ state = vehicle.mule,          pos = 10  },
-			{ state = vehicle.zombieHorse,   pos = 8   },
-			{ state = vehicle.skeletonHorse, pos = 11  },
-			{ state = vehicle.pig,           pos = 10  },
-			{ state = vehicle.strider,       pos = 10  },
-			{ state = vehicle.camel,         pos = 9   },
-		}
-		
-		-- Base position check
-		for _, case in ipairs(statePos) do
-			if case.state then
-				posTarget = case.pos
-				break
-			elseif vehicle.vehicle then
-				-- Unsupported cases
-				posTarget = 10 -- Assumption
-			else
-				posTarget = 0
-			end
-		end
-		
-		-- Pos lerp
-		posCurrentPos = math.lerp(posCurrent, posNextTick, delta)
-		
-		-- Scaling target and lerp
-		scaleTarget     = isInBall and 0 or 1
-		scaleCurrentPos = math.lerp(scaleCurrent, scaleNextTick, delta)
-		
-		-- Apply scale, color, & pos
-		-- Lapras
-		model:scale(scaleCurrentPos)
-			:color(1, scaleCurrentPos, scaleCurrentPos)
-			:pos(vec(0, posCurrentPos, 0))
-		
-		-- Pokeball
-		pokeball:visible(context ~= "FIRST_PERSON")
-			:scale(math.map(scaleCurrentPos, 0, 1, 1, 0) * (vehicle.player and 0.5 or 1))
-			:pos(vec(0, posCurrentPos, 0))
-			:rot(vehicle.player and 0 or vec(0, staticRot + player:getBodyYaw(delta), 0))
-		
-		-- Shadow
-		renderer:shadowRadius(math.map(scaleCurrentPos, 0, 1, 0.2, 1.25))
-		
-		t.scale = scaleCurrentPos
+	
+	-- Base position check
+	if vehicle and (vType ~= "minecraft:boat" and vType ~= "minecraft:chest_boat") or isRider then
+		local hitbox = player:getBoundingBox()
+		pos.target = vec(0, hitbox.y * 6, -hitbox.z * 16 + 8)
+	else
+		pos.target = 0
 	end
-end
-
--- Keybind animations/blockers
-local function forwardWobble()
-	anims.wobbleForward:play()
-end
-
-local function backWobble()
-	anims.wobbleBack:play()
-end
-
-local function rightWobble()
-	anims.wobbleRight:play()
-end
-
-local function leftWobble()
-	anims.wobbleLeft:play()
-end
-
--- Keybind ping setup
-pings.playForwardWobble = forwardWobble
-pings.playBackWobble    = backWobble
-pings.playRightWobble   = rightWobble
-pings.playLeftWobble    = leftWobble
-
-if host:isHost() then
-	local cantMove  = (toggle or vehicle.isPassenger or vehicle.player)
-	local kbForward = keybinds:newKeybind("Pokeball Forward Blocker"):onPress(function() if cantMove and not anims.wobbleForward:isPlaying() then pings.playForwardWobble() end return cantMove end)
-	local kbBack    = keybinds:newKeybind("Pokeball Back Blocker"   ):onPress(function() if cantMove and not anims.wobbleBack:isPlaying() then pings.playBackWobble() end return cantMove end)
-	local kbRight   = keybinds:newKeybind("Pokeball Right Blocker"  ):onPress(function() if cantMove and not anims.wobbleRight:isPlaying() then pings.playRightWobble() end return cantMove end)
-	local kbLeft    = keybinds:newKeybind("Pokeball Left Blocker"   ):onPress(function() if cantMove and not anims.wobbleLeft:isPlaying() then pings.playLeftWobble() end return cantMove end)
-	local kbJump    = keybinds:newKeybind("Pokeball Jump Blocker"   ):onPress(function() return cantMove and player:isInWater() end)
-	local kbCrouch  = keybinds:newKeybind("Pokeball Crouch Blocker" ):onPress(function() return toggle end)
-	local kbAttack  = keybinds:newKeybind("Pokeball Attack Blocker" ):onPress(function() return cantMove end)
-	local kbUse     = keybinds:newKeybind("Pokeball Use Blocker"    ):onPress(function() return cantMove end)
-
-	-- Keybind maintainer (Prevents changes)
-	function events.TICK()
-		cantMove = (toggle or vehicle.isPassenger or vehicle.player)
-		kbForward:key(keybinds:getVanillaKey("key.forward"))
-		kbBack:key(keybinds:getVanillaKey("key.back"))
-		kbRight:key(keybinds:getVanillaKey("key.right"))
-		kbLeft:key(keybinds:getVanillaKey("key.left"))
-		kbJump:key(keybinds:getVanillaKey("key.jump"))
-		kbCrouch:key(keybinds:getVanillaKey("key.sneak"))
-		kbAttack:key(keybinds:getVanillaKey("key.attack"))
-		kbUse:key(keybinds:getVanillaKey("key.use"))
-	end
+	
+	-- Pos lerp
+	pos.currentPos = math.lerp(pos.current, pos.nextTick, delta)
+	
+	-- Scaling target and lerp
+	scale.target     = isInBall and 0 or 1
+	scale.currentPos = math.lerp(scale.current, scale.nextTick, delta)
+	
+	local firstPerson = context == "FIRST_PERSON"
+	local menus       = context == "PAPERDOLL" or context == "MINECRAFT_GUI" or context == "FIGURA_GUI"
+	
+	model.model
+		:pos(pos.currentPos)
+		:scale(scale.currentPos)
+		:color(not firstPerson and vec(1, scale.currentPos, scale.currentPos) or 1)
+	
+	model.pokeball
+		:pos(pos.currentPos)
+		:rot(menus and 0 or vec(0, player:getBodyYaw(delta) + staticYaw, 0))
+		:scale(math.map(scale.currentPos, 0, 1, 1, 0))
+		:visible(menus or not renderer:isFirstPerson())
+	
+	renderer:shadowRadius(math.map(scale.currentPos, 0, 1, 0.2, 1.25))
+	
 end
 
 -- Pokeball toggler
 local function setPokeball(boolean)
+	
 	toggle = boolean
 	config:save("PokeballToggle", toggle)
+	
 end
 
 -- Sync variable
 local function syncPokeball(a)
+	
 	toggle = a
+	
 end
 
 -- Ping setup
 pings.setPokeball  = setPokeball
 pings.syncPokeball = syncPokeball
 
+-- Keybind
+local toggleBind   = config:load("PokeballToggleKeybind") or "key.keyboard.keypad.1"
+local setToggleKey = keybinds:newKeybind("Pokeball Toggle"):onPress(function() pings.setPokeball(not toggle) end):key(toggleBind)
+
+-- Keybind updater
+function events.TICK()
+	
+	local key = setToggleKey:getKey()
+	if key ~= toggleBind then
+		toggleBind = key
+		config:save("PokeballToggleKeybind", key)
+	end
+	
+end
+
 -- Sync on tick
 if host:isHost() then
 	function events.TICK()
+		
 		if world.getTime() % 200 == 0 then
 			pings.syncPokeball(toggle)
 		end
+	
 	end
+end
+
+local lean        = 15
+local leanForward = 0
+local leanBack    = 0
+local leanLeft    = 0
+local leanRight   = 0
+
+-- Keybind animations/blockers
+local function forwardTilt(bool)
+	
+	leanForward = bool and lean or 0
+	
+end
+
+local function backTilt(bool)
+	
+	leanBack = bool and lean or 0
+	
+end
+
+local function leftTilt(bool)
+	
+	leanLeft = bool and lean or 0
+	
+end
+
+local function rightTilt(bool)
+	
+	leanRight = bool and lean or 0
+	
+end
+
+-- Keybind ping setup
+pings.pokeballForwardTilt = forwardTilt
+pings.pokeballBackTilt    = backTilt
+pings.pokeballLeftTilt    = leftTilt
+pings.pokeballRightTilt   = rightTilt
+
+local stop
+local kbForward = keybinds:newKeybind("Pokeball Tilt Forward") :onPress(function() pings.pokeballForwardTilt(true) return stop end):onRelease(function() pings.pokeballForwardTilt(false) end)
+local kbBack    = keybinds:newKeybind("Pokeball Tilt Backward"):onPress(function() pings.pokeballBackTilt(true)    return stop end):onRelease(function() pings.pokeballBackTilt(false)    end)
+local kbLeft    = keybinds:newKeybind("Pokeball Tilt Left")    :onPress(function() pings.pokeballLeftTilt(true)    return stop end):onRelease(function() pings.pokeballLeftTilt(false)    end)
+local kbRight   = keybinds:newKeybind("Pokeball Tilt Right")   :onPress(function() pings.pokeballRightTilt(true)   return stop end):onRelease(function() pings.pokeballRightTilt(false)   end)
+local kbJump    = keybinds:newKeybind("Pokeball Block Jump")   :onPress(function() return stop and player:isInWater() end)
+local kbCrouch  = keybinds:newKeybind("Pokeball Block Crouch") :onPress(function() return toggle end)
+local kbAttack  = keybinds:newKeybind("Pokeball Block Attack") :onPress(function() return stop end)
+local kbUse     = keybinds:newKeybind("Pokeball Block Use")    :onPress(function() return stop end)
+
+-- Keybind maintainer (Prevents changes)
+function events.TICK()
+	
+	stop         = toggle or isRider
+	local enable = scale.currentPos < 0.5
+	
+	kbForward:key(keybinds:getVanillaKey("key.forward")):enabled(enable)
+	kbBack   :key(keybinds:getVanillaKey("key.back")   ):enabled(enable)
+	kbRight  :key(keybinds:getVanillaKey("key.right")  ):enabled(enable)
+	kbLeft   :key(keybinds:getVanillaKey("key.left")   ):enabled(enable)
+	kbJump   :key(keybinds:getVanillaKey("key.jump")   ):enabled(enable)
+	kbCrouch :key(keybinds:getVanillaKey("key.sneak")  ):enabled(enable)
+	kbAttack :key(keybinds:getVanillaKey("key.attack") ):enabled(enable)
+	kbUse    :key(keybinds:getVanillaKey("key.use")    ):enabled(enable)
+	
+end
+
+-- Pokeball physics
+squapi.pokeball = squapi.bounceObject:new()
+
+function events.RENDER(delta, context)
+	
+	model.pokeball:offsetRot(squapi.pokeball.pos)
+	
+	local target = vec(leanBack - leanForward, 0, leanLeft - leanRight)
+	
+	squapi.pokeball:doBounce(target, 0.01, .075)
+	
 end
 
 -- Activate action
 setPokeball(toggle)
+
+-- Table setup
+local t = {}
 
 -- Return action wheel page
 t.togglePage = action_wheel:newAction("Pokeball")

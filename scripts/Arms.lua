@@ -1,35 +1,59 @@
--- Model setup
-local model     = models.CharizardTaur
-local upperRoot = model.Player.UpperBody
-local lowerRoot = model.Player.LowerBody
-local anims     = animations.CharizardTaur
+-- Required scripts
+local model = require("scripts.ModelParts")
+local arm   = require("lib.MOARArmsAPI")
+local pose  = require("scripts.Posing")
 
--- API setup
-local arm  = require("lib.MOARArmsAPI")
-local pose = require("scripts.Posing")
+-- Animation setup
+local anims = animations.CharizardTaur
+
+-- Config setup
+config:name("CharizardTaur")
+local armMove = config:load("AvatarArmMove") or false
+local holdItem = config:load("AvatarArmItems") or false
 
 -- Arms setup
-local fakeLeftArm   = model.LeftArmFP
-local fakeRightArm  = model.RightArmFP
-local upperLeftArm  = arm:newArm(1, "LEFT",  upperRoot.Body.LeftArm.UpperLeftArmItem,   upperRoot.Body.LeftArm,  "OFFHAND")
-local upperRightArm = arm:newArm(1, "RIGHT", upperRoot.Body.RightArm.UpperRightArmItem, upperRoot.Body.RightArm, "MAINHAND")
-local lowerLeftArm  = arm:newArm(2, "LEFT",  lowerRoot.Midsection.LowerLeftArm.LeftForearm.LeftHand.LeftFingerM.LowerLeftArmItem, lowerRoot.Midsection.LowerLeftArm, 1,
+local upperLeftArm = arm:newArm(
+	1,
+	"LEFT",
+	model.leftArm.UpperLeftArmItem,
+	model.leftArm,
+	"OFFHAND"
+)
+
+local upperRightArm = arm:newArm(
+	1,
+	"RIGHT",
+	model.rightArm.UpperRightArmItem,
+	model.rightArm,
+	"MAINHAND"
+)
+
+local lowerLeftArm = arm:newArm(
+	2,
+	"LEFT",
+	model.leftHand.LeftFingerM.LowerLeftArmItem,
+	model.lowerLeftArm,
+	1,
 	{WALK = 0, OVERRIDE = 0},
-	{HOLD = anims.holdLeft})
-local lowerRightArm = arm:newArm(2, "RIGHT", lowerRoot.Midsection.LowerRightArm.RightForearm.RightHand.RightFingerM.LowerRightArmItem, lowerRoot.Midsection.LowerRightArm, 2,
+	{HOLD = anims.holdLeft}
+)
+
+local lowerRightArm = arm:newArm(
+	2,
+	"RIGHT",
+	model.rightHand.RightFingerM.LowerRightArmItem,
+	model.lowerRightArm,
+	2,
 	{WALK = 0, OVERRIDE = 0},
-	{HOLD = anims.holdRight})
+	{HOLD = anims.holdRight}
+)
 
 anims.holdLeft:priority(1)
 anims.holdRight:priority(1)
 
--- Config setup
-config:name("CharizardTaur")
-local armMove  = config:load("AvatarArmMove") or false
-local holdItem = config:load("AvatarArmItems") or false
-
 function events.TICK()
 	
+	-- Movement overrides
 	local shouldMove = (armMove or pose.swim or pose.crawl) and 1 or 0
 	
 	upperLeftArm.AnimOptions.WALK      = shouldMove
@@ -37,8 +61,8 @@ function events.TICK()
 	upperRightArm.AnimOptions.WALK     = shouldMove
 	upperRightArm.AnimOptions.OVERRIDE = shouldMove
 	
-	-- upperLeftArm:changeItem(     player:isLeftHanded() and "MAINHAND" or "OFFHAND")
-	-- upperRightArm:changeItem(not player:isLeftHanded() and "MAINHAND" or "OFFHAND")
+	upperLeftArm:changeItem(     player:isLeftHanded() and "MAINHAND" or "OFFHAND")
+	upperRightArm:changeItem(not player:isLeftHanded() and "MAINHAND" or "OFFHAND")
 	lowerLeftArm:changeItem(holdItem and 1 or -1)
 	lowerRightArm:changeItem(holdItem and 2 or -1)
 	
@@ -46,37 +70,57 @@ end
 
 function events.RENDER(delta, context)
 	
+	-- First person check
 	local firstPerson = context == "FIRST_PERSON"
 	
-	fakeRightArm:visible(firstPerson)
-	fakeLeftArm:visible(firstPerson)
+	-- Apply
+	local leftPos = vanilla_model.LEFT_ARM:getOriginPos()
+	model.leftArm:pos(leftPos.x, -leftPos.y, leftPos.z)
+		:visible(not firstPerson)
 	
-	local body = vanilla_model.BODY:getOriginRot()._yz
+	model.leftArmFP:visible(firstPerson)
 	
-	lowerRoot.Midsection:offsetRot(body)
-	lowerRoot.Midsection.RightWing1:offsetRot(-body)
-	lowerRoot.Midsection.LeftWing1:offsetRot(-body)
+	local rightPos = vanilla_model.RIGHT_ARM:getOriginPos()
+	model.rightArm:pos(rightPos.x, -rightPos.y, rightPos.z)
+		:visible(not firstPerson)
+	
+	model.rightArmFP:visible(firstPerson)
+	
+	
+	local body = vanilla_model.BODY:getOriginRot()._yz -- Come back to later
+	
+	model.merge:offsetRot(body)
+	model.torso:offsetRot(body) -- Please
+	model.leftWing:offsetRot(-body) -- help
+	model.rightWing:offsetRot(-body) -- I beg of you
+	
 end
 
--- Arm Movement toggler
+-- Arm Movement toggle
 local function setArmMove(boolean)
+	
 	armMove = boolean
 	config:save("AvatarArmMove", armMove)
+	
 end
 
--- Arm Hold Items toggler
+-- Arm Hold Items toggle
 local function setArmItems(boolean)
+	
 	holdItem = boolean
 	config:save("AvatarArmItems", holdItem)
 	if player:isLoaded() then
 		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
 	end
+	
 end
 
 -- Sync variable
 local function syncArms(a, b)
+	
 	armMove  = a
 	holdItem = b
+	
 end
 
 -- Ping setup
@@ -87,9 +131,11 @@ pings.syncArms          = syncArms
 -- Sync on tick
 if host:isHost() then
 	function events.TICK()
+		
 		if world.getTime() % 200 == 0 then
 			pings.syncArms(armMove, holdItem)
 		end
+		
 	end
 end
 
@@ -119,5 +165,5 @@ t.holdPage = action_wheel:newAction("ArmHoldItems")
 	:onToggle(pings.setAvatarArmItems)
 	:toggled(holdItem)
 
--- Return table
+-- Return action wheel pages
 return t

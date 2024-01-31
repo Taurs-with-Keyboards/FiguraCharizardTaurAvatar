@@ -1,51 +1,116 @@
--- Connects various actions accross many scripts into pages
-local mainPage = action_wheel:newPage("MainPage")
-local avatPage = action_wheel:newPage("AvatarPage")
-local camPage  = action_wheel:newPage("CameraPage")
+-- Required scripts
+local fire     = require("scripts.Fire")
+--local fall     = require("scripts.FallSound")
+local avatar   = require("scripts.Player")
+local arms     = require("scripts.Arms")
+local camera   = require("scripts.CameraControl")
+--local anims    = require("scripts.Anims")
+local armor    = require("scripts.Armor")
+local pokeball = require("scripts.Pokeball")
+
+-- Page setups
+local mainPage   = action_wheel:newPage("MainPage")
+local fallPage   = action_wheel:newPage("FallSoundPage")
+local avatarPage = action_wheel:newPage("AvatarPage")
+local cameraPage = action_wheel:newPage("CameraPage")
+local animsPage  = action_wheel:newPage("AnimationPage")
+local armorPage  = action_wheel:newPage("ArmorPage")
+
+-- Logs pages for navigation
+local navigation = {}
+
+-- Go forward a page
+local function descend(page)
+	
+	navigation[#navigation + 1] = action_wheel:getCurrentPage() 
+	action_wheel:setPage(page)
+	
+end
+
+-- Go back a page
+local function ascend()
+	
+	action_wheel:setPage(table.remove(navigation, #navigation))
+	
+end
+
+-- Action back to main page
 local backPage = action_wheel:newAction()
 	:title("§c§lGo Back?")
-	:hoverColor(vectors.hexToRGB("FF7F7F"))
+	:hoverColor(vectors.hexToRGB("FF5555"))
 	:item("minecraft:barrier")
-	:onLeftClick(function() action_wheel:setPage(mainPage) end)
+	:onLeftClick(function() ascend() end)
 
+-- Set starting page to main page
 action_wheel:setPage(mainPage)
 
 -- Main actions
 mainPage
-	:action( 1,
+	:action( -1,
+		action_wheel:newAction()
+			:title("§6§lFall Sound Settings")
+			:hoverColor(vectors.hexToRGB("D8741E"))
+			:item("minecraft:pufferfish")
+			:onLeftClick(function() descend(fallPage) end))
+	
+	:action( -1,
 		action_wheel:newAction()
 			:title("§6§lAvatar Settings")
 			:hoverColor(vectors.hexToRGB("D8741E"))
 			:item("minecraft:armor_stand")
-			:onLeftClick(function() action_wheel:setPage(avatPage) end))
+			:onLeftClick(function() descend(avatarPage) end))
 	
-	:action( 2,
+	:action( -1,
 		action_wheel:newAction()
 			:title("§6§lCamera Settings")
 			:hoverColor(vectors.hexToRGB("D8741E"))
 			:item("minecraft:redstone")
-			:onLeftClick(function() action_wheel:setPage(camPage) end))
+			:onLeftClick(function() descend(cameraPage) end))
 	
-	:action( 3, require("scripts.Pokeball").togglePage)
+	:action( -1,
+		action_wheel:newAction()
+			:title("§6§lAnimations")
+			:hoverColor(vectors.hexToRGB("D8741E"))
+			:item("minecraft:jukebox")
+			:onLeftClick(function() descend(animsPage) end))
+	
+	:action( -1,
+		action_wheel:newAction()
+			:title("§6§lArmor Settings")
+			:hoverColor(vectors.hexToRGB("D8741E"))
+			:item("minecraft:iron_chestplate")
+			:onLeftClick(function() descend(armorPage) end))
+	
+	:action( -1, pokeball.togglePage)
+
+-- Fall sound actions
+fallPage
+	:action( -1, backPage)
 
 -- Avatar actions
-do
-	local avatar = require("scripts.Player")
-	local arms   = require("scripts.Arms")
-	avatPage
-		:action( 1, avatar.vanillaSkinPage)
-		:action( 2, avatar.modelPage)
-		:action( 3, arms.movePage)
-		:action( 4, arms.holdPage)
-		:action( 5, backPage)
-end
+avatarPage
+	:action( -1, avatar.vanillaSkinPage)
+	:action( -1, avatar.modelPage)
+	:action( -1, arms.holdPage)
+	:action( -1, fire.damagePage)
+	:action( -1, backPage)
 
 -- Camera actions
-do
-	local camera = require("scripts.CameraControl")
-	camPage
-		:action( 1, camera.posPage)
-		:action( 2, camera.rotPage)
-		:action( 3, camera.eyePage)
-		:action( 4, backPage)
-end
+cameraPage
+	:action( -1, camera.posPage)
+	:action( -1, camera.eyePage)
+	:action( -1, backPage)
+
+-- Animation actions
+animsPage
+	:action( -1, arms.movePage)
+	:action( -1, backPage)
+
+-- Armor actions
+armorPage
+	:action( -1, armor.allPage)
+	:action( -1, armor.bootsPage)
+	:action( -1, armor.leggingsPage)
+	:action( -1, armor.chestplatePage)
+	:action( -1, armor.helmetPage)
+	:action( -1, backPage)

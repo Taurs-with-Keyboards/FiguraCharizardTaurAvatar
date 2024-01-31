@@ -1,27 +1,62 @@
--- Variable setup
-config:name("LaprasTaur")
-local timer = config:load("FallSoundDryTimer") or 400
+-- Config setup
+config:name("CharizardTaur")
 
 -- Table setup
-local t = {}
-t.wet   = timer -- Rain
-t.water = timer -- In Water
-t.under = timer -- Underwater
+local t = {
+	wet   = 200, -- Rain
+	water = 200, -- In Water
+	under = 200  -- Underwater
+}
+
+-- Check if a splash potion is broken near the player
+local splash = false
+function events.ON_PLAY_SOUND(id, pos, vol, pitch, loop, category, path)
+	
+	if player:isLoaded() then
+		local atPos      = pos < player:getPos() + 2 and pos > player:getPos() - 2
+		local splashID   = id == "minecraft:entity.splash_potion.break" or id == "minecraft:entity.lingering_potion.break"
+		splash = atPos and splashID and path
+	end
+	
+end
 
 -- Each tick add one to each timer. Reset if confition met.
 function events.TICK()
-	t.wet   = t.wet   + 1
-	t.water = t.water + 1
-	t.under = t.under + 1
-	if player:isWet() then
-		t.wet   = 0
+	
+	-- Add if not currently riptiding.
+	if not player:riptideSpinning() then
+		t.wet   = t.wet   + 1
+		t.water = t.water + 1
+		t.under = t.under + 1
 	end
-	if player:isInWater() or player:isInLava() then
+	
+	-- Arm variables
+	local handedness  = player:isLeftHanded()
+	local activeness  = player:getActiveHand()
+	local leftActive  = not handedness and "OFF_HAND" or "MAIN_HAND"
+	local rightActive = handedness and "OFF_HAND" or "MAIN_HAND"
+	local leftItem    = player:getHeldItem(not handedness)
+	local rightItem   = player:getHeldItem(handedness)
+	local using       = player:isUsingItem()
+	local drinkingL   = activeness == leftActive and using and leftItem:getUseAction() == "DRINK"
+	local drinkingR   = activeness == rightActive and using and rightItem:getUseAction() == "DRINK"
+	
+	-- Check for if player touches any liquid
+	if player:isWet() or ((drinkingL or drinkingR) and player:getActiveItemTime() > 20) or splash then
+		t.wet   = 0
+		splash  = false
+	end
+	
+	-- Check for if player is in water
+	if player:isInWater() then
 		t.water = 0
 	end
-	if player:isUnderwater() or player:isInLava() then
+	
+	-- Check for if player has gone underwater 
+	if player:isUnderwater() then
 		t.under = 0
 	end
+	
 end
 
 -- Return table

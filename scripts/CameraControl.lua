@@ -1,35 +1,33 @@
--- Model setup
-local model     = models.CharizardTaur
-local upperRoot = model.Player.UpperBody
-local pokeball  = models.Pokeball
+-- Required scripts
+local model = require("scripts.ModelParts")
+local pose  = require("scripts.Posing")
 
 -- Config setup
 config:name("CharizardTaur")
 local camPos = config:load("CameraPos") or false
-local camRot = config:load("CameraRot") or false
-local eyePos = false
 
 -- Variable setup
-local pose      = require("scripts.Posing")
-local ball      = require("scripts.Pokeball")
-local vehicle   = require("scripts.Vehicles")
+local eyePos = false
 
--- Startup camera pos
+-- Set starting head pos on init
 local trueHeadPos = 0
 function events.ENTITY_INIT()
+	
 	trueHeadPos = player:getPos()
+	
 end
 
 function events.POST_RENDER(delta, context)
 	if context == "FIRST_PERSON" or context == "RENDER" or (not client.isHudEnabled() and context ~= "MINECRAFT_GUI") then
+		
 		-- Pos checking
 		local playerPos = player:getPos(delta)
-		trueHeadPos     = (upperRoot.Head:partToWorldMatrix():apply() * ball.scale) + (pokeball:partToWorldMatrix():apply(0, 2.25, 0) * math.map(ball.scale, 0, 1, 1, 0))
+		trueHeadPos     = model.head:partToWorldMatrix():apply()
 		
 		-- Pehkui scaling
 		local nbt   = player:getNbt()
 		local types = nbt["pehkui:scale_data_types"]
-		local scale = (
+		local playerScale = (
 			types and
 			types["pehkui:base"] and
 			types["pehkui:base"]["scale"] or 1)
@@ -41,75 +39,67 @@ function events.POST_RENDER(delta, context)
 			types and
 			types["pehkui:model_height"] and
 			types["pehkui:model_height"]["scale"] or 1)
+		local offsetScale = vec(modelWidth, modelHeight, modelWidth) * playerScale
 		
-		local offsetScale = vec(modelWidth, modelHeight, modelWidth) * scale
-		
-		-- Camera offset & rotation setup
+		-- Camera offset
 		local posOffset = (trueHeadPos - playerPos) * (context == "FIRST_PERSON" and offsetScale or 1) + vec(0, -player:getEyeHeight() + ((3/16) * offsetScale.y), 0)
-		local upperRot  = model:getTrueRot() + upperRoot:getOffsetRot() + upperRoot.Head:getTrueRot()
-		local rotOffset = (renderer:isCameraBackwards() and vec(upperRot.x, -upperRot.y / 2, upperRot.z) or vec(-upperRot.x, -upperRot.y, -upperRot.z)) * ball.scale
 		
-		if pose.swim then
-			rotOffset = rotOffset._yz
-		end
-		
-		-- Renders offset & rotation
+		-- Renders offset
 		local posOffsetApply = not player:riptideSpinning()
 		renderer:offsetCameraPivot(camPos and posOffsetApply and posOffset or 0)
-			:offsetCameraRot(camRot and rotOffset or 0)
 			:eyeOffset(eyePos and camPos and posOffsetApply and posOffset or 0)
 		
 		-- Nameplate Placement
-		nameplate.ENTITY:pivot(posOffset + vec(0, player:getBoundingBox().y + (vehicle.isVehicle and (33/16) or (9/16)), 0))
-			:scale(ball.scale)
+		nameplate.ENTITY:pivot(posOffset + vec(0, player:getBoundingBox().y + 9/16, 0))
+			:scale(model.model:getScale())
 		
 		-- Disables head if sleeping in first person
-		upperRoot.Head:visible(not(pose.sleep and renderer:isFirstPerson()))
+		model.head:visible(not(pose.sleep and renderer:isFirstPerson()))
+		
 	end
 end
 
--- Camera pos toggler
+-- Camera pos toggle
 local function setPos(boolean)
+	
 	camPos = boolean
 	config:save("CameraPos", camPos)
+	
 end
 
--- Camera rot toggler
-local function setRot(boolean)
-	camRot = boolean
-	config:save("CameraRot", camRot)
-end
-
--- Eye pos toggler
+-- Eye pos toggle
 local function setEye(boolean)
+	
 	eyePos = boolean
+	
 end
 
 -- Sync variables
-local function syncCamera(a, b, c)
+local function syncCamera(a, b)
+	
 	camPos = a
-	camRot = b
-	eyePos = c
+	eyePos = b
+	
 end
 
 -- Setup pings
 pings.setCameraPos = setPos
-pings.setCameraRot = setRot
 pings.setCameraEye = setEye
 pings.syncCamera   = syncCamera
 
 -- Sync on tick
 if host:isHost() then
 	function events.TICK()
+		
 		if world.getTime() % 200 == 0 then
-			pings.syncCamera(camPos, camRot, eyePos)
+			pings.syncCamera(camPos, eyePos)
 		end
+		
 	end
 end
 
 -- Activate actions
 setPos(camPos)
-setRot(camRot)
 
 -- Table setup
 local t = {}
@@ -124,15 +114,6 @@ t.posPage = action_wheel:newAction("CameraPos")
 	:onToggle(pings.setCameraPos)
 	:toggled(camPos)
 
-t.rotPage = action_wheel:newAction("CameraRot")
-	:title("§6§lCamera Rotation Toggle\n\n§3Sets the camera rotation to match the avatar's head.")
-	:hoverColor(vectors.hexToRGB("D8741E"))
-	:toggleColor(vectors.hexToRGB("BA4A0F"))
-	:item("minecraft:quartz")
-	:toggleItem("minecraft:observer")
-	:onToggle(pings.setCameraRot)
-	:toggled(camRot)
-	
 t.eyePage = action_wheel:newAction("OffsetEye")
 	:title("§6§lEye Position Toggle\n\n§3Sets the eye position to match the avatar's head.\nRequires camera position toggle.\n\n§4§lWARNING: §cThis feature is dangerous!\nIt can and will be flagged on servers with anticheat!\nFurthermore, \"In Wall\" damage is possible.\nThis setting will §c§lNOT §cbe saved between sessions for your safety.\n\nPlease use with extreme caution!")
 	:hoverColor(vectors.hexToRGB("FF0000"))
