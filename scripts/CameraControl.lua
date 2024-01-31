@@ -53,9 +53,6 @@ function events.POST_RENDER(delta, context)
 		nameplate.ENTITY:pivot(posOffset + vec(0, player:getBoundingBox().y + 9/16, 0))
 			:scale(model.model:getScale())
 		
-		-- Disables head if sleeping in first person
-		model.head:visible(not(pose.sleep and renderer:isFirstPerson()))
-		
 	end
 end
 
