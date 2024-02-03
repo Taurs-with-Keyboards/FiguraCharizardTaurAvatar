@@ -8,6 +8,13 @@ local ground     = require("lib.GroundCheck")
 -- Animations setup
 local anims = animations.CharizardTaur
 
+-- Animation variables
+local breatheTime = {
+	prev = 0,
+	time = 0,
+	next = 0
+}
+
 function events.TICK()
 	
 	-- Player variables
@@ -19,9 +26,15 @@ function events.TICK()
 	local underwater = waterTicks.under < 20
 	local onGround   = ground()
 	
+	-- Store animation variables
+	breatheTime.prev = breatheTime.next
+	
+	-- Animation control
+	breatheTime.next = breatheTime.next + math.clamp((vel:length() * 15 + 1) * 0.05, 0, 0.4)
+	
 	-- Animation states
-	local groundIdle = (onGround or inWater) and not pose.swim and not pose.sleep
-	local groundWalk = walking and not (pose.swim or pose.elytra) and not pose.sleep
+	local groundIdle = (inWater or onGround) and not pose.swim and not pose.sleep
+	local groundWalk = walking and onGround and not pose.elytra and not pose.sleep
 	local airIdle    = not (pose.elytra or inWater) and not onGround
 	local airFlying  = (pose.elytra or pose.swim) and not onGround
 	local sleep      = pose.sleep
@@ -48,7 +61,19 @@ function events.RENDER(delta, context)
 	
 	-- Animation speeds
 	anims.groundWalk:speed(math.clamp((fbVel < -0.1 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 6.5, -2, 2))
-	anims.airFlying:speed(math.min(vel:length(), 2))
+	anims.airFlying:speed(math.clamp(vel:length(), 0, 2))
+	
+	-- Render lerps
+	breatheTime.time = math.lerp(breatheTime.prev, breatheTime.next, delta)
+	
+	-- Apply
+	local scale = math.sin(breatheTime.time) * 0.0125 + 1.0125
+	local offsetScale = math.map(scale, 1, 1.025, 1, 0.975)
+	parts.Torso:scale(scale)
+	parts.LowerLeftArm:scale(offsetScale)
+	parts.LowerRightArm:scale(offsetScale)
+	parts.LeftWing1:scale(offsetScale)
+	parts.RightWing1:scale(offsetScale)
 	
 	-- Scales models to fit GUIs better
 	if context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL" then
