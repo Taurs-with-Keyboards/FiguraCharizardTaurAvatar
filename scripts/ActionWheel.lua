@@ -4,7 +4,7 @@ local fire     = require("scripts.Fire")
 local avatar   = require("scripts.Player")
 local arms     = require("scripts.Arms")
 local camera   = require("scripts.CameraControl")
---local anims    = require("scripts.Anims")
+local anims    = require("scripts.Anims")
 local armor    = require("scripts.Armor")
 local pokeball = require("scripts.Pokeball")
 

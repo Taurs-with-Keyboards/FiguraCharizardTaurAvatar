@@ -50,7 +50,7 @@ function events.TICK()
 	
 	-- Variables
 	vehicle  = player:getVehicle() or false
-	vType     = vehicle and vehicle:getType() or false
+	vType    = vehicle and vehicle:getType() or false
 	isRider  = vehicle and vehicle:getControllingPassenger() and vehicle:getControllingPassenger():getName() ~= player:getName()
 	hasRider = (vehicle and #vehicle:getPassengers() > 1 and not isRider) or #player:getPassengers() > 0
 	

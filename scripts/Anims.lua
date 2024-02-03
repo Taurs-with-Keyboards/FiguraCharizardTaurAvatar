@@ -46,9 +46,11 @@ function events.RENDER(delta, context)
 	local lrVel = player:getVelocity():cross(dir.x_z:normalize()).y
 	local udVel = player:getVelocity().y
 	
+	-- Animation speeds
 	anims.groundWalk:speed(math.clamp((fbVel < -0.1 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 6.5, -2, 2))
 	anims.airFlying:speed(math.min(vel:length(), 2))
 	
+	-- Scales models to fit GUIs better
 	if context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL" then
 		parts.Player:scale(0.6)
 		parts.Ball:scale(0.6)
@@ -66,10 +68,10 @@ end
 
 -- GS Blending Setup
 local blendAnims = {
-	{ anim = anims.groundIdle, ticks = 7  },
-	{ anim = anims.groundWalk, ticks = 7  },
-	{ anim = anims.airIdle,    ticks = 7  },
-	{ anim = anims.airFlying,  ticks = 7  }
+	{ anim = anims.groundIdle, ticks = 7 },
+	{ anim = anims.groundWalk, ticks = 7 },
+	{ anim = anims.airIdle,    ticks = 7 },
+	{ anim = anims.airFlying,  ticks = 7 }
 }
 	
 for _, blend in ipairs(blendAnims) do
