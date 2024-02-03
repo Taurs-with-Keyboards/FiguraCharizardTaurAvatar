@@ -1,5 +1,5 @@
 -- Required scripts
-local model = require("scripts.ModelParts")
+local parts = require("scripts.ModelParts")
 
 -- Glowing outline
 renderer:outlineColor(vectors.hexToRGB("D8741E"))
@@ -24,19 +24,19 @@ function events.TICK()
 	-- Model shape
 	local slimShape = (vanillaSkin and vanillaAvatarType == "SLIM") or (slim and not vanillaSkin)
 	
-	model.leftArm.leftArmDefault:setVisible(not slimShape)
-	model.rightArm.rightArmDefault:setVisible(not slimShape)
-	model.leftArmFP.leftArmDefaultFP:visible(not slimShape)
-	model.rightArmFP.rightArmDefaultFP:visible(not slimShape)
+	parts.leftArmDefault:setVisible(not slimShape)
+	parts.rightArmDefault:setVisible(not slimShape)
+	parts.leftArmDefaultFP:visible(not slimShape)
+	parts.rightArmDefaultFP:visible(not slimShape)
 	
-	model.leftArm.leftArmSlim:setVisible(slimShape)
-	model.rightArm.rightArmSlim:setVisible(slimShape)
-	model.leftArmFP.leftArmSlimFP:visible(slimShape)
-	model.rightArmFP.rightArmSlimFP:visible(slimShape)
+	parts.leftArmSlim:setVisible(slimShape)
+	parts.rightArmSlim:setVisible(slimShape)
+	parts.leftArmSlimFP:visible(slimShape)
+	parts.rightArmSlimFP:visible(slimShape)
 	
 	-- Skin textures
 	local skinType = vanillaSkin and "SKIN" or "PRIMARY"
-	for _, part in ipairs(model.skin) do
+	for _, part in ipairs(parts.skin) do
 		part:primaryTexture(skinType)
 	end
 	
@@ -48,10 +48,10 @@ function events.TICK()
 	--]]
 	
 	-- Disables lower body if player is in spectator mode
-	model.lower:parentType(player:getGamemode() == "SPECTATOR" and "BODY" or "NONE")
+	parts.LowerBody:parentType(player:getGamemode() == "SPECTATOR" and "BODY" or "NONE")
 	
 	-- Layer toggling
-	for layerType, parts in pairs(model.layer) do
+	for layerType, parts in pairs(parts.layer) do
 		local enabled = enabled
 		if layerType == "LOWER_BODY" then
 			enabled = player:isSkinLayerVisible("RIGHT_PANTS_LEG") or player:isSkinLayerVisible("LEFT_PANTS_LEG")

@@ -1,5 +1,5 @@
 -- Required scripts
-local model = require("scripts.ModelParts")
+local parts = require("scripts.ModelParts")
 local arm   = require("lib.MOARArmsAPI")
 local pose  = require("scripts.Posing")
 
@@ -15,24 +15,24 @@ local holdItem = config:load("AvatarArmItems") or false
 local upperLeftArm = arm:newArm(
 	1,
 	"LEFT",
-	model.leftArm.UpperLeftArmItem,
-	model.leftArm,
+	parts.UpperLeftArmItem,
+	parts.LeftArm,
 	"OFFHAND"
 )
 
 local upperRightArm = arm:newArm(
 	1,
 	"RIGHT",
-	model.rightArm.UpperRightArmItem,
-	model.rightArm,
+	parts.UpperRightArmItem,
+	parts.RightArm,
 	"MAINHAND"
 )
 
 local lowerLeftArm = arm:newArm(
 	2,
 	"LEFT",
-	model.leftHand.LeftFingerM.LowerLeftArmItem,
-	model.lowerLeftArm,
+	parts.LowerLeftArmItem,
+	parts.LowerLeftArm,
 	1,
 	{WALK = 0, OVERRIDE = 0},
 	{HOLD = anims.holdLeft}
@@ -41,8 +41,8 @@ local lowerLeftArm = arm:newArm(
 local lowerRightArm = arm:newArm(
 	2,
 	"RIGHT",
-	model.rightHand.RightFingerM.LowerRightArmItem,
-	model.lowerRightArm,
+	parts.LowerRightArmItem,
+	parts.LowerRightArm,
 	2,
 	{WALK = 0, OVERRIDE = 0},
 	{HOLD = anims.holdRight}
@@ -75,24 +75,24 @@ function events.RENDER(delta, context)
 	
 	-- Apply
 	local leftPos = vanilla_model.LEFT_ARM:getOriginPos()
-	model.leftArm:pos(leftPos.x, -leftPos.y, leftPos.z)
+	parts.LeftArm:pos(leftPos.x, -leftPos.y, leftPos.z)
 		:visible(not firstPerson)
 	
-	model.leftArmFP:visible(firstPerson)
+	parts.LeftArmFP:visible(firstPerson)
 	
 	local rightPos = vanilla_model.RIGHT_ARM:getOriginPos()
-	model.rightArm:pos(rightPos.x, -rightPos.y, rightPos.z)
+	parts.RightArm:pos(rightPos.x, -rightPos.y, rightPos.z)
 		:visible(not firstPerson)
 	
-	model.rightArmFP:visible(firstPerson)
+	parts.RightArmFP:visible(firstPerson)
 	
 	
 	local body = vanilla_model.BODY:getOriginRot()._yz -- Come back to later
 	
-	model.merge:offsetRot(body)
-	model.torso:offsetRot(body) -- Please
-	model.leftWing:offsetRot(-body) -- help
-	model.rightWing:offsetRot(-body) -- I beg of you
+	parts.Merge:offsetRot(body)
+	parts.Torso:offsetRot(body) -- Please
+	parts.LeftWing1:offsetRot(-body) -- help
+	parts.RightWing1:offsetRot(-body) -- I beg of you
 	
 end
 

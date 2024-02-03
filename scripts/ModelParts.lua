@@ -1,89 +1,54 @@
 -- Setup table
 local t = {}
 
--- Models setup
-t.model    = models.CharizardTaur
-t.pokeball = models.Pokeball
+-- Index a model's or model part's child groups into a table
+local function groupIndex(m)
+	
+	local children = m:getChildren()
+	
+	for _, p in ipairs(children) do
+		if p:getType() == "GROUP" then
+			t[p:getName()] = p
+			groupIndex(p)
+		end
+	end
+	
+end
 
--- Model parts
-t.root  = t.model.Player
-t.upper = t.root.UpperBody
-t.lower = t.root.LowerBody
+-- Call group index
+groupIndex(models)
 
--- Head parts
-t.head  = t.upper.Head
-t.horns = t.head.Horns
-
--- Body parts
-t.body   = t.upper.Body
-t.elytra = t.body.Elytra
-t.cape   = t.body.Cape
-
--- Lower Parts
-t.merge = t.lower.Merge
-t.torso = t.lower.Torso
-t.hips  = t.lower.Hips
-
--- Arm parts
-t.leftArm       = t.upper.LeftArm
-t.rightArm      = t.upper.RightArm
-t.lowerLeftArm  = t.torso.LowerLeftArm
-t.lowerRightArm = t.torso.LowerRightArm
-t.leftHand      = t.lowerLeftArm.LeftForearm.LeftHand
-t.rightHand     = t.lowerRightArm.RightForearm.RightHand
-t.leftArmFP     = t.model.LeftArmFP
-t.rightArmFP    = t.model.RightArmFP
-
--- Leg parts
-t.leftLeg   = t.hips.leftLeg
-t.rightLeg  = t.hips.rightLeg
-t.leftFoot  = t.leftLeg.LeftFoot
-t.rightFoot = t.rightLeg.RightFoot
-
--- Wing parts
-t.leftWing  = t.torso.LeftWing1
-t.rightWing = t.torso.RightWing1
-
--- Tail parts
-t.tail = t.hips.Tail1
-t.fire = t.tail.Tail2.Tail3.Fire
+-- All tail segments
 t.tailSegments = {
-	t.tail,
-	t.tail.Tail2,
-	t.tail.Tail2.Tail3
+	t.Tail1,
+	t.Tail2,
+	t.Tail3
 }
-
--- Misc parts
-t.skull    = t.model.Skull
-t.portrait = t.model.Portrait
-
-t.skull   :visible(true)
-t.portrait:visible(true)
 
 -- All vanilla skin parts
 t.skin = {
 	
-	t.head.Head,
-	t.head.Layer,
+	t.Head.Head,
+	t.Head.Layer,
 	
-	t.body.Body,
-	t.body.Layer,
+	t.Body.Body,
+	t.Body.Layer,
 	
-	t.leftArm.leftArmDefault,
-	t.leftArm.leftArmSlim,
-	t.leftArmFP.leftArmDefaultFP,
-	t.leftArmFP.leftArmSlimFP,
+	t.LeftArm.leftArmDefault,
+	t.LeftArm.leftArmSlim,
+	t.LeftArmFP.leftArmDefaultFP,
+	t.LeftArmFP.leftArmSlimFP,
 	
-	t.rightArm.rightArmDefault,
-	t.rightArm.rightArmSlim,
-	t.rightArmFP.rightArmDefaultFP,
-	t.rightArmFP.rightArmSlimFP,
+	t.RightArm.rightArmDefault,
+	t.RightArm.rightArmSlim,
+	t.RightArmFP.rightArmDefaultFP,
+	t.RightArmFP.rightArmSlimFP,
 	
-	t.portrait.Head,
-	t.portrait.Layer,
+	t.Portrait.Head,
+	t.Portrait.Layer,
 	
-	t.skull.Head,
-	t.skull.Layer
+	t.Skull.Head,
+	t.Skull.Layer
 	
 }
 
@@ -91,111 +56,111 @@ t.skin = {
 t.layer = {
 	
 	HAT = {
-		t.head.Layer
+		t.Head.Layer
 	},
 	JACKET = {
-		t.body.Layer
+		t.Body.Layer
 	},
 	RIGHT_SLEEVE = {
-		t.leftArm.leftArmDefault.Layer,
-		t.leftArm.leftArmSlim.Layer,
-		t.lowerLeftArm.Layer,
-		t.lowerLeftArm.LeftForearm.Layer,
-		t.leftHand.LeftFingerF.Layer,
-		t.leftHand.LeftFingerM.Layer,
-		t.leftHand.LeftFingerB.Layer,
-		t.leftArmFP.leftArmDefaultFP.Layer,
-		t.leftArmFP.leftArmSlimFP.Layer
+		t.leftArmDefault.Layer,
+		t.leftArmSlim.Layer,
+		t.LowerLeftArm.Layer,
+		t.LeftForearm.Layer,
+		t.LeftFingerF.Layer,
+		t.LeftFingerM.Layer,
+		t.LeftFingerB.Layer,
+		t.leftArmDefaultFP.Layer,
+		t.leftArmSlimFP.Layer
 	},
 	RIGHT_SLEEVE = {
-		t.rightArm.rightArmDefault.Layer,
-		t.rightArm.rightArmSlim.Layer,
-		t.lowerRightArm.Layer,
-		t.lowerRightArm.RightForearm.Layer,
-		t.rightHand.RightFingerF.Layer,
-		t.rightHand.RightFingerM.Layer,
-		t.rightHand.RightFingerB.Layer,
-		t.rightArmFP.rightArmDefaultFP.Layer,
-		t.rightArmFP.rightArmSlimFP.Layer
+		t.rightArmDefault.Layer,
+		t.rightArmSlim.Layer,
+		t.LowerRightArm.Layer,
+		t.RightForearm.Layer,
+		t.RightFingerF.Layer,
+		t.RightFingerM.Layer,
+		t.RightFingerB.Layer,
+		t.rightArmDefaultFP.Layer,
+		t.rightArmSlimFP.Layer
 	},
 	LEFT_PANTS_LEG = {
 		t.leftLeg.Layer,
-		t.leftFoot.Layer
+		t.LeftFoot.Layer
 	},
 	RIGHT_PANTS_LEG = {
 		t.rightLeg.Layer,
-		t.rightFoot.Layer
+		t.RightFoot.Layer
 	},
 	CAPE = {
-		t.cape
+		t.Cape
 	},
 	LOWER_BODY = {
-		t.merge.Layer,
-		t.torso.Layer,
-		t.hips.Layer,
-		t.tail.Layer,
-		t.tail.Tail2.Layer,
-		t.tail.Tail2.Tail3.Layer
+		t.Merge.Layer,
+		t.Torso.Layer,
+		t.Hips.Layer,
+		t.Tail1.Layer,
+		t.Tail2.Layer,
+		t.Tail3.Layer
 	}
 }
 
 -- All helmet parts
 t.helmetToggle = {
 	
-	t.head.headArmorHelmet,
-	t.head.HelmetItemPivot
+	t.headArmorHelmet,
+	t.HelmetItemPivot
 	
 }
 
 -- All chestplate parts
 t.chestplateToggle = {
 	
-	t.body.bodyArmorChestplate,
-	t.leftArm.leftArmArmorChestplate,
-	t.rightArm.rightArmArmorChestplate,
+	t.bodyArmorChestplate,
+	t.leftArmArmorChestplate,
+	t.rightArmArmorChestplate,
 	
-	t.merge.MergeArmorChestplate,
-	t.torso.TorsoArmorChestplate,
+	t.MergeArmorChestplate,
+	t.TorsoArmorChestplate,
 	
-	t.lowerLeftArm.LowerLeftArmArmorChestplate,
-	t.lowerLeftArm.LeftForearm.LeftForearmArmorChestplate,
-	t.leftHand.LeftFingerF.LeftFingerFArmorChestplate,
-	t.leftHand.LeftFingerM.LeftFingerMArmorChestplate,
-	t.leftHand.LeftFingerB.LeftFingerBArmorChestplate,
+	t.LowerLeftArmArmorChestplate,
+	t.LeftForearmArmorChestplate,
+	t.LeftFingerFArmorChestplate,
+	t.LeftFingerMArmorChestplate,
+	t.LeftFingerBArmorChestplate,
 	
-	t.lowerRightArm.LowerRightArmArmorChestplate,
-	t.lowerRightArm.RightForearm.RightForearmArmorChestplate,
-	t.rightHand.RightFingerF.RightFingerFArmorChestplate,
-	t.rightHand.RightFingerM.RightFingerMArmorChestplate,
-	t.rightHand.RightFingerB.RightFingerBArmorChestplate,
+	t.LowerRightArmArmorChestplate,
+	t.RightForearmArmorChestplate,
+	t.RightFingerFArmorChestplate,
+	t.RightFingerMArmorChestplate,
+	t.RightFingerBArmorChestplate,
 	
-	t.hips.HipsArmorChestplate,
+	t.HipsArmorChestplate,
 	
-	t.leftArmFP.leftArmArmorChestplateFP,
-	t.rightArmFP.rightArmArmorChestplateFP
+	t.leftArmArmorChestplateFP,
+	t.rightArmArmorChestplateFP
 	
 }
 
 -- All leggings parts
 t.leggingsToggle = {
 	
-	t.torso.TorsoArmorLeggings,
-	t.hips.HipsArmorLeggings,
+	t.TorsoArmorLeggings,
+	t.HipsArmorLeggings,
 	
-	t.leftLeg.leftLegArmorLeggings,
-	t.rightLeg.rightLegArmorLeggings,
+	t.leftLegArmorLeggings,
+	t.rightLegArmorLeggings,
 	
-	t.tail.Tail1ArmorLeggings,
-	t.tail.Tail2.Tail2ArmorLeggings,
-	t.tail.Tail2.Tail3.Tail3ArmorLeggings
+	t.Tail1ArmorLeggings,
+	t.Tail2ArmorLeggings,
+	t.Tail3ArmorLeggings
 	
 }
 
 -- All boots parts
 t.bootsToggle = {
 	
-	t.leftFoot.LeftFootArmorBoot,
-	t.rightFoot.RightFootArmorBoot
+	t.LeftFootArmorBoot,
+	t.RightFootArmorBoot
 	
 }
 
@@ -215,38 +180,38 @@ t.bootsToggle = {
 t.planeParts = {
 	
 	-- Left wing
-	t.leftWing.Membrane,
-	t.leftWing.LeftWing2.Membrane,
-	t.leftWing.LeftWing2.LeftWing3.Membrane,
+	t.LeftWing1.Membrane,
+	t.LeftWing2.Membrane,
+	t.LeftWing3.Membrane,
 	
 	-- Right wing
-	t.rightWing.Membrane,
-	t.rightWing.RightWing2.Membrane,
-	t.rightWing.RightWing2.RightWing3.Membrane,
+	t.RightWing1.Membrane,
+	t.RightWing2.Membrane,
+	t.RightWing3.Membrane,
 	
 	-- Left arm claws
-	t.leftHand.LeftFingerF.Claw,
-	t.leftHand.LeftFingerM.Claw,
-	t.leftHand.LeftFingerB.Claw,
+	t.LeftFingerF.Claw,
+	t.LeftFingerM.Claw,
+	t.LeftFingerB.Claw,
 	
 	-- Right arm claws
-	t.rightHand.RightFingerF.Claw,
-	t.rightHand.RightFingerM.Claw,
-	t.rightHand.RightFingerB.Claw,
+	t.RightFingerF.Claw,
+	t.RightFingerM.Claw,
+	t.RightFingerB.Claw,
 	
 	-- Left leg claws
-	t.leftFoot.ClawL,
-	t.leftFoot.ClawM,
-	t.leftFoot.ClawR,
+	t.LeftFoot.ClawL,
+	t.LeftFoot.ClawM,
+	t.LeftFoot.ClawR,
 	
 	-- Right leg claws
-	t.rightFoot.ClawL,
-	t.rightFoot.ClawM,
-	t.rightFoot.ClawR,
+	t.RightFoot.ClawL,
+	t.RightFoot.ClawM,
+	t.RightFoot.ClawR,
 	
 	-- Fire
-	t.fire.FireX,
-	t.fire.FireZ
+	t.Fire.FireX,
+	t.Fire.FireZ
 	
 }
 
@@ -254,6 +219,10 @@ t.planeParts = {
 for _, part in ipairs(t.planeParts) do
 	part:primaryRenderType("TRANSLUCENT_CULL")
 end
+
+-- Set skull and portrait groups to visible (incase disabled in blockbench)
+t.Skull   :visible(true)
+t.Portrait:visible(true)
 
 -- Return model parts table
 return t

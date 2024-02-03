@@ -1,5 +1,5 @@
 -- Required scripts
-local model  = require("scripts.ModelParts")
+local parts  = require("scripts.ModelParts")
 local squapi = require("lib.SquAPI")
 local pose   = require("scripts.Posing")
 
@@ -18,13 +18,13 @@ local function calculateParentRot(m)
 end
 
 -- Squishy smooth torso
-squapi.smoothTorso(model.upper, 0.3)
+squapi.smoothTorso(parts.UpperBody, 0.3)
 
 -- Squishy crounch
 squapi.crouch(anims.crouch)
 
 -- Squishy tail
-squapi.tails(model.tailSegments,
+squapi.tails(parts.tailSegments,
 	3,      --intensity
 	10,     --tailintensityY
 	20,     --tailintensityX
@@ -41,24 +41,24 @@ squapi.tails(model.tailSegments,
 )
 
 -- Squishy animated texture
-squapi.animateTexture(model.fire, 4, 0.25, 2, false)
+squapi.animateTexture(parts.Fire, 4, 0.25, 2, false)
 
 function events.RENDER(delta, context)
 	
 	-- Set upper pivot to proper pos when crouching
-	model.upper:offsetPivot(anims.crouch:isPlaying() and vec(0, 0, 5) or 0)
+	parts.UpperBody:offsetPivot(anims.crouch:isPlaying() and vec(0, 0, 5) or 0)
 	
 	-- Offset smooth torso in various parts
-	-- Note: acts strangely with `model.body` and when sleeping
-	for _, group in ipairs(model.upper:getChildren()) do
-		if group ~= model.body and not pose.sleep then
+	-- Note: acts strangely with `parts.body` and when sleeping
+	for _, group in ipairs(parts.UpperBody:getChildren()) do
+		if group ~= parts.Body and not pose.sleep then
 			group:rot(-calculateParentRot(group:getParent()))
 		end
 	end
 	
 	-- Creates flowed movement for fire on tail
 	-- Note: Acts strangely when sleeping
-	local fireRot = model.tail.Tail2.Tail3:getOffsetRot()
-	model.fire:offsetRot(vec(-fireRot.x, fireRot.z, -fireRot.y * 2))
+	local fireRot = parts.Tail3:getOffsetRot()
+	parts.Fire:offsetRot(vec(-fireRot.x, fireRot.z, -fireRot.y * 2))
 	
 end

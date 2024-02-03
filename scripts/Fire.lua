@@ -1,7 +1,6 @@
 -- Required scripts
-local model      = require("scripts.ModelParts")
+local parts      = require("scripts.ModelParts")
 local waterTicks = require("scripts.WaterTicks")
-local origins    = require("lib.OriginsAPI")
 
 -- Config setup
 config:name("CharizardTaur")
@@ -28,8 +27,7 @@ local color = {
 function events.TICK()
 	
 	-- Variables
-	local exp   = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.5, 1.5)
-	local power = origins.hasPower(player, "origins:charizard_light")
+	local exp = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.5, 1.5)
 	
 	-- Timer manipulation
 	timer = timer + 1
@@ -46,9 +44,6 @@ function events.TICK()
 		end
 	end
 	
-	-- Sets model light to match fire tail
-	model.model:light((power or timer >= 200) and 15 or nil)
-	
 	-- Targets
 	scale.target = timer < 200 and 0 or exp
 	
@@ -64,7 +59,7 @@ function events.RENDER(delta, context)
 	scale.currentPos = math.lerp(scale.current, scale.nextTick, delta)
 	
 	-- Apply
-	model.fire
+	parts.Fire
 		:scale(scale.currentPos)
 		:secondaryRenderType(context == "RENDER" and "EMISSIVE" or "EYES")
 	
@@ -77,7 +72,7 @@ local damageText = textures["textures.damageFlame"]
 local dim = normalText:getDimensions()-1
 
 -- Set secondary texture to share primary texture
-model.fire:secondaryTexture("CUSTOM", textures["textures.normalFlame"])
+parts.Fire:secondaryTexture("CUSTOM", textures["textures.normalFlame"])
 
 -- Check average based on colorCurrent between two textures
 local function comparePixels(x, y)

@@ -1,5 +1,5 @@
 -- Required scripts
-local model = require("scripts.ModelParts")
+local parts = require("scripts.ModelParts")
 
 -- Keybind config
 config:name("CharizardTaur")
@@ -20,7 +20,7 @@ function events.TICK()
 	
 	-- Hit sound
 	if player:getNbt()["HurtTime"] == 10 then
-		if average(model.pokeball:getScale()) > 0.5 then
+		if average(parts.Pokeball:getScale()) > 0.5 then
 			sounds:playSound("cobblemon:poke_ball.open", player:getPos(), 0.4)
 		else
 			sounds:playSound("cobblemon:pokemon.charizard.cry", player:getPos(), 0.6, math.random()*0.35+0.85)

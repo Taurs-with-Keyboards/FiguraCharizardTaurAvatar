@@ -1,5 +1,5 @@
 -- Required scripts
-local model   = require("scripts.ModelParts")
+local parts   = require("scripts.ModelParts")
 local carrier = require("lib.GSCarrier")
 
 -- GSCarrier rider
@@ -14,7 +14,7 @@ carrier.rider.controller.setAimEnabled(false)
 carrier.vehicle.addTag("gscarrier:taur", "gscarrier:land", "gscarrier:air")
 
 -- Seat 1
-carrier.vehicle.newSeat("Seat1", model.torso.Seat1, {
+carrier.vehicle.newSeat("Seat1", parts.Seat1, {
 	priority = 1,
 	tags = {["gscarrier:piggyback"] = true}
 })

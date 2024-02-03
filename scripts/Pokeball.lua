@@ -1,5 +1,5 @@
 -- Required scripts
-local model  = require("scripts.ModelParts")
+local parts  = require("scripts.ModelParts")
 local squapi = require("lib.SquAPI")
 
 -- Animations setup
@@ -109,12 +109,12 @@ function events.RENDER(delta, context)
 	local firstPerson = context == "FIRST_PERSON"
 	local menus       = context == "PAPERDOLL" or context == "MINECRAFT_GUI" or context == "FIGURA_GUI"
 	
-	model.model
+	parts.CharizardTaur
 		:pos(pos.currentPos)
 		:scale(scale.currentPos)
 		:color(not firstPerson and vec(1, scale.currentPos, scale.currentPos) or 1)
 	
-	model.pokeball
+	parts.Pokeball
 		:pos(pos.currentPos)
 		:rot(menus and 0 or vec(0, player:getBodyYaw(delta) + staticYaw, 0))
 		:scale(math.map(scale.currentPos, 0, 1, 1, 0))
@@ -238,7 +238,7 @@ squapi.pokeball = squapi.bounceObject:new()
 
 function events.RENDER(delta, context)
 	
-	model.pokeball:offsetRot(squapi.pokeball.pos)
+	parts.Ball:offsetRot(squapi.pokeball.pos)
 	
 	local target = vec(leanBack - leanForward, 0, leanLeft - leanRight)
 	

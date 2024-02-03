@@ -1,5 +1,5 @@
 -- Required scripts
-local model = require("scripts.ModelParts")
+local parts = require("scripts.ModelParts")
 local pose  = require("scripts.Posing")
 
 -- Config setup
@@ -22,7 +22,7 @@ function events.POST_RENDER(delta, context)
 		
 		-- Pos checking
 		local playerPos = player:getPos(delta)
-		trueHeadPos     = model.head:partToWorldMatrix():apply()
+		trueHeadPos     = parts.Head:partToWorldMatrix():apply()
 		
 		-- Pehkui scaling
 		local nbt   = player:getNbt()
@@ -51,7 +51,7 @@ function events.POST_RENDER(delta, context)
 		
 		-- Nameplate Placement
 		nameplate.ENTITY:pivot(posOffset + vec(0, player:getBoundingBox().y + 9/16, 0))
-			:scale(model.model:getScale())
+			:scale(parts.CharizardTaur:getScale())
 		
 	end
 end

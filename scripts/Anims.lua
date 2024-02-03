@@ -1,6 +1,6 @@
 -- Required scripts
 require("lib.GSAnimBlend")
-local model      = require("scripts.ModelParts")
+local parts      = require("scripts.ModelParts")
 local waterTicks = require("scripts.WaterTicks")
 local pose       = require("scripts.Posing")
 local ground     = require("lib.GroundCheck")
@@ -50,14 +50,17 @@ function events.RENDER(delta, context)
 	anims.airFlying:speed(math.min(vel:length(), 2))
 	
 	if context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL" then
-		models:scale(0.6)
+		parts.Player:scale(0.6)
+		parts.Ball:scale(0.6)
 	end
 	
 end
 
 function events.POST_RENDER(delta, context)
 	
-	models:scale(1)
+	-- After scaling models to fit GUIs, immediately scale back
+	parts.Player:scale(1)
+	parts.Ball:scale(1)
 	
 end
 
@@ -78,7 +81,7 @@ function events.RENDER(delta, context)
 	
 	local rot = vanilla_model.HEAD:getOriginRot()
 	rot.x = math.clamp(rot.x, -90, 30)
-	model.upper.Spyglass:rot(rot)
+	parts.UpperBody.Spyglass:rot(rot)
 		:pos(pose.crouch and vec(0, -4, 0) or nil)
 	
 end
