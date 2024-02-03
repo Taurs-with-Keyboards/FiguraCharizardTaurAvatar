@@ -120,7 +120,7 @@ function events.RENDER(delta, context)
 		:scale(math.map(scale.currentPos, 0, 1, 1, 0))
 		:visible(menus or not renderer:isFirstPerson())
 	
-	renderer:shadowRadius(math.map(scale.currentPos, 0, 1, 0.2, 1.25))
+	renderer:shadowRadius(math.map(scale.currentPos, 0, 1, 0.2, 1))
 	
 end
 
