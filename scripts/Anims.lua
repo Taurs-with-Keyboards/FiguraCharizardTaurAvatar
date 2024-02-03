@@ -20,11 +20,11 @@ function events.TICK()
 	local onGround   = ground()
 	
 	-- Animation states
-	local groundIdle =             (onGround or inWater) and not pose.swim and not pose.sleep
-	local groundWalk = walking and (onGround or inWater) and not pose.swim and not pose.sleep
+	local groundIdle = (onGround or inWater) and not pose.swim and not pose.sleep
+	local groundWalk = walking and not (pose.swim or pose.elytra) and not pose.sleep
 	local airIdle    = not (pose.elytra or inWater) and not onGround
-	local airFlying  =     (pose.elytra or pose.swim) and not onGround
-	local sleep      =      pose.sleep
+	local airFlying  = (pose.elytra or pose.swim) and not onGround
+	local sleep      = pose.sleep
 	
 	-- Animations
 	anims.groundIdle:playing(groundIdle)
