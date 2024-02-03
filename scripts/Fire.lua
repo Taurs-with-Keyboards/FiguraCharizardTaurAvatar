@@ -9,6 +9,30 @@ if damage == nil then damage = true end
 
 -- Variable setup
 local timer = 200
+local normalText = textures["textures.normalFlame"]
+local midwayText = textures:copy("textures.midwayFlame", textures["textures.normalFlame"])
+local damageText = textures["textures.damageFlame"]
+local dim = normalText:getDimensions()-1
+
+-- Find midway color between two pixels based on lerp
+local function comparePixel(x, y, d)
+	
+	local normal = normalText:getPixel(x, y)
+	local damage = damageText:getPixel(x, y)
+	
+	local midway = math.lerp(normal, damage, d)
+	
+	midwayText:setPixel(x, y, midway)
+	
+end
+
+-- Return number down to desired decimals
+local function round(n, d)
+	
+	local p = 10 ^ d
+	return math.floor(n * p) / p
+	
+end
 
 -- Lerp scale table
 local scale = {
@@ -18,6 +42,7 @@ local scale = {
 	currentPos = 1
 }
 
+-- Lerp color table
 local color = {
 	prev = 0,
 	curr = 0,
@@ -51,6 +76,45 @@ function events.TICK()
 	scale.current  = scale.nextTick
 	scale.nextTick = math.lerp(scale.nextTick, scale.target, 0.05)
 	
+	-- Texture
+	if avatar:getPermissionLevel() == "MAX" then
+		
+		-- Set fire textures to midway textures
+		parts.Fire
+			:primaryTexture("CUSTOM", midwayText)
+			:secondaryTexture("CUSTOM", midwayText)
+		
+		-- Damage target
+		local health = player:getHealth() / player:getMaxHealth()
+		color.next   = damage and math.clamp(math.map(health, 0.25, 1, 1, 0), 0, 1) or 0
+		
+		-- Tick lerp
+		color.curr = round(math.lerp(color.prev, color.next, 0.05), 3)
+		
+		-- Apply
+		if color.curr ~= color.next then
+			for x = 0, dim.x do
+				for y = 0, dim.y do
+					comparePixel(x, y, color.curr)
+				end
+			end
+			
+			-- Store color variable and update texture
+			color.prev = color.curr
+			midwayText:update()
+			
+		end
+		
+	else
+		
+		-- Set fire textures to normal textures
+		parts.Fire
+			:primaryTexture("CUSTOM", normalText)
+			:secondaryTexture("CUSTOM", normalText)
+		
+	end
+	
+	
 end
 
 function events.RENDER(delta, context)
@@ -65,63 +129,19 @@ function events.RENDER(delta, context)
 	
 end
 
--- Color variables/setup
-local colorCurrent, colorPrevTick, colorTarget = 0, 0, 0
-local normalText = textures["textures.normalFlame"]
-local damageText = textures["textures.damageFlame"]
-local dim = normalText:getDimensions()-1
-
--- Set secondary texture to share primary texture
-parts.Fire:secondaryTexture("CUSTOM", textures["textures.normalFlame"])
-
--- Check average based on colorCurrent between two textures
-local function comparePixels(x, y)
-	local normalPixel = normalText:getPixel(x, y)
-	local damagePixel = damageText:getPixel(x, y)
-	local average = math.lerp(normalPixel, damagePixel, colorCurrent)
-	normalText:setPixel(x, y, average)
-end
-
--- Return number down to desired decimals
-local function round(number, decimals)
-	local power = 10^decimals
-	return math.floor(number * power) / power
-end
-
--- Color functions
-function events.TICK()
-	if avatar:getPermissionLevel() == "MAX" then
-		
-		-- Damage target
-		local health = player:getHealth() / player:getMaxHealth()
-		colorTarget = damage and math.clamp(math.map(health, 0.25, 1, 1, 0), 0, 1) or 0
-		
-		-- Tick lerp
-		colorCurrent = round(math.lerp(colorCurrent, colorTarget, 0.05), 3)
-		
-		if colorCurrent ~= colorPrevTick then
-			normalText:restore()
-			for x = 0, dim.x do
-				for y = 0, dim.y do
-					comparePixels(x, y)
-				end
-			end
-			normalText:update()
-			colorPrevTick = colorCurrent
-		end
-		
-	end
-end
-
 -- Fire damage toggle
 local function setDamage(boolean)
+	
 	damage = boolean
 	config:save("FireDamage", damage)
+	
 end
 
 -- Sync variables
 local function syncFire(a)
+	
 	damage = a
+	
 end
 
 -- Pings setup
@@ -131,9 +151,11 @@ pings.syncFire      = syncFire
 -- Sync on tick
 if host:isHost() then
 	function events.TICK()
+		
 		if world.getTime() % 200 == 0 then
 			pings.syncFire(damage)
 		end
+		
 	end
 end
 
@@ -152,5 +174,5 @@ t.damagePage = action_wheel:newAction("FireDamage")
 	:onToggle(pings.setFireDamage)
 	:toggled(damage)
 
--- Return table
+-- Return action wheel pages
 return t
