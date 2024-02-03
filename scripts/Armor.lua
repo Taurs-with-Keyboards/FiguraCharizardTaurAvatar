@@ -224,7 +224,7 @@ if leggings   == nil then leggings   = true end
 if boots      == nil then boots      = true end
 
 -- All helmet parts
-local helmetToggle = {
+local helmetGroups = {
 	
 	parts.headArmorHelmet,
 	parts.HelmetItemPivot
@@ -232,7 +232,7 @@ local helmetToggle = {
 }
 
 -- All chestplate parts
-local chestplateToggle = {
+local chestplateGroups = {
 	
 	parts.bodyArmorChestplate,
 	parts.leftArmArmorChestplate,
@@ -261,7 +261,7 @@ local chestplateToggle = {
 }
 
 -- All leggings parts
-local leggingsToggle = {
+local leggingsGroups = {
 	
 	parts.TorsoArmorLeggings,
 	parts.HipsArmorLeggings,
@@ -276,7 +276,7 @@ local leggingsToggle = {
 }
 
 -- All boots parts
-local bootsToggle = {
+local bootsGroups = {
 	
 	parts.LeftFootArmorBoot,
 	parts.RightFootArmorBoot
@@ -285,19 +285,19 @@ local bootsToggle = {
 
 function events.TICK()
 	
-	for _, part in ipairs(helmetToggle) do
+	for _, part in ipairs(helmetGroups) do
 		part:visible(helmet)
 	end
 	
-	for _, part in ipairs(chestplateToggle) do
+	for _, part in ipairs(chestplateGroups) do
 		part:visible(chestplate)
 	end
 	
-	for _, part in ipairs(leggingsToggle) do
+	for _, part in ipairs(leggingsGroups) do
 		part:visible(leggings)
 	end
 	
-	for _, part in ipairs(bootsToggle) do
+	for _, part in ipairs(bootsGroups) do
 		part:visible(boots)
 	end
 	
