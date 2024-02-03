@@ -1,5 +1,5 @@
 -- Required scripts
-local parts   = require("scripts.ModelParts")
+local parts   = require("lib.GroupIndex")(models)
 local carrier = require("lib.GSCarrier")
 
 -- GSCarrier rider

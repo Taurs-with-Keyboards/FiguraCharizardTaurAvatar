@@ -1,5 +1,5 @@
 -- Required scripts
-local parts = require("scripts.ModelParts")
+local parts = require("lib.GroupIndex")(models)
 
 -- Keybind config
 config:name("CharizardTaur")

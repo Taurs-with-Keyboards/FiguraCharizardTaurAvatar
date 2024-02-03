@@ -1,5 +1,5 @@
 -- Required scripts
-local parts  = require("scripts.ModelParts")
+local parts  = require("lib.GroupIndex")(models)
 local squapi = require("lib.SquAPI")
 local pose   = require("scripts.Posing")
 
@@ -23,8 +23,15 @@ squapi.smoothTorso(parts.UpperBody, 0.3)
 -- Squishy crounch
 squapi.crouch(anims.crouch)
 
+-- All tail segments
+local tail = {
+	parts.Tail1,
+	parts.Tail2,
+	parts.Tail3
+}
+
 -- Squishy tail
-squapi.tails(parts.tailSegments,
+squapi.tails(tail,
 	3,      --intensity
 	10,     --tailintensityY
 	20,     --tailintensityX

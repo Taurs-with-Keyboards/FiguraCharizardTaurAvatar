@@ -1,5 +1,5 @@
 -- Required scripts
-local parts     = require("scripts.ModelParts")
+local parts     = require("lib.GroupIndex")(models)
 local kattArmor = require("lib.KattArmor")()
 
 -- Setting the leggings to layer 1
@@ -223,21 +223,81 @@ if chestplate == nil then chestplate = true end
 if leggings   == nil then leggings   = true end
 if boots      == nil then boots      = true end
 
+-- All helmet parts
+local helmetToggle = {
+	
+	parts.headArmorHelmet,
+	parts.HelmetItemPivot
+	
+}
+
+-- All chestplate parts
+local chestplateToggle = {
+	
+	parts.bodyArmorChestplate,
+	parts.leftArmArmorChestplate,
+	parts.rightArmArmorChestplate,
+	
+	parts.MergeArmorChestplate,
+	parts.TorsoArmorChestplate,
+	
+	parts.LowerLeftArmArmorChestplate,
+	parts.LeftForearmArmorChestplate,
+	parts.LeftFingerFArmorChestplate,
+	parts.LeftFingerMArmorChestplate,
+	parts.LeftFingerBArmorChestplate,
+	
+	parts.LowerRightArmArmorChestplate,
+	parts.RightForearmArmorChestplate,
+	parts.RightFingerFArmorChestplate,
+	parts.RightFingerMArmorChestplate,
+	parts.RightFingerBArmorChestplate,
+	
+	parts.HipsArmorChestplate,
+	
+	parts.leftArmArmorChestplateFP,
+	parts.rightArmArmorChestplateFP
+	
+}
+
+-- All leggings parts
+local leggingsToggle = {
+	
+	parts.TorsoArmorLeggings,
+	parts.HipsArmorLeggings,
+	
+	parts.leftLegArmorLeggings,
+	parts.rightLegArmorLeggings,
+	
+	parts.Tail1ArmorLeggings,
+	parts.Tail2ArmorLeggings,
+	parts.Tail3ArmorLeggings
+	
+}
+
+-- All boots parts
+local bootsToggle = {
+	
+	parts.LeftFootArmorBoot,
+	parts.RightFootArmorBoot
+	
+}
+
 function events.TICK()
 	
-	for _, part in ipairs(parts.helmetToggle) do
+	for _, part in ipairs(helmetToggle) do
 		part:visible(helmet)
 	end
 	
-	for _, part in ipairs(parts.chestplateToggle) do
+	for _, part in ipairs(chestplateToggle) do
 		part:visible(chestplate)
 	end
 	
-	for _, part in ipairs(parts.leggingsToggle) do
+	for _, part in ipairs(leggingsToggle) do
 		part:visible(leggings)
 	end
 	
-	for _, part in ipairs(parts.bootsToggle) do
+	for _, part in ipairs(bootsToggle) do
 		part:visible(boots)
 	end
 	

@@ -1,6 +1,6 @@
 -- Required scripts
 require("lib.GSAnimBlend")
-local parts   = require("scripts.ModelParts")
+local parts   = require("lib.GroupIndex")(models)
 local origins = require("lib.OriginsAPI")
 
 -- Animations setup

@@ -1,5 +1,5 @@
 -- Required scripts
-local parts = require("scripts.ModelParts")
+local parts = require("lib.GroupIndex")(models)
 local arm   = require("lib.MOARArmsAPI")
 local pose  = require("scripts.Posing")
 

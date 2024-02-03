@@ -1,5 +1,5 @@
 -- Required scripts
-local parts = require("scripts.ModelParts")
+local parts = require("lib.GroupIndex")(models)
 
 -- Glowing outline
 renderer:outlineColor(vectors.hexToRGB("D8741E"))
@@ -9,6 +9,145 @@ config:name("CharizardTaur")
 local vanillaSkin = config:load("AvatarVanillaSkin")
 local slim        = config:load("AvatarSlim") or false
 if vanillaSkin == nil then vanillaSkin = true end
+
+-- Set skull and portrait groups to visible (incase disabled in blockbench)
+parts.Skull   :visible(true)
+parts.Portrait:visible(true)
+
+-- All vanilla skin parts
+local skin = {
+	
+	parts.Head.Head,
+	parts.Head.Layer,
+	
+	parts.Body.Body,
+	parts.Body.Layer,
+	
+	parts.LeftArm.leftArmDefault,
+	parts.LeftArm.leftArmSlim,
+	parts.LeftArmFP.leftArmDefaultFP,
+	parts.LeftArmFP.leftArmSlimFP,
+	
+	parts.RightArm.rightArmDefault,
+	parts.RightArm.rightArmSlim,
+	parts.RightArmFP.rightArmDefaultFP,
+	parts.RightArmFP.rightArmSlimFP,
+	
+	parts.Portrait.Head,
+	parts.Portrait.Layer,
+	
+	parts.Skull.Head,
+	parts.Skull.Layer
+	
+}
+
+-- All layer parts
+local layer = {
+	
+	HAT = {
+		parts.Head.Layer
+	},
+	JACKET = {
+		parts.Body.Layer
+	},
+	RIGHT_SLEEVE = {
+		parts.leftArmDefault.Layer,
+		parts.leftArmSlim.Layer,
+		parts.LowerLeftArm.Layer,
+		parts.LeftForearm.Layer,
+		parts.LeftFingerF.Layer,
+		parts.LeftFingerM.Layer,
+		parts.LeftFingerB.Layer,
+		parts.leftArmDefaultFP.Layer,
+		parts.leftArmSlimFP.Layer
+	},
+	RIGHT_SLEEVE = {
+		parts.rightArmDefault.Layer,
+		parts.rightArmSlim.Layer,
+		parts.LowerRightArm.Layer,
+		parts.RightForearm.Layer,
+		parts.RightFingerF.Layer,
+		parts.RightFingerM.Layer,
+		parts.RightFingerB.Layer,
+		parts.rightArmDefaultFP.Layer,
+		parts.rightArmSlimFP.Layer
+	},
+	LEFT_PANTS_LEG = {
+		parts.leftLeg.Layer,
+		parts.LeftFoot.Layer
+	},
+	RIGHT_PANTS_LEG = {
+		parts.rightLeg.Layer,
+		parts.RightFoot.Layer
+	},
+	CAPE = {
+		parts.Cape
+	},
+	LOWER_BODY = {
+		parts.Merge.Layer,
+		parts.Torso.Layer,
+		parts.Hips.Layer,
+		parts.Tail1.Layer,
+		parts.Tail2.Layer,
+		parts.Tail3.Layer
+	}
+}
+
+--[[
+	
+	Because flat parts in the model are 2 faces directly on top
+	of eachother, and have 0 inflate, the two faces will z-fight.
+	This prevents z-fighting, as well as z-fighting at a distance,
+	as well as translucent stacking.
+	
+	Please add plane/flat parts with 2 faces to the table below.
+	0.01 works, but this works much better :)
+	
+--]]
+
+-- All plane parts
+local planes = {
+	
+	-- Left wing
+	parts.LeftWing1.Membrane,
+	parts.LeftWing2.Membrane,
+	parts.LeftWing3.Membrane,
+	
+	-- Right wing
+	parts.RightWing1.Membrane,
+	parts.RightWing2.Membrane,
+	parts.RightWing3.Membrane,
+	
+	-- Left arm claws
+	parts.LeftFingerF.Claw,
+	parts.LeftFingerM.Claw,
+	parts.LeftFingerB.Claw,
+	
+	-- Right arm claws
+	parts.RightFingerF.Claw,
+	parts.RightFingerM.Claw,
+	parts.RightFingerB.Claw,
+	
+	-- Left leg claws
+	parts.LeftFoot.ClawL,
+	parts.LeftFoot.ClawM,
+	parts.LeftFoot.ClawR,
+	
+	-- Right leg claws
+	parts.RightFoot.ClawL,
+	parts.RightFoot.ClawM,
+	parts.RightFoot.ClawR,
+	
+	-- Fire
+	parts.Fire.FireX,
+	parts.Fire.FireZ
+	
+}
+
+-- Apply
+for _, part in ipairs(planes) do
+	part:primaryRenderType("TRANSLUCENT_CULL")
+end
 
 -- Determine vanilla player type on init
 local vanillaAvatarType
@@ -36,7 +175,7 @@ function events.TICK()
 	
 	-- Skin textures
 	local skinType = vanillaSkin and "SKIN" or "PRIMARY"
-	for _, part in ipairs(parts.skin) do
+	for _, part in ipairs(skin) do
 		part:primaryTexture(skinType)
 	end
 	
@@ -51,7 +190,7 @@ function events.TICK()
 	parts.LowerBody:parentType(player:getGamemode() == "SPECTATOR" and "BODY" or "NONE")
 	
 	-- Layer toggling
-	for layerType, parts in pairs(parts.layer) do
+	for layerType, parts in pairs(layer) do
 		local enabled = enabled
 		if layerType == "LOWER_BODY" then
 			enabled = player:isSkinLayerVisible("RIGHT_PANTS_LEG") or player:isSkinLayerVisible("LEFT_PANTS_LEG")

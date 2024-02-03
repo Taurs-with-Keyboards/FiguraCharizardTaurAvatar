@@ -1,6 +1,6 @@
 -- Required scripts
 require("lib.GSAnimBlend")
-local parts      = require("scripts.ModelParts")
+local parts      = require("lib.GroupIndex")(models)
 local waterTicks = require("scripts.WaterTicks")
 local pose       = require("scripts.Posing")
 local ground     = require("lib.GroundCheck")
