@@ -127,8 +127,10 @@ end
 -- Pokeball toggler
 local function setPokeball(boolean)
 	
-	toggle = boolean
-	config:save("PokeballToggle", toggle)
+	if player:isLoaded() and (toggle or player:getVelocity().xz:length() == 0) then
+		toggle = boolean
+		config:save("PokeballToggle", toggle)
+	end
 	
 end
 
@@ -261,5 +263,11 @@ t.togglePage = action_wheel:newAction("Pokeball")
 	:onToggle(pings.setPokeball)
 	:toggled(toggle)
 
+-- Update action page info
+function events.TICK()
+	
+	t.togglePage:toggled(toggle)
+	
+end
 -- Return action wheel page (and toggle)
 return t
