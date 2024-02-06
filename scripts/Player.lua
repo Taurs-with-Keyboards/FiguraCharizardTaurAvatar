@@ -23,15 +23,15 @@ local skin = {
 	parts.Body.Body,
 	parts.Body.Layer,
 	
-	parts.LeftArm.leftArmDefault,
-	parts.LeftArm.leftArmSlim,
-	parts.LeftArmFP.leftArmDefaultFP,
-	parts.LeftArmFP.leftArmSlimFP,
+	parts.leftArmDefault,
+	parts.leftArmSlim,
+	parts.leftArmDefaultFP,
+	parts.leftArmSlimFP,
 	
-	parts.RightArm.rightArmDefault,
-	parts.RightArm.rightArmSlim,
-	parts.RightArmFP.rightArmDefaultFP,
-	parts.RightArmFP.rightArmSlimFP,
+	parts.rightArmDefault,
+	parts.rightArmSlim,
+	parts.rightArmDefaultFP,
+	parts.rightArmSlimFP,
 	
 	parts.Portrait.Head,
 	parts.Portrait.Layer,
