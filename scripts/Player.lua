@@ -139,8 +139,7 @@ local planes = {
 	parts.RightFoot.ClawR,
 	
 	-- Fire
-	parts.Fire.FireX,
-	parts.Fire.FireZ
+	parts.Fire
 	
 }
 

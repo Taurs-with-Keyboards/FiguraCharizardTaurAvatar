@@ -63,9 +63,13 @@ function events.RENDER(delta, context)
 		end
 	end
 	
-	-- Creates flowed movement for fire on tail
-	-- Note: Acts strangely when sleeping
-	local fireRot = parts.Tail3:getOffsetRot()
-	parts.Fire:offsetRot(vec(-fireRot.x, fireRot.z, -fireRot.y * 2))
+	--[[
+		
+		-- Creates flowed movement for fire on tail
+		-- Note: Acts strangely when sleeping
+		local fireRot = parts.Tail3:getOffsetRot()
+		parts.Fire:offsetRot(vec(-fireRot.x, fireRot.z, -fireRot.y * 2))
+		
+	--]]
 	
 end

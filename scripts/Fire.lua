@@ -14,23 +14,20 @@ local midwayText = textures:copy("textures.midwayFlame", textures["textures.norm
 local damageText = textures["textures.damageFlame"]
 local dim = normalText:getDimensions()-1
 
+-- Set Fire Parent Type
+parts.Fire.Fire:parentType("CAMERA")
+
 -- Find midway color between two pixels based on lerp
 local function comparePixel(x, y, d)
 	
-	local normal = normalText:getPixel(x, y)
-	local damage = damageText:getPixel(x, y)
+	local normalText = normalText:getPixel(x, y)
+	local damageText = damageText:getPixel(x, y)
 	
-	local midway = math.lerp(normal, damage, d)
+	if normalText == damageText then return end
+	
+	local midway = math.lerp(normalText, damageText, d)
 	
 	midwayText:setPixel(x, y, midway)
-	
-end
-
--- Return number down to desired decimals
-local function round(n, d)
-	
-	local p = 10 ^ d
-	return math.floor(n * p) / p
 	
 end
 
@@ -52,7 +49,8 @@ local color = {
 function events.TICK()
 	
 	-- Variables
-	local exp = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.5, 1.5)
+	local exp    = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.5, 1.5)
+	local health = math.clamp(math.map((player:getHealth() / player:getMaxHealth()) * 1, 0.25, 1, 1, 0), 0, 1)
 	
 	-- Timer manipulation
 	timer = timer + 1
@@ -69,51 +67,39 @@ function events.TICK()
 		end
 	end
 	
+	color.prev = color.curr
+	
 	-- Targets
 	scale.target = timer < 200 and 0 or exp
+	color.next   = damage and math.round(health * 1000) / 1000 or 0
 	
 	-- Tick lerps
 	scale.current  = scale.nextTick
 	scale.nextTick = math.lerp(scale.nextTick, scale.target, 0.05)
+	color.curr     = math.round(math.lerp(color.prev, color.next, avatar:getPermissionLevel() == "MAX" and 0.05 or 1) * 1000) / 1000
+	
+	if color.prev == color.curr and color.curr ~= color.next then
+		for k, v in pairs(color) do
+			color[k] = color.next
+		end
+	end
 	
 	-- Texture
 	if avatar:getPermissionLevel() == "MAX" then
-		
-		-- Set fire textures to midway textures
-		parts.Fire
-			:primaryTexture("CUSTOM", midwayText)
-			:secondaryTexture("CUSTOM", midwayText)
-		
-		-- Damage target
-		local health = player:getHealth() / player:getMaxHealth()
-		color.next   = damage and math.clamp(math.map(health, 0.25, 1, 1, 0), 0, 1) or 0
-		
-		-- Tick lerp
-		color.curr = round(math.lerp(color.prev, color.next, 0.05), 3)
-		
-		-- Apply
-		if color.curr ~= color.next then
+		if color.prev ~= color.curr then
+			
+			-- Compare and change pixels
 			for x = 0, dim.x do
 				for y = 0, dim.y do
 					comparePixel(x, y, color.curr)
 				end
 			end
 			
-			-- Store color variable and update texture
-			color.prev = color.curr
+			-- Update texture
 			midwayText:update()
 			
 		end
-		
-	else
-		
-		-- Set fire textures to normal textures
-		parts.Fire
-			:primaryTexture("CUSTOM", normalText)
-			:secondaryTexture("CUSTOM", normalText)
-		
 	end
-	
 	
 end
 
@@ -123,8 +109,11 @@ function events.RENDER(delta, context)
 	scale.currentPos = math.lerp(scale.current, scale.nextTick, delta)
 	
 	-- Apply
+	local texture = damage and (avatar:getPermissionLevel() == "MAX" and midwayText or color.curr == 1 and damageText or normalText) or normalText
 	parts.Fire
 		:scale(scale.currentPos)
+		:primaryTexture("CUSTOM",   texture)
+		:secondaryTexture("CUSTOM", texture)
 		:secondaryRenderType(context == "RENDER" and "EMISSIVE" or "EYES")
 	
 end
@@ -166,7 +155,7 @@ setDamage(damage)
 local t = {}
 
 t.damagePage = action_wheel:newAction("FireDamage")
-	:title("§6§lToggle Fire Damage Indicator\n\n§3Allow the tail fire to indicate overall health.\n§cThis feature can be intensive, and requires \"§5Max§c\" permission level to be visible.")
+	:title("§6§lToggle Fire Damage Indicator\n\n§3Allow the tail fire to indicate overall health.\n§cThis feature can be intensive, and requires \"§5Max§c\" permission level to see gradual change.")
 	:hoverColor(vectors.hexToRGB("D8741E"))
 	:toggleColor(vectors.hexToRGB("BA4A0F"))
 	:item("minecraft:campfire")
