@@ -162,13 +162,13 @@ function events.TICK()
 	-- Model shape
 	local slimShape = (vanillaSkin and vanillaAvatarType == "SLIM") or (slim and not vanillaSkin)
 	
-	parts.leftArmDefault:setVisible(not slimShape)
-	parts.rightArmDefault:setVisible(not slimShape)
+	parts.leftArmDefault:visible(not slimShape)
+	parts.rightArmDefault:visible(not slimShape)
 	parts.leftArmDefaultFP:visible(not slimShape)
 	parts.rightArmDefaultFP:visible(not slimShape)
 	
-	parts.leftArmSlim:setVisible(slimShape)
-	parts.rightArmSlim:setVisible(slimShape)
+	parts.leftArmSlim:visible(slimShape)
+	parts.rightArmSlim:visible(slimShape)
 	parts.leftArmSlimFP:visible(slimShape)
 	parts.rightArmSlimFP:visible(slimShape)
 	
