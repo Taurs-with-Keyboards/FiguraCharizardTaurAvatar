@@ -47,7 +47,7 @@ function events.TICK()
 	airTimer = not (onGround or player:isInWater()) and airTimer + 1 or 0
 	
 	-- Animation variables
-	local walking    = vel.xz:length() ~= 0
+	local walking    = pose.climb and vel:length() ~= 0 or vel.xz:length() ~= 0
 	local inAir      = airTimer > 15
 	
 	-- Store animation variables
@@ -57,9 +57,9 @@ function events.TICK()
 	breatheTime.next = breatheTime.next + math.clamp((vel:length() * 15 + 1) * 0.05, 0, 0.4)
 	
 	-- Animation states
-	local groundIdle = (not inAir or player:getVehicle()) and not pose.swim and not pose.sleep 
-	local groundWalk = walking and not inAir and not pose.elytra and not pose.sleep
-	local airIdle    = inAir and not player:getVehicle() and not pose.elytra
+	local groundIdle = ((not inAir or pose.climb) or player:getVehicle()) and not pose.swim and not pose.sleep 
+	local groundWalk = walking and (not inAir or pose.climb) and not pose.elytra and not pose.sleep
+	local airIdle    = inAir and not player:getVehicle() and not pose.elytra and not pose.climb
 	local airFlying  = (pose.elytra or pose.swim) and not onGround
 	local sleep      = pose.sleep
 	
@@ -84,7 +84,7 @@ function events.RENDER(delta, context)
 	local udVel = player:getVelocity().y
 	
 	-- Animation speeds
-	anims.groundWalk:speed(math.clamp((fbVel < -0.1 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 6.5, -2, 2))
+	anims.groundWalk:speed(pose.climb and udVel * 6.5 or math.clamp((fbVel < -0.1 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 6.5, -2, 2))
 	anims.airFlying:speed(math.clamp(vel:length(), 0, 2))
 	
 	-- Render lerps
