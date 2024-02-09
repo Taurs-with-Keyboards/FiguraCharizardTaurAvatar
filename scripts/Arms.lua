@@ -70,22 +70,29 @@ end
 
 function events.RENDER(delta, context)
 	
+	-- Variables
+	local leftPos  = vanilla_model.LEFT_ARM:getOriginPos()
+	local rightPos = vanilla_model.RIGHT_ARM:getOriginPos()
+	
+	local lowerLeftRot  = parts.LowerLeftArm:getOffsetRot()
+	local lowerRightRot = parts.LowerRightArm:getOffsetRot()
+	
 	-- First person check
 	local firstPerson = context == "FIRST_PERSON"
 	
 	-- Apply
-	local leftPos = vanilla_model.LEFT_ARM:getOriginPos()
 	parts.LeftArm:pos(leftPos.x, -leftPos.y, leftPos.z)
 		:visible(not firstPerson)
 	
 	parts.LeftArmFP:visible(firstPerson)
 	
-	local rightPos = vanilla_model.RIGHT_ARM:getOriginPos()
 	parts.RightArm:pos(rightPos.x, -rightPos.y, rightPos.z)
 		:visible(not firstPerson)
 	
 	parts.RightArmFP:visible(firstPerson)
 	
+	parts.LowerLeftArm:offsetRot(  lowerLeftRot.y, -lowerLeftRot.x  / 2, lowerLeftRot.z)
+	parts.LowerRightArm:offsetRot(-lowerRightRot.y, lowerRightRot.x / 2, lowerRightRot.z)
 	
 	local body = vanilla_model.BODY:getOriginRot()._yz -- Come back to later
 	
@@ -157,7 +164,7 @@ t.movePage = action_wheel:newAction("ArmMovement")
 	:toggled(armMove)
 
 t.holdPage = action_wheel:newAction("ArmHoldItems")
-	:title("§6§lTentacle Hold Items Toggle\n\n§3Toggles the usage of your lower arms for holding and using items.\nUses slots 1 & 2 respectively.")
+	:title("§6§lLower Arms Items Toggle\n\n§3Toggles the usage of your lower arms for holding and using items.\nUses slots 1 & 2 respectively.\n\n§4§lWARNING: §cThis feature is still in testing!\nSome animations will not function properly, such as some usable items.\nFurthermore, even with this setting off, the upper arms will still refuse to work.\n\nI'll do my best to get this working properly in future updates!\n\n- Total")
 	:hoverColor(vectors.hexToRGB("D8741E"))
 	:toggleColor(vectors.hexToRGB("BA4A0F"))
 	:item("minecraft:stick")
