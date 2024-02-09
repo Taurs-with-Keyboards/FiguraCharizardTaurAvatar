@@ -57,7 +57,7 @@ function events.TICK()
 	-- Pokeball check
 	isInBall =
 		toggle and not hasRider
-		or vehicle and (vType ~= "minecraft:boat" and vType ~= "minecraft:chest_boat")
+		or vehicle
 		or isRider
 	
 	-- Compare states
@@ -92,9 +92,9 @@ end
 function events.RENDER(delta, context)
 	
 	-- Base position check
-	if vehicle and (vType ~= "minecraft:boat" and vType ~= "minecraft:chest_boat") or isRider then
+	if vehicle or isRider then
 		local hitbox = player:getBoundingBox()
-		pos.target = vec(0, hitbox.y * 6, -hitbox.z * 16 + 8)
+		pos.target = vec(0, hitbox.y * 5.25, 0)
 	else
 		pos.target = 0
 	end
