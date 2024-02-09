@@ -50,6 +50,39 @@ squapi.tails(tail,
 -- Squishy animated texture
 squapi.animateTexture(parts.Fire, 4, 0.25, 2, false)
 
+-- Wings bounce
+squapi.wings = squapi.bounceObject:new()
+
+function events.render(delta, context)
+	
+	-- Player variables
+	local vel = player:getVelocity()
+	local dir = player:getLookDir()
+	
+	-- Directional velocity
+	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
+	local udVel = player:getVelocity().y
+	
+	parts.LeftWing1:offsetRot(squapi.wings.pos)
+	parts.RightWing1:offsetRot(-squapi.wings.pos)
+	
+	local target = vec(0, 0, 0)
+	if not (pose.stand or pose.crouch) or player:isInWater() or anims.airIdle:isPlaying() then
+		
+		target = 0
+		
+	else
+		
+		target.x = 0
+		target.y = math.clamp(fbVel * 25, -15, 15)
+		target.z = math.clamp(udVel * 25, -15, 15)
+		
+	end
+	
+	squapi.wings:doBounce(target, 0.01, 0.025)
+	
+end
+
 function events.RENDER(delta, context)
 	
 	-- Set upper pivot to proper pos when crouching
