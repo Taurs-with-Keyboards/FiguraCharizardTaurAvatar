@@ -96,6 +96,8 @@ function events.RENDER(delta, context)
 		end
 	end
 	
+	-- This code exists temporarily while I try to add swaying to the fire. Please ignore
+	-- Or dont, im not your dad.
 	--[[
 		
 		-- Creates flowed movement for fire on tail
