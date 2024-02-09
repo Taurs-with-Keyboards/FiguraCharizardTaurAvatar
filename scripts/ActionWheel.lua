@@ -1,20 +1,19 @@
 -- Required scripts
-local fire     = require("scripts.Fire")
---local fall     = require("scripts.FallSound")
 local avatar   = require("scripts.Player")
 local arms     = require("scripts.Arms")
+local fire     = require("scripts.Fire")
+local fall     = require("scripts.FallSound")
+local armor    = require("scripts.Armor")
 local camera   = require("scripts.CameraControl")
 local anims    = require("scripts.Anims")
-local armor    = require("scripts.Armor")
 local pokeball = require("scripts.Pokeball")
 
 -- Page setups
 local mainPage   = action_wheel:newPage("MainPage")
-local fallPage   = action_wheel:newPage("FallSoundPage")
 local avatarPage = action_wheel:newPage("AvatarPage")
+local armorPage  = action_wheel:newPage("ArmorPage")
 local cameraPage = action_wheel:newPage("CameraPage")
 local animsPage  = action_wheel:newPage("AnimationPage")
-local armorPage  = action_wheel:newPage("ArmorPage")
 
 -- Logs pages for navigation
 local navigation = {}
@@ -48,24 +47,10 @@ action_wheel:setPage(mainPage)
 mainPage
 	:action( -1,
 		action_wheel:newAction()
-			:title("§6§lFall Sound Settings")
-			:hoverColor(vectors.hexToRGB("D8741E"))
-			:item("minecraft:pufferfish")
-			:onLeftClick(function() descend(fallPage) end))
-	
-	:action( -1,
-		action_wheel:newAction()
 			:title("§6§lAvatar Settings")
 			:hoverColor(vectors.hexToRGB("D8741E"))
 			:item("minecraft:armor_stand")
 			:onLeftClick(function() descend(avatarPage) end))
-	
-	:action( -1,
-		action_wheel:newAction()
-			:title("§6§lCamera Settings")
-			:hoverColor(vectors.hexToRGB("D8741E"))
-			:item("minecraft:redstone")
-			:onLeftClick(function() descend(cameraPage) end))
 	
 	:action( -1,
 		action_wheel:newAction()
@@ -74,18 +59,7 @@ mainPage
 			:item("minecraft:jukebox")
 			:onLeftClick(function() descend(animsPage) end))
 	
-	:action( -1,
-		action_wheel:newAction()
-			:title("§6§lArmor Settings")
-			:hoverColor(vectors.hexToRGB("D8741E"))
-			:item("minecraft:iron_chestplate")
-			:onLeftClick(function() descend(armorPage) end))
-	
 	:action( -1, pokeball.togglePage)
-
--- Fall sound actions
-fallPage
-	:action( -1, backPage)
 
 -- Avatar actions
 avatarPage
@@ -93,6 +67,28 @@ avatarPage
 	:action( -1, avatar.modelPage)
 	:action( -1, arms.holdPage)
 	:action( -1, fire.damagePage)
+	:action( -1, fall.soundPage)
+	:action( -1,
+		action_wheel:newAction()
+			:title("§6§lArmor Settings")
+			:hoverColor(vectors.hexToRGB("D8741E"))
+			:item("minecraft:iron_chestplate")
+			:onLeftClick(function() descend(armorPage) end))
+	:action( -1,
+		action_wheel:newAction()
+			:title("§6§lCamera Settings")
+			:hoverColor(vectors.hexToRGB("D8741E"))
+			:item("minecraft:redstone")
+			:onLeftClick(function() descend(cameraPage) end))
+	:action( -1, backPage)
+
+-- Armor actions
+armorPage
+	:action( -1, armor.allPage)
+	:action( -1, armor.bootsPage)
+	:action( -1, armor.leggingsPage)
+	:action( -1, armor.chestplatePage)
+	:action( -1, armor.helmetPage)
 	:action( -1, backPage)
 
 -- Camera actions
@@ -104,13 +100,4 @@ cameraPage
 -- Animation actions
 animsPage
 	:action( -1, arms.movePage)
-	:action( -1, backPage)
-
--- Armor actions
-armorPage
-	:action( -1, armor.allPage)
-	:action( -1, armor.bootsPage)
-	:action( -1, armor.leggingsPage)
-	:action( -1, armor.chestplatePage)
-	:action( -1, armor.helmetPage)
 	:action( -1, backPage)
