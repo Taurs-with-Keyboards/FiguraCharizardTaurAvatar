@@ -8,6 +8,28 @@ local ground     = require("lib.GroundCheck")
 -- Animations setup
 local anims = animations.CharizardTaur
 
+-- Variables setup
+local airTimer = 0
+
+-- Parrot pivots
+local parrots = {
+	
+	parts.LeftParrotPivot,
+	parts.RightParrotPivot
+	
+}
+
+-- Calculate parent's rotations
+local function calculateParentRot(m)
+	
+	local parent = m:getParent()
+	if not parent then
+		return m:getTrueRot()
+	end
+	return calculateParentRot(parent) + m:getTrueRot()
+	
+end
+
 -- Animation variables
 local breatheTime = {
 	prev = 0,
@@ -18,13 +40,15 @@ local breatheTime = {
 function events.TICK()
 	
 	-- Player variables
-	local vel = player:getVelocity()
+	local vel      = player:getVelocity()
+	local onGround = ground()
+	
+	-- Ground timer
+	airTimer = not (onGround or player:isInWater()) and airTimer + 1 or 0
 	
 	-- Animation variables
 	local walking    = vel.xz:length() ~= 0
-	local inWater    = waterTicks.water < 20
-	local underwater = waterTicks.under < 20
-	local onGround   = ground()
+	local inAir      = airTimer > 15
 	
 	-- Store animation variables
 	breatheTime.prev = breatheTime.next
@@ -33,9 +57,9 @@ function events.TICK()
 	breatheTime.next = breatheTime.next + math.clamp((vel:length() * 15 + 1) * 0.05, 0, 0.4)
 	
 	-- Animation states
-	local groundIdle = (inWater or onGround) and not pose.swim and not pose.sleep
-	local groundWalk = walking and onGround and not pose.elytra and not pose.sleep
-	local airIdle    = not (pose.elytra or inWater) and not onGround
+	local groundIdle = (not inAir or player:getVehicle()) and not pose.swim and not pose.sleep 
+	local groundWalk = walking and not inAir and not pose.elytra and not pose.sleep
+	local airIdle    = inAir and not player:getVehicle() and not pose.elytra
 	local airFlying  = (pose.elytra or pose.swim) and not onGround
 	local sleep      = pose.sleep
 	
@@ -74,6 +98,11 @@ function events.RENDER(delta, context)
 	parts.LowerRightArm:scale(offsetScale)
 	parts.LeftWing1:scale(offsetScale)
 	parts.RightWing1:scale(offsetScale)
+	
+	-- Parrot rot offset
+	for _, parrot in pairs(parrots) do
+		parrot:rot(-calculateParentRot(parrot:getParent()))
+	end
 	
 	-- Scales models to fit GUIs better
 	if context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL" then
