@@ -20,13 +20,17 @@ parts.Fire.Fire:parentType("CAMERA")
 -- Find midway color between two pixels based on lerp
 local function comparePixel(x, y, d)
 	
+	-- Find pixels at given cords
 	local normalText = normalText:getPixel(x, y)
 	local damageText = damageText:getPixel(x, y)
 	
+	-- If the pixels are the exact same, stop function
 	if normalText == damageText then return end
 	
+	-- Find desired midpoint
 	local midway = math.lerp(normalText, damageText, d)
 	
+	-- Apply to midpoint texture
 	midwayText:setPixel(x, y, midway)
 	
 end
