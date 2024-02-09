@@ -1,5 +1,4 @@
 -- Required scripts
-local parts   = require("lib.GroupIndex")(models)
 local origins = require("lib.OriginsAPI")
 
 function events.TICK()
