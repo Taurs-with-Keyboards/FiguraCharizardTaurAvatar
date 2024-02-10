@@ -148,6 +148,18 @@ for _, part in ipairs(planes) do
 	part:primaryRenderType("TRANSLUCENT_CULL")
 end
 
+-- Outer wing parts
+local wings = {
+	
+	parts.LeftWing1,
+	parts.LeftWing2,
+	parts.LeftWing3,
+	parts.RightWing1,
+	parts.RightWing2,
+	parts.RightWing3
+	
+}
+
 -- Determine vanilla player type on init
 local vanillaAvatarType
 function events.ENTITY_INIT()
@@ -178,12 +190,15 @@ function events.TICK()
 		part:primaryTexture(skinType)
 	end
 	
-	-- Cape/Elytra texture
-	--[[
-	upperRoot.Body.Cape:primaryTexture(vanillaSkin and "CAPE" or nil)
-	upperRoot.Body.Elytra:primaryTexture(vanillaSkin and player:hasCape() and (player:isSkinLayerVisible("CAPE") and "CAPE" or "ELYTRA") or nil)
-		:secondaryRenderType(player:getItem(5):hasGlint() and "GLINT" or "NONE")
-	--]]
+	-- Cape Texture
+	parts.Cape:primaryTexture(vanillaSkin and "CAPE" or "PRIMARY")
+	
+	-- Elytra glint
+	local item  = player:getItem(5)
+	local glint = item.id == "minecraft:elytra" and item:hasGlint() and "GLINT" or "NONE"
+	for _, part in ipairs(wings) do
+		part.Wing:secondaryRenderType(glint)
+	end
 	
 	-- Disables lower body if player is in spectator mode
 	parts.LowerBody:parentType(player:getGamemode() == "SPECTATOR" and "BODY" or "NONE")
