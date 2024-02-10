@@ -1,19 +1,21 @@
 -- Required scripts
 local avatar   = require("scripts.Player")
+local armor    = require("scripts.Armor")
+local camera   = require("scripts.CameraControl")
 local arms     = require("scripts.Arms")
 local fire     = require("scripts.Fire")
 local fall     = require("scripts.FallSound")
-local armor    = require("scripts.Armor")
-local camera   = require("scripts.CameraControl")
 local anims    = require("scripts.Anims")
 local pokeball = require("scripts.Pokeball")
 
 -- Page setups
-local mainPage   = action_wheel:newPage("MainPage")
-local avatarPage = action_wheel:newPage("AvatarPage")
-local armorPage  = action_wheel:newPage("ArmorPage")
-local cameraPage = action_wheel:newPage("CameraPage")
-local animsPage  = action_wheel:newPage("AnimationPage")
+local mainPage      = action_wheel:newPage("MainPage")
+local avatarPage    = action_wheel:newPage("AvatarPage")
+local armorPage     = action_wheel:newPage("ArmorPage")
+local cameraPage    = action_wheel:newPage("CameraPage")
+local charizardPage = action_wheel:newPage("CharizardPage")
+local firePage      = action_wheel:newPage("FirePage")
+local animsPage     = action_wheel:newPage("AnimationPage")
 
 -- Logs pages for navigation
 local navigation = {}
@@ -54,6 +56,13 @@ mainPage
 	
 	:action( -1,
 		action_wheel:newAction()
+			:title("§6§lCharizard Settings")
+			:hoverColor(vectors.hexToRGB("D8741E"))
+			:item("minecraft:campfire")
+			:onLeftClick(function() descend(charizardPage) end))
+	
+	:action( -1,
+		action_wheel:newAction()
 			:title("§6§lAnimations")
 			:hoverColor(vectors.hexToRGB("D8741E"))
 			:item("minecraft:jukebox")
@@ -65,9 +74,6 @@ mainPage
 avatarPage
 	:action( -1, avatar.vanillaSkinPage)
 	:action( -1, avatar.modelPage)
-	:action( -1, arms.holdPage)
-	:action( -1, fire.damagePage)
-	:action( -1, fall.soundPage)
 	:action( -1,
 		action_wheel:newAction()
 			:title("§6§lArmor Settings")
@@ -95,6 +101,12 @@ armorPage
 cameraPage
 	:action( -1, camera.posPage)
 	:action( -1, camera.eyePage)
+	:action( -1, backPage)
+
+charizardPage
+	:action( -1, arms.holdPage)
+	:action( -1, fire.damagePage)
+	:action( -1, fall.soundPage)
 	:action( -1, backPage)
 
 -- Animation actions
