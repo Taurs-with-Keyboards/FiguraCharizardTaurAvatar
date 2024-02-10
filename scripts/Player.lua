@@ -8,6 +8,7 @@ renderer:outlineColor(vectors.hexToRGB("D8741E"))
 config:name("CharizardTaur")
 local vanillaSkin = config:load("AvatarVanillaSkin")
 local slim        = config:load("AvatarSlim") or false
+local shiny       = config:load("AvatarShiny") or false
 if vanillaSkin == nil then vanillaSkin = true end
 
 -- Set skull and portrait groups to visible (incase disabled in blockbench)
@@ -91,6 +92,42 @@ local layer = {
 		parts.Tail2.Layer,
 		parts.Tail3.Layer
 	}
+}
+
+-- All shiny parts
+local shinyParts = {
+	
+	parts.Horns,
+	parts.HornsSkull,
+	
+	parts.Merge.Merge,
+	parts.Torso.Torso,
+	
+	parts.LowerLeftArm.Arm,
+	parts.LeftForearm.Arm,
+	parts.LeftFingerF.Finger,
+	parts.LeftFingerM.Finger,
+	parts.LeftFingerB.Finger,
+	
+	parts.LowerRightArm.Arm,
+	parts.RightForearm.Arm,
+	parts.RightFingerF.Finger,
+	parts.RightFingerM.Finger,
+	parts.RightFingerB.Finger,
+	
+	parts.LeftWing1,
+	parts.RightWing1,
+	
+	parts.Hips.Hips,
+	parts.leftLeg.Leg,
+	parts.LeftFoot.Foot,
+	parts.rightLeg.Leg,
+	parts.RightFoot.Foot,
+	
+	parts.Tail1.Tail,
+	parts.Tail2.Tail,
+	parts.Tail3.Tail
+	
 }
 
 --[[
@@ -190,6 +227,12 @@ function events.TICK()
 		part:primaryTexture(skinType)
 	end
 	
+	-- Shiny textures
+	local textureType = shiny and textures["textures.charizard_shiny"] or textures["textures.charizard"]
+	for _, part in ipairs(shinyParts) do
+		part:primaryTexture("Custom", textureType)
+	end
+	
 	-- Cape Texture
 	parts.Cape:primaryTexture(vanillaSkin and "CAPE" or "PRIMARY")
 	
@@ -234,17 +277,27 @@ local function setModelType(boolean)
 	
 end
 
+-- Shiny toggle
+local function setShiny(boolean)
+	
+	shiny = boolean
+	config:save("AvatarShiny", shiny)
+	
+end
+
 -- Sync variables
-local function syncPlayer(a, b)
+local function syncPlayer(a, b, c)
 	
 	vanillaSkin = a
-	slim = b
+	slim        = b
+	shiny       = c
 	
 end
 
 -- Pings setup
 pings.setAvatarVanillaSkin = setVanillaSkin
 pings.setAvatarModelType   = setModelType
+pings.setAvatarShiny       = setShiny
 pings.syncPlayer           = syncPlayer
 
 -- Sync on tick
@@ -252,7 +305,7 @@ if host:isHost() then
 	function events.TICK()
 		
 		if world.getTime() % 200 == 0 then
-			pings.syncPlayer(vanillaSkin, slim)
+			pings.syncPlayer(vanillaSkin, slim, shiny)
 		end
 		
 	end
@@ -261,6 +314,7 @@ end
 -- Activate actions
 setVanillaSkin(vanillaSkin)
 setModelType(slim)
+setShiny(shiny)
 
 -- Setup table
 local t = {}
@@ -282,6 +336,15 @@ t.modelPage = action_wheel:newAction("ModelShape")
 	:toggleItem('minecraft:player_head{"SkullOwner":"MHF_Alex"}')
 	:onToggle(pings.setAvatarModelType)
 	:toggled(slim)
+
+t.shinyPage = action_wheel:newAction("ModelShiny")
+	:title("§6§lToggle Shiny Textures\n\n§3Set the lower body to use shiny textures over the default textures.")
+	:hoverColor(vectors.hexToRGB("D8741E"))
+	:toggleColor(vectors.hexToRGB("BA4A0F"))
+	:item('minecraft:gunpowder')
+	:toggleItem("minecraft:glowstone_dust")
+	:onToggle(pings.setAvatarShiny)
+	:toggled(shiny)
 
 -- Return action wheel pages
 return t
