@@ -79,7 +79,7 @@ function events.render(delta, context)
 		
 	end
 	
-	squapi.wings:doBounce(target, 0.01, 0.025)
+	squapi.wings:doBounce(target, 0.01, 0.05)
 	
 end
 
