@@ -127,6 +127,9 @@ local function setDamage(boolean)
 	
 	damage = boolean
 	config:save("FireDamage", damage)
+	if host:isHost() and player:isLoaded() then
+		sounds:playSound("item.flintandsteel.use", player:getPos(), 0.75)
+	end
 	
 end
 
@@ -159,11 +162,11 @@ setDamage(damage)
 local t = {}
 
 t.damagePage = action_wheel:newAction("FireDamage")
-	:title("§6§lToggle Fire Damage Indicator\n\n§3Allow the tail fire to indicate overall health.\n\n§cThis feature can be intensive,\nand requires \"§5Max§c\" permission level to see gradual change.")
+	:title("§6§lToggle Fire Damage Indicator\n\n§3Allow the tail fire to indicate overall health.\n\n§cThis feature can be intensive, and will require\n\"§5Max§c\" permission level to see gradual change.")
 	:hoverColor(vectors.hexToRGB("D8741E"))
 	:toggleColor(vectors.hexToRGB("BA4A0F"))
-	:item("minecraft:campfire")
-	:toggleItem("minecraft:soul_campfire")
+	:item("minecraft:lantern")
+	:toggleItem("minecraft:soul_lantern")
 	:onToggle(pings.setFireDamage)
 	:toggled(damage)
 
