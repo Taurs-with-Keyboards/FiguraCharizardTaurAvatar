@@ -50,7 +50,7 @@ local layer = {
 	JACKET = {
 		parts.Body.Layer
 	},
-	RIGHT_SLEEVE = {
+	LEFT_SLEEVE = {
 		parts.leftArmDefault.Layer,
 		parts.leftArmSlim.Layer,
 		parts.LowerLeftArm.Layer,
