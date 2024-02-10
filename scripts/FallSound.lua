@@ -77,10 +77,15 @@ t.soundPage = action_wheel:newAction("FallSound")
 	:title("§6§lToggle Falling Sound\n\n§3Toggles pokeball sound effects when landing on the ground.")
 	:hoverColor(vectors.hexToRGB("D8741E"))
 	:toggleColor(vectors.hexToRGB("BA4A0F"))
-	:item("minecraft:snowball")
-	:toggleItem("minecraft:fire_charge")
+	:toggleTexture(textures["textures.misc.pokeballIcon"])
 	:onToggle(pings.setFallSoundToggle)
 	:toggled(fallSound)
+
+function events.TICK()
+	
+	t.soundPage:item(not fallSound and "minecraft:snowball" or nil)
+	
+end
 
 -- Return action wheel pages
 return t
