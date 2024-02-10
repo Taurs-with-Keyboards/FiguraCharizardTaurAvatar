@@ -39,7 +39,7 @@ local function setToggle(boolean)
 	fallSound = boolean
 	config:save("FallSoundToggle", fallSound)
 	if host:isHost() and player:isLoaded() and fallSound then
-		sounds:playSound("cobblemon:poke_ball.hit", player:getPos(), 0.25)
+		sounds:playSound("cobblemon:poke_ball.hit", player:getPos(), 0.35)
 	end
 	
 end
