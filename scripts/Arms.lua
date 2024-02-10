@@ -94,12 +94,13 @@ function events.RENDER(delta, context)
 	parts.LowerLeftArm:offsetRot(  lowerLeftRot.y, -lowerLeftRot.x  / 2, lowerLeftRot.z)
 	parts.LowerRightArm:offsetRot(-lowerRightRot.y, lowerRightRot.x / 2, lowerRightRot.z)
 	
-	local body = vanilla_model.BODY:getOriginRot()._yz -- Come back to later
+	-- Apply body rotations to lower body
+	local body = vanilla_model.BODY:getOriginRot()._y_
 	
 	parts.Merge:offsetRot(body)
-	parts.Torso:offsetRot(body) -- Please
-	parts.LeftWing1:offsetRot(-body) -- help
-	parts.RightWing1:offsetRot(-body) -- I beg of you
+	parts.Torso:offsetRot(body)
+	parts.LeftWing1:offsetRot(-body  + parts.LeftWing1:getOffsetRot())
+	parts.RightWing1:offsetRot(-body + parts.RightWing1:getOffsetRot())
 	
 end
 
