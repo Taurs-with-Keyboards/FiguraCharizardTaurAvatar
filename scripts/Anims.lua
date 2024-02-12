@@ -30,13 +30,6 @@ local function calculateParentRot(m)
 	
 end
 
--- Animation variables
-local breatheTime = {
-	prev = 0,
-	time = 0,
-	next = 0
-}
-
 function events.TICK()
 	
 	-- Player variables
@@ -50,18 +43,13 @@ function events.TICK()
 	local walking    = pose.climb and vel:length() ~= 0 or vel.xz:length() ~= 0
 	local inAir      = airTimer > 15
 	
-	-- Store animation variables
-	breatheTime.prev = breatheTime.next
-	
-	-- Animation control
-	breatheTime.next = breatheTime.next + math.clamp((vel:length() * 15 + 1) * 0.05, 0, 0.4)
-	
 	-- Animation states
 	local groundIdle = ((not inAir or pose.climb) or player:getVehicle()) and not pose.swim and not pose.sleep 
 	local groundWalk = walking and (not inAir or pose.climb) and not pose.elytra and not pose.sleep
 	local airIdle    = inAir and not player:getVehicle() and not pose.elytra and not pose.climb
 	local airFlying  = (pose.elytra or pose.swim) and not onGround
 	local sleep      = pose.sleep
+	local breathe    = true
 	
 	-- Animations
 	anims.groundIdle:playing(groundIdle)
@@ -69,6 +57,7 @@ function events.TICK()
 	anims.airIdle:playing(airIdle)
 	anims.airFlying:playing(airFlying)
 	anims.sleep:playing(sleep)
+	anims.breathe:playing(breathe)
 	
 end
 
@@ -86,18 +75,7 @@ function events.RENDER(delta, context)
 	-- Animation speeds
 	anims.groundWalk:speed(pose.climb and udVel * 6.5 or math.clamp((fbVel < -0.1 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 6.5, -2, 2))
 	anims.airFlying:speed(math.clamp(vel:length(), 0, 2))
-	
-	-- Render lerps
-	breatheTime.time = math.lerp(breatheTime.prev, breatheTime.next, delta)
-	
-	-- Apply
-	local scale = math.sin(breatheTime.time) * 0.0125 + 1.0125
-	local offsetScale = math.map(scale, 1, 1.025, 1, 0.975)
-	parts.Torso:scale(scale)
-	parts.LowerLeftArm:scale(offsetScale)
-	parts.LowerRightArm:scale(offsetScale)
-	parts.LeftWing1:scale(offsetScale)
-	parts.RightWing1:scale(offsetScale)
+	anims.breathe:speed(math.min(vel:length() * 15 + 1, 8))
 	
 	-- Parrot rot offset
 	for _, parrot in pairs(parrots) do
