@@ -110,6 +110,7 @@ function events.RENDER(delta, context)
 	
 	parts.RightArmFP:visible(firstPerson)
 	
+	-- Change how the lower arms swing
 	parts.LowerLeftArm:offsetRot(  lowerLeftRot.y, -lowerLeftRot.x  / 2, lowerLeftRot.z)
 	parts.LowerRightArm:offsetRot(-lowerRightRot.y, lowerRightRot.x / 2, lowerRightRot.z)
 	
