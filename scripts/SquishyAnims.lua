@@ -25,9 +25,11 @@ squapi.crouch(anims.crouch)
 
 -- All tail segments
 local tail = {
+	
 	parts.Tail1,
 	parts.Tail2,
 	parts.Tail3
+	
 }
 
 -- Squishy tail
