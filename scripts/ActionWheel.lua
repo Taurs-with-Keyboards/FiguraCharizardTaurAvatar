@@ -103,10 +103,10 @@ cameraPage
 	:action( -1, backPage)
 
 charizardPage
-	:action( -1, avatar.shinyPage)
 	:action( -1, arms.holdPage)
 	:action( -1, fire.damagePage)
 	:action( -1, fall.soundPage)
+	:action( -1, avatar.shinyPage)
 	:action( -1, backPage)
 
 -- Animation actions
