@@ -83,7 +83,7 @@ t.soundPage = action_wheel:newAction("FallSound")
 
 function events.TICK()
 	
-	t.soundPage:item(not fallSound and "minecraft:snowball" or nil)
+	t.soundPage:item(not fallSound and "minecraft:ender_pearl" or nil)
 	
 end
 
