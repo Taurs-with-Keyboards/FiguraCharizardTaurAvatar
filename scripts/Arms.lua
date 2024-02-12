@@ -53,13 +53,32 @@ anims.holdRight:priority(1)
 
 function events.TICK()
 	
-	-- Movement overrides
-	local shouldMove = (armMove or pose.swim or pose.crawl) and 1 or 0
+	-- Arm variables
+	local handedness  = player:isLeftHanded()
+	local activeness  = player:getActiveHand()
+	local leftActive  = not handedness and "OFF_HAND" or "MAIN_HAND"
+	local rightActive = handedness and "OFF_HAND" or "MAIN_HAND"
+	local leftItem    = player:getHeldItem(not handedness)
+	local rightItem   = player:getHeldItem(handedness)
+	local using       = player:isUsingItem()
+	local usingL      = activeness == leftActive and leftItem:getUseAction() or "NONE"
+	local usingR      = activeness == rightActive and rightItem:getUseAction() or "NONE"
+	local crossL      = leftItem.tag and leftItem.tag["Charged"] == 1
+	local crossR      = rightItem.tag and rightItem.tag["Charged"] == 1
 	
-	upperLeftArm.AnimOptions.WALK      = shouldMove
-	upperLeftArm.AnimOptions.OVERRIDE  = shouldMove
-	upperRightArm.AnimOptions.WALK     = shouldMove
-	upperRightArm.AnimOptions.OVERRIDE = shouldMove
+	-- Movement overrides
+	local shouldMove = pose.swim or pose.crawl
+	
+	-- Targets
+	leftMove  = (armMove or shouldMove or ((crossL or crossR) or (using and usingL ~= "NONE"))) and 1 or 0
+	rightMove = (armMove or shouldMove or ((crossL or crossR) or (using and usingR ~= "NONE"))) and 1 or 0
+	
+	--log(leftMove, rightMove)
+	
+	upperLeftArm.AnimOptions.WALK      = leftMove
+	upperLeftArm.AnimOptions.OVERRIDE  = leftMove
+	upperRightArm.AnimOptions.WALK     = rightMove
+	upperRightArm.AnimOptions.OVERRIDE = rightMove
 	
 	upperLeftArm:changeItem(     player:isLeftHanded() and "MAINHAND" or "OFFHAND")
 	upperRightArm:changeItem(not player:isLeftHanded() and "MAINHAND" or "OFFHAND")
