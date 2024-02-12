@@ -14,7 +14,6 @@ local avatarPage    = action_wheel:newPage("AvatarPage")
 local armorPage     = action_wheel:newPage("ArmorPage")
 local cameraPage    = action_wheel:newPage("CameraPage")
 local charizardPage = action_wheel:newPage("CharizardPage")
-local firePage      = action_wheel:newPage("FirePage")
 local animsPage     = action_wheel:newPage("AnimationPage")
 
 -- Logs pages for navigation
