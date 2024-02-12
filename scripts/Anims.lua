@@ -104,20 +104,6 @@ function events.RENDER(delta, context)
 		parrot:rot(-calculateParentRot(parrot:getParent()))
 	end
 	
-	-- Scales models to fit GUIs better
-	if context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL" then
-		parts.Player:scale(0.6)
-		parts.Ball:scale(0.6)
-	end
-	
-end
-
-function events.POST_RENDER(delta, context)
-	
-	-- After scaling models to fit GUIs, immediately scale back
-	parts.Player:scale(1)
-	parts.Ball:scale(1)
-	
 end
 
 -- GS Blending Setup
