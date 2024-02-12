@@ -300,6 +300,9 @@ local function setShiny(boolean)
 	
 	shiny = boolean
 	config:save("AvatarShiny", shiny)
+	if player:isLoaded() and shiny then
+		sounds:playSound("block.amethyst_block.chime", player:getPos(), 1)
+	end
 	
 end
 
