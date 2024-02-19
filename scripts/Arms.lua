@@ -4,7 +4,7 @@ local arm   = require("lib.MOARArmsAPI")
 local pose  = require("scripts.Posing")
 
 -- Animation setup
-local anims = animations.CharizardTaur
+local anims = animations["models.CharizardTaur"]
 
 -- Config setup
 config:name("CharizardTaur")

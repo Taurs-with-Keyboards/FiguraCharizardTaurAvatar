@@ -3,7 +3,7 @@ local parts  = require("lib.GroupIndex")(models)
 local squapi = require("lib.SquAPI")
 
 -- Animations setup
-local anims = animations.Pokeball
+local anims = animations["models.Pokeball"]
 
 -- Config setup
 config:name("CharizardTaur")

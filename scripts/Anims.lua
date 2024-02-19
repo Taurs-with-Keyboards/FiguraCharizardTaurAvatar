@@ -6,7 +6,7 @@ local pose       = require("scripts.Posing")
 local ground     = require("lib.GroundCheck")
 
 -- Animations setup
-local anims = animations.CharizardTaur
+local anims = animations["models.CharizardTaur"]
 
 -- Variables setup
 local airTimer = 0
