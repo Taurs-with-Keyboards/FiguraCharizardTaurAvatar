@@ -155,6 +155,8 @@ local MainHandArmSlot = -1 --current held item slot for mainhand arm
 ---@param animOptions Table Table containing info on which API anims to use. each anim is a key: IDLE,WALK,SWING,ATTACK,USE,DROP,OVERRIDE,OVERRIDE_AIM. Value determines whether to use anim: 0 - anim off, 1 - anim off if custom anim playing, 2 - anim always on, even if custom anims are playing
 ---@param customAnims Table Table containing all custom anims. Key determines when to play anim, with same keys as animOptions. All valid anims play at once, use Figura's setPriority() to make some override others when they play.
 function Arm:newArm(id, left_right, itemPivot, armModel, itemChoice, animOptions, customAnims)
+    --check if model paths are correct
+    assert(itemPivot, "\nItem Pivot is nil. Check if the model path is entered correctly.")
     --setup arm vars
     local arm = {ID=id, LeftRight = left_right, ItemPivot = itemPivot, Model = armModel, ItemChoice = itemChoice, AnimOptions = animOptions, CustomAnims = customAnims, IsAnimActive = true, IsItemActive = true}
     local animOptionlist = {"IDLE","WALK","SWING","OVERRIDE","HOLD","CROUCH","RIDE"}
