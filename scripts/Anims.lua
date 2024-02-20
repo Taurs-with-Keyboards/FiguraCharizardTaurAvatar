@@ -6,7 +6,7 @@ local pose       = require("scripts.Posing")
 local ground     = require("lib.GroundCheck")
 
 -- Animations setup
-local anims = animations.CharizardTaur
+local anims = animations["models.CharizardTaur"]
 
 -- Variables setup
 local airTimer = 0
@@ -73,7 +73,7 @@ function events.RENDER(delta, context)
 	local udVel = player:getVelocity().y
 	
 	-- Animation speeds
-	anims.groundWalk:speed(pose.climb and udVel * 6.5 or math.clamp((fbVel < -0.1 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 6.5, -2, 2))
+	anims.groundWalk:speed(pose.climb and udVel * 6.5 or math.clamp((fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 6.5, -2, 2))
 	anims.airFlying:speed(math.clamp(vel:length(), 0, 2))
 	anims.breathe:speed(math.min(vel:length() * 15 + 1, 8))
 	

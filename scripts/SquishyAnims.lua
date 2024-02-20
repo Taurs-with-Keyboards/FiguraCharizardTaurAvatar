@@ -4,7 +4,7 @@ local squapi = require("lib.SquAPI")
 local pose   = require("scripts.Posing")
 
 -- Animation setup
-local anims = animations.CharizardTaur
+local anims = animations["models.CharizardTaur"]
 
 -- Calculate parent's rotations
 local function calculateParentRot(m)
