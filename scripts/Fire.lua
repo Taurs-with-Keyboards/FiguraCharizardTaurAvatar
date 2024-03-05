@@ -1,14 +1,16 @@
 -- Required scripts
-local parts      = require("lib.GroupIndex")(models)
-local waterTicks = require("scripts.WaterTicks")
+local parts = require("lib.GroupIndex")(models)
 
 -- Config setup
 config:name("CharizardTaur")
-local damage = config:load("FireDamage")
-if damage == nil then damage = true end
+local damage   = config:load("FireDamage")
+local particle = config:load("FireParticle")
+if damage   == nil then damage   = true end
+if particle == nil then particle = true end
 
 -- Variable setup
-local timer = 200
+local timer  = 200
+local _timer = timer
 local normalText = textures["textures.normalFlame"]
 local midwayText = textures:copy("textures.midwayFlame", textures["textures.normalFlame"])
 local damageText = textures["textures.damageFlame"]
@@ -53,12 +55,13 @@ local color = {
 function events.TICK()
 	
 	-- Variables
-	local exp    = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.5, 1.5)
-	local health = math.clamp(math.map((player:getHealth() / player:getMaxHealth()) * 1, 0.25, 1, 1, 0), 0, 1)
+	local firePos = parts.Fire:partToWorldMatrix():apply()
+	local exp     = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.5, 1.5)
+	local health  = math.clamp(math.map((player:getHealth() / player:getMaxHealth()) * 1, 0.25, 1, 1, 0), 0, 1)
 	
 	-- Timer manipulation
 	timer = timer + 1
-	if waterTicks.wet == 0 then
+	if world.getBlockState(firePos):getFluidTags()[1] == "minecraft:water" then
 		timer = 0
 	elseif player:isOnFire() then
 		timer = 200
@@ -71,7 +74,32 @@ function events.TICK()
 		end
 	end
 	
+	-- Extinguish fire
+	if timer == 0 and _timer >= 200 then
+		
+		-- Set scale
+		for enrty, value in pairs(scale) do
+			scale[enrty] = 0
+		end
+		
+		-- Play sound
+		sounds:playSound("entity.generic.extinguish_fire", firePos, 0.75)
+		
+		-- Spawn particles
+		if particles then
+			for i = 1, 30 do
+				particles["campfire_cosy_smoke"]
+					:pos(firePos + vec(math.random(-8, 8)/16, math.random(-8, 8)/16, math.random(-8, 8)/16))
+					:velocity(0, 0.1, 0)
+					:spawn()
+			end
+		end
+		
+	end
+	
+	-- Store previous values
 	color.prev = color.curr
+	_timer     = timer
 	
 	-- Targets
 	scale.target = timer < 200 and 0 or exp
@@ -105,6 +133,23 @@ function events.TICK()
 		end
 	end
 	
+	-- Particles
+	if particle and scale.currentPos >= 0.5 then
+		
+		local chance = math.random(1, 1000)
+		if chance < 10 then -- Lava bubble chance
+			particles["lava"]
+				:pos(firePos)
+				:spawn()
+		elseif chance < 125 then -- Smoke chance
+			particles["campfire_cosy_smoke"]
+				:pos(firePos + vec(math.random(-2, 2)/16, math.random(0, 16)/16, math.random(-2, 2)/16))
+				:velocity(0, 0.1, 0)
+				:spawn()
+		end
+		
+	end
+	
 end
 
 function events.RENDER(delta, context)
@@ -133,23 +178,36 @@ local function setDamage(boolean)
 	
 end
 
--- Sync variables
-local function syncFire(a)
+-- Fire particles toggle
+local function setParticle(boolean)
 	
-	damage = a
+	particle = boolean
+	config:save("FireParticle", particle)
+	if host:isHost() and player:isLoaded() then
+		sounds:playSound(particle and "item.flintandsteel.use" or "entity.generic.extinguish_fire", player:getPos(), 0.75)
+	end
+	
+end
+
+-- Sync variables
+local function syncFire(a, b)
+	
+	damage   = a
+	particle = b
 	
 end
 
 -- Pings setup
-pings.setFireDamage = setDamage
-pings.syncFire      = syncFire
+pings.setFireDamage   = setDamage
+pings.setFireParticle = setParticle
+pings.syncFire        = syncFire
 
 -- Sync on tick
 if host:isHost() then
 	function events.TICK()
 		
 		if world.getTime() % 200 == 0 then
-			pings.syncFire(damage)
+			pings.syncFire(damage, particle)
 		end
 		
 	end
@@ -157,6 +215,7 @@ end
 
 -- Activate actions
 setDamage(damage)
+setParticle(particle)
 
 -- Setup table
 local t = {}
@@ -169,6 +228,15 @@ t.damagePage = action_wheel:newAction("FireDamage")
 	:toggleItem("minecraft:soul_lantern")
 	:onToggle(pings.setFireDamage)
 	:toggled(damage)
+
+t.particlePage = action_wheel:newAction("FireParticle")
+	:title("§6§lToggle Fire Particles\n\n§3Allow the tail fire to create particles.")
+	:hoverColor(vectors.hexToRGB("D8741E"))
+	:toggleColor(vectors.hexToRGB("BA4A0F"))
+	:item("minecraft:flint")
+	:toggleItem("minecraft:flint_and_steel")
+	:onToggle(pings.setFireParticle)
+	:toggled(particle)
 
 -- Return action wheel pages
 return t

@@ -118,6 +118,7 @@ charizardPage
 -- Fire actions
 firePage
 	:action( -1, fire.damagePage)
+	:action( -1, fire.particlePage)
 	:action( -1, backPage)
 
 -- Animation actions
