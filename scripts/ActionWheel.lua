@@ -14,6 +14,7 @@ local avatarPage    = action_wheel:newPage("AvatarPage")
 local armorPage     = action_wheel:newPage("ArmorPage")
 local cameraPage    = action_wheel:newPage("CameraPage")
 local charizardPage = action_wheel:newPage("CharizardPage")
+local firePage      = action_wheel:newPage("FirePage")
 local animsPage     = action_wheel:newPage("AnimationPage")
 
 -- Logs pages for navigation
@@ -104,9 +105,19 @@ cameraPage
 
 charizardPage
 	:action( -1, arms.holdPage)
-	:action( -1, fire.damagePage)
+	:action( -1,
+		action_wheel:newAction()
+			:title("§6§lTail Fire Settings")
+			:hoverColor(vectors.hexToRGB("D8741E"))
+			:item("minecraft:flint_and_steel")
+			:onLeftClick(function() descend(firePage) end))
 	:action( -1, fall.soundPage)
 	:action( -1, avatar.shinyPage)
+	:action( -1, backPage)
+
+-- Fire actions
+firePage
+	:action( -1, fire.damagePage)
 	:action( -1, backPage)
 
 -- Animation actions
