@@ -163,7 +163,7 @@ function events.TICK()
 		-- Effects
 		if effects and scale.currentPos >= 0.5 then
 			
-			local chance = math.random(1, 1000)
+			local chance = math.random(1, math.map(exp, 0.5, 1.5, 1.5, 0.5) * 2000)
 			if chance <= 5 then -- Campfire sound
 				sounds:playSound("block.campfire.crackle", firePos, 0.75)
 			elseif chance <= 15 and hue.curr < 0.5 then -- Lava bubble chance
@@ -172,7 +172,7 @@ function events.TICK()
 					:spawn()
 			elseif chance <= 125 then -- Smoke chance
 				particles["campfire_cosy_smoke"]
-					:pos(firePos + vec(math.random(-2, 2)/16, math.random(0, 16)/16, math.random(-2, 2)/16))
+					:pos(firePos + vec(math.random(-2, 2)/16, math.random(0, 8)/16, math.random(-2, 2)/16))
 					:velocity(0, 0.1, 0)
 					:spawn()
 			end
