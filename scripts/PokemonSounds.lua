@@ -1,26 +1,16 @@
 -- Required scripts
-local parts = require("lib.GroupIndex")(models)
+local pokeballParts = require("lib.GroupIndex")(models.models.Pokeball)
+local average       = require("lib.Average")
 
 -- Keybind config
 config:name("CharizardTaur")
-local bind = config:load("PokemonCryKeybind") or "key.keyboard.c"
-
--- Get the average of a vector
-local function average(vec)
-	
-	local sum = 0
-	for _, v in ipairs{vec:unpack()} do
-		sum = sum + v
-	end
-	return sum / #vec
-	
-end
+local bind = config:load("PokemonCryKeybind") or "key.keyboard.keypad.2"
 
 function events.TICK()
 	
 	-- Hit sound
 	if player:getNbt()["HurtTime"] == 10 then
-		if average(parts.Pokeball:getScale()) > 0.5 then
+		if average(pokeballParts.Pokeball:getScale():unpack()) >= 0.5 then
 			sounds:playSound("cobblemon:poke_ball.open", player:getPos(), 0.4)
 		else
 			sounds:playSound("cobblemon:pokemon.charizard.cry", player:getPos(), 0.6, math.random()*0.35+0.85)

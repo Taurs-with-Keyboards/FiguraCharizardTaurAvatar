@@ -1,7 +1,10 @@
 -- Required scripts
-local parts   = require("lib.GroupIndex")(models)
-local ground  = require("lib.GroundCheck")
-local effects = require("scripts.SyncedVariables")
+local pokeballParts = require("lib.GroupIndex")(models.models.Pokeball)
+local ground        = require("lib.GroundCheck")
+local average       = require("lib.Average")
+local itemCheck     = require("lib.ItemCheck")
+local effects       = require("scripts.SyncedVariables")
+local color         = require("scripts.ColorProperties")
 
 -- Config setup
 config:name("CharizardTaur")
@@ -11,22 +14,11 @@ if fallSound == nil then fallSound = true end
 -- Variables setup
 local wasInAir = false
 
--- Get the average of a vector
-local function average(vec)
-	
-	local sum = 0
-	for _, v in ipairs{vec:unpack()} do
-		sum = sum + v
-	end
-	return sum / #vec
-	
-end
-
 function events.TICK()
 	
 	-- Play sound if conditions are met
 	if fallSound and wasInAir and ground() and not player:getVehicle() and not player:isInWater() and not effects.cF then
-		if average(parts.Pokeball:getScale()) > 0.5 then
+		if average(pokeballParts.Pokeball:getScale():unpack()) >= 0.5 then
 			sounds:playSound("cobblemon:poke_ball.hit", player:getPos(), 0.25)
 		end
 	end
@@ -75,16 +67,17 @@ local t = {}
 
 -- Action wheel pages
 t.soundPage = action_wheel:newAction("FallSound")
-	:title("§6§lToggle Falling Sound\n\n§3Toggles pokeball sound effects when landing on the ground.")
-	:hoverColor(vectors.hexToRGB("D8741E"))
-	:toggleColor(vectors.hexToRGB("BA4A0F"))
-	:toggleTexture(textures["textures.misc.pokeballIcon"])
+	:item(itemCheck("snowball"))
+	:toggleItem(itemCheck("cobblemon:luxury_ball", "ender_pearl"))
 	:onToggle(pings.setFallSoundToggle)
 	:toggled(fallSound)
 
 function events.TICK()
 	
-	t.soundPage:item(not fallSound and "minecraft:ender_pearl" or nil)
+	t.soundPage
+		:title(color.primary.."Toggle Falling Sound\n\n"..color.secondary.."Toggles pokeball sound effects when landing on the ground.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
 	
 end
 

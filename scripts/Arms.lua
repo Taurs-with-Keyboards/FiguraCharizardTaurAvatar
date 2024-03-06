@@ -1,7 +1,9 @@
 -- Required scripts
-local parts = require("lib.GroupIndex")(models)
-local arm   = require("lib.MOARArmsAPI")
-local pose  = require("scripts.Posing")
+local pokemonParts = require("lib.GroupIndex")(models.models.CharizardTaur)
+local arm          = require("lib.MOARArmsAPI")
+local itemCheck    = require("lib.ItemCheck")
+local pose         = require("scripts.Posing")
+local color        = require("scripts.ColorProperties")
 
 -- Animation setup
 local anims = animations["models.CharizardTaur"]
@@ -15,24 +17,24 @@ local holdItem = config:load("AvatarArmItems") or false
 local upperLeftArm = arm:newArm(
 	1,
 	"LEFT",
-	parts.UpperLeftArmItem,
-	parts.LeftArm,
+	pokemonParts.UpperLeftArmItem,
+	pokemonParts.LeftArm,
 	"OFFHAND"
 )
 
 local upperRightArm = arm:newArm(
 	1,
 	"RIGHT",
-	parts.UpperRightArmItem,
-	parts.RightArm,
+	pokemonParts.UpperRightArmItem,
+	pokemonParts.RightArm,
 	"MAINHAND"
 )
 
 local lowerLeftArm = arm:newArm(
 	2,
 	"LEFT",
-	parts.LowerLeftArmItem,
-	parts.LowerLeftArm,
+	pokemonParts.LowerLeftArmItem,
+	pokemonParts.LowerLeftArm,
 	1,
 	{WALK = 0, OVERRIDE = 0},
 	{HOLD = anims.holdLeft}
@@ -41,8 +43,8 @@ local lowerLeftArm = arm:newArm(
 local lowerRightArm = arm:newArm(
 	2,
 	"RIGHT",
-	parts.LowerRightArmItem,
-	parts.LowerRightArm,
+	pokemonParts.LowerRightArmItem,
+	pokemonParts.LowerRightArm,
 	2,
 	{WALK = 0, OVERRIDE = 0},
 	{HOLD = anims.holdRight}
@@ -93,34 +95,34 @@ function events.RENDER(delta, context)
 	local leftPos  = vanilla_model.LEFT_ARM:getOriginPos()
 	local rightPos = vanilla_model.RIGHT_ARM:getOriginPos()
 	
-	local lowerLeftRot  = parts.LowerLeftArm:getOffsetRot()
-	local lowerRightRot = parts.LowerRightArm:getOffsetRot()
+	local lowerLeftRot  = pokemonParts.LowerLeftArm:getOffsetRot()
+	local lowerRightRot = pokemonParts.LowerRightArm:getOffsetRot()
 	
 	-- First person check
 	local firstPerson = context == "FIRST_PERSON"
 	
 	-- Apply
-	parts.LeftArm:pos(leftPos.x, -leftPos.y, leftPos.z)
+	pokemonParts.LeftArm:pos(leftPos.x, -leftPos.y, leftPos.z)
 		:visible(not firstPerson)
 	
-	parts.LeftArmFP:visible(firstPerson)
+	pokemonParts.LeftArmFP:visible(firstPerson)
 	
-	parts.RightArm:pos(rightPos.x, -rightPos.y, rightPos.z)
+	pokemonParts.RightArm:pos(rightPos.x, -rightPos.y, rightPos.z)
 		:visible(not firstPerson)
 	
-	parts.RightArmFP:visible(firstPerson)
+	pokemonParts.RightArmFP:visible(firstPerson)
 	
 	-- Change how the lower arms swing
-	parts.LowerLeftArm:offsetRot(  lowerLeftRot.y, -lowerLeftRot.x  / 2, lowerLeftRot.z)
-	parts.LowerRightArm:offsetRot(-lowerRightRot.y, lowerRightRot.x / 2, lowerRightRot.z)
+	pokemonParts.LowerLeftArm:offsetRot(  lowerLeftRot.y, -lowerLeftRot.x  / 2, lowerLeftRot.z)
+	pokemonParts.LowerRightArm:offsetRot(-lowerRightRot.y, lowerRightRot.x / 2, lowerRightRot.z)
 	
 	-- Apply body rotations to lower body
 	local body = vanilla_model.BODY:getOriginRot()._y_
 	
-	parts.Merge:offsetRot(body)
-	parts.Torso:offsetRot(body)
-	parts.LeftWing1:offsetRot(-body  + parts.LeftWing1:getOffsetRot())
-	parts.RightWing1:offsetRot(-body + parts.RightWing1:getOffsetRot())
+	pokemonParts.Merge:offsetRot(body)
+	pokemonParts.Torso:offsetRot(body)
+	pokemonParts.LeftWing1:offsetRot(-body  + pokemonParts.LeftWing1:getOffsetRot())
+	pokemonParts.RightWing1:offsetRot(-body + pokemonParts.RightWing1:getOffsetRot())
 	
 end
 
@@ -138,7 +140,7 @@ local function setArmItems(boolean)
 	holdItem = boolean
 	config:save("AvatarArmItems", holdItem)
 	if player:isLoaded() then
-		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
 	
 end
@@ -175,23 +177,32 @@ setArmItems(holdItem)
 local t = {}
 
 -- Action wheel pages
-t.movePage = action_wheel:newAction("ArmMovement")
-	:title("§6§lArm Movement Toggle\n\n§3Toggles the movement swing movement of the arms.\nActions are not effected.")
-	:hoverColor(vectors.hexToRGB("D8741E"))
-	:toggleColor(vectors.hexToRGB("BA4A0F"))
-	:item("minecraft:red_dye")
-	:toggleItem("minecraft:rabbit_foot")
+t.movePage = action_wheel:newAction()
+	:item(itemCheck("red_dye"))
+	:toggleItem(itemCheck("rabbit_foot"))
 	:onToggle(pings.setAvatarArmMove)
 	:toggled(armMove)
 
-t.holdPage = action_wheel:newAction("ArmHoldItems")
-	:title("§6§lLower Arms Items Toggle\n\n§3Toggles the usage of your lower arms for holding and using items.\nUses slots 1 & 2 respectively.\n\n§4§lWARNING: §cThis feature is still in testing!\nSome animations will not function properly, such as some usable items.\nFurthermore, even with this setting off, the upper arms will still refuse to work.\n\nI'll do my best to get this working properly in future updates!\n\n- Total")
-	:hoverColor(vectors.hexToRGB("D8741E"))
-	:toggleColor(vectors.hexToRGB("BA4A0F"))
-	:item("minecraft:stick")
-	:toggleItem("minecraft:diamond_sword")
+t.holdPage = action_wheel:newAction()
+	:item(itemCheck("stick"))
+	:toggleItem(itemCheck("diamond_sword"))
 	:onToggle(pings.setAvatarArmItems)
 	:toggled(holdItem)
+
+-- Update action page info
+function events.TICK()
+	
+	t.movePage
+		:title(color.primary.."Arm Movement Toggle\n\n"..color.secondary.."Toggles the movement swing movement of the arms.\nActions are not effected.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
+	t.holdPage
+		:title(color.primary.."Lower Arms Items Toggle\n\n"..color.secondary.."Toggles the usage of your lower arms for holding and using items.\nUses slots 1 & 2 respectively.\n\n§4§lWARNING: §cThis feature is still in testing!\nSome animations will not function properly, such as some usable items.\nFurthermore, even with this setting off, the upper arms will still refuse to work.\n\nI'll do my best to get this working properly in future updates!\n\n- Total")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
+end
 
 -- Return action wheel pages
 return t

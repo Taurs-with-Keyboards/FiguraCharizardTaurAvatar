@@ -1,6 +1,9 @@
 -- Required scripts
-local parts  = require("lib.GroupIndex")(models)
-local squapi = require("lib.SquAPI")
+local pokemonParts  = require("lib.GroupIndex")(models.models.CharizardTaur)
+local pokeballParts = require("lib.GroupIndex")(models.models.Pokeball)
+local squapi        = require("lib.SquAPI")
+local itemCheck     = require("lib.ItemCheck")
+local color         = require("scripts.ColorProperties")
 
 -- Animations setup
 local anims = animations["models.Pokeball"]
@@ -109,12 +112,12 @@ function events.RENDER(delta, context)
 	local firstPerson = context == "FIRST_PERSON"
 	local menus       = context == "PAPERDOLL" or context == "MINECRAFT_GUI" or context == "FIGURA_GUI"
 	
-	parts.CharizardTaur
+	pokemonParts.CharizardTaur
 		:pos(pos.currentPos)
 		:scale(scale.currentPos)
 		:color(not firstPerson and vec(1, scale.currentPos, scale.currentPos) or 1)
 	
-	parts.Pokeball
+	pokeballParts.Pokeball
 		:pos(pos.currentPos)
 		:rot(menus and 0 or vec(0, player:getBodyYaw(delta) + staticYaw, 0))
 		:scale(math.map(scale.currentPos, 0, 1, 1, 0))
@@ -240,7 +243,7 @@ squapi.pokeball = squapi.bounceObject:new()
 
 function events.RENDER(delta, context)
 	
-	parts.Ball:offsetRot(squapi.pokeball.pos)
+	pokeballParts.Ball:offsetRot(squapi.pokeball.pos)
 	
 	local target = vec(leanBack - leanForward, 0, leanLeft - leanRight)
 	
@@ -255,19 +258,20 @@ setPokeball(toggle)
 local t = {}
 
 -- Return action wheel page
-t.togglePage = action_wheel:newAction("Pokeball")
-	:title("§6§lToggle Pokeball\n\n§3Auto activates/deactivates on vehicles.")
-	:hoverColor(vectors.hexToRGB("D8741E"))
-	:toggleColor(vectors.hexToRGB("BA4A0F"))
-	:texture(textures["textures.misc.pokeballIcon"])
+t.togglePage = action_wheel:newAction()
+	:item(itemCheck("cobblemon:luxury_ball", "ender_pearl"))
 	:onToggle(pings.setPokeball)
-	:toggled(toggle)
 
 -- Update action page info
 function events.TICK()
 	
-	t.togglePage:toggled(toggle)
+	t.togglePage
+		:title(color.primary.."Toggle Pokeball\n\n"..color.secondary.."Auto activates/deactivates on vehicles.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+		:toggled(toggle)
 	
 end
+
 -- Return action wheel page (and toggle)
 return t

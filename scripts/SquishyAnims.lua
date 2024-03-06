@@ -1,7 +1,7 @@
 -- Required scripts
-local parts  = require("lib.GroupIndex")(models)
-local squapi = require("lib.SquAPI")
-local pose   = require("scripts.Posing")
+local pokemonParts = require("lib.GroupIndex")(models.models.CharizardTaur)
+local squapi       = require("lib.SquAPI")
+local pose         = require("scripts.Posing")
 
 -- Animation setup
 local anims = animations["models.CharizardTaur"]
@@ -18,7 +18,7 @@ local function calculateParentRot(m)
 end
 
 -- Squishy smooth torso
-squapi.smoothTorso(parts.UpperBody, 0.3)
+squapi.smoothTorso(pokemonParts.UpperBody, 0.3)
 
 -- Squishy crounch
 squapi.crouch(anims.crouch)
@@ -26,9 +26,9 @@ squapi.crouch(anims.crouch)
 -- All tail segments
 local tail = {
 	
-	parts.Tail1,
-	parts.Tail2,
-	parts.Tail3
+	pokemonParts.Tail1,
+	pokemonParts.Tail2,
+	pokemonParts.Tail3
 	
 }
 
@@ -50,7 +50,7 @@ squapi.tails(tail,
 )
 
 -- Squishy animated texture
-squapi.animateTexture(parts.Fire, 4, 0.25, 2, false)
+squapi.animateTexture(pokemonParts.Fire, 4, 0.25, 2, false)
 
 -- Wings bounce
 squapi.wings = squapi.bounceObject:new()
@@ -65,8 +65,8 @@ function events.render(delta, context)
 	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
 	local udVel = player:getVelocity().y
 	
-	parts.LeftWing1:offsetRot(squapi.wings.pos)
-	parts.RightWing1:offsetRot(-squapi.wings.pos)
+	pokemonParts.LeftWing1:offsetRot(squapi.wings.pos)
+	pokemonParts.RightWing1:offsetRot(-squapi.wings.pos)
 	
 	local target = vec(0, 0, 0)
 	if not (pose.stand or pose.crouch) or player:isInWater() or anims.airIdle:isPlaying() then
@@ -88,12 +88,12 @@ end
 function events.RENDER(delta, context)
 	
 	-- Set upper pivot to proper pos when crouching
-	parts.UpperBody:offsetPivot(anims.crouch:isPlaying() and vec(0, 0, 5) or 0)
+	pokemonParts.UpperBody:offsetPivot(anims.crouch:isPlaying() and vec(0, 0, 5) or 0)
 	
 	-- Offset smooth torso in various parts
-	-- Note: acts strangely with `parts.body` and when sleeping
-	for _, group in ipairs(parts.UpperBody:getChildren()) do
-		if group ~= parts.Body and not pose.sleep then
+	-- Note: acts strangely with `pokemonParts.body` and when sleeping
+	for _, group in ipairs(pokemonParts.UpperBody:getChildren()) do
+		if group ~= pokemonParts.Body and not pose.sleep then
 			group:rot(-calculateParentRot(group:getParent()))
 		end
 	end
@@ -104,8 +104,8 @@ function events.RENDER(delta, context)
 		
 		-- Creates flowed movement for fire on tail
 		-- Note: Acts strangely when sleeping
-		local fireRot = parts.Tail3:getOffsetRot()
-		parts.Fire:offsetRot(vec(-fireRot.x, fireRot.z, -fireRot.y * 2))
+		local fireRot = pokemonParts.Tail3:getOffsetRot()
+		pokemonParts.Fire:offsetRot(vec(-fireRot.x, fireRot.z, -fireRot.y * 2))
 		
 	--]]
 	
