@@ -1,6 +1,8 @@
 -- Required scripts
-local parts = require("lib.GroupIndex")(models)
-local pose  = require("scripts.Posing")
+local pokemonParts = require("lib.GroupIndex")(models.models.CharizardTaur)
+local itemCheck    = require("lib.ItemCheck")
+local pose         = require("scripts.Posing")
+local color        = require("scripts.ColorProperties")
 
 -- Config setup
 config:name("CharizardTaur")
@@ -22,7 +24,7 @@ function events.RENDER(delta, context)
 		
 		-- Pos checking
 		local playerPos = player:getPos(delta)
-		trueHeadPos     = parts.Head:partToWorldMatrix():apply()
+		trueHeadPos     = pokemonParts.Head:partToWorldMatrix():apply()
 		
 		-- Pehkui scaling
 		local nbt   = player:getNbt()
@@ -51,7 +53,7 @@ function events.RENDER(delta, context)
 		
 		-- Nameplate Placement
 		nameplate.ENTITY:pivot(posOffset + vec(0, player:getBoundingBox().y + 9/16, 0))
-			:scale(parts.CharizardTaur:getScale())
+			:scale(pokemonParts.CharizardTaur:getScale())
 		
 	end
 end
@@ -102,22 +104,31 @@ setPos(camPos)
 local t = {}
 
 -- Action wheel pages
-t.posPage = action_wheel:newAction("CameraPos")
-	:title("§6§lCamera Position Toggle\n\n§3Sets the camera position to where your avatar's head is.\nIf your head is inside a block, the camera will default to its original position.\nThis is done to prevent x-ray.")
-	:hoverColor(vectors.hexToRGB("D8741E"))
-	:toggleColor(vectors.hexToRGB("BA4A0F"))
-	:item("minecraft:skeleton_skull")
-	:toggleItem(('minecraft:player_head{"SkullOwner":"%s"}'):format(avatar:getEntityName()))
+t.posPage = action_wheel:newAction()
+	:item(itemCheck("skeleton_skull"))
+	:toggleItem(itemCheck("player_head{'SkullOwner':'"..avatar:getEntityName().."'}"))
 	:onToggle(pings.setCameraPos)
 	:toggled(camPos)
 
-t.eyePage = action_wheel:newAction("OffsetEye")
-	:title("§6§lEye Position Toggle\n\n§3Sets the eye position to match the avatar's head.\nRequires camera position toggle.\n\n§4§lWARNING: §cThis feature is dangerous!\nIt can and will be flagged on servers with anticheat!\nFurthermore, \"In Wall\" damage is possible.\nThis setting will §c§lNOT §cbe saved between sessions for your safety.\n\nPlease use with extreme caution!")
-	:hoverColor(vectors.hexToRGB("FF0000"))
-	:toggleColor(vectors.hexToRGB("7F0000"))
-	:item("minecraft:ender_pearl")
-	:toggleItem("minecraft:ender_eye")
+t.eyePage = action_wheel:newAction()
+	:item(itemCheck("ender_pearl"))
+	:toggleItem(itemCheck("ender_eye"))
 	:onToggle(pings.setCameraEye)
+
+-- Update action page info
+function events.TICK()
+	
+	t.posPage
+		:title(color.primary.."Camera Position Toggle\n\n"..color.secondary.."Sets the camera position to where your avatar's head is.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
+	t.eyePage
+		:title(color.primary.."Eye Position Toggle\n\n"..color.secondary.."Sets the eye position to match the avatar's head.\nRequires camera position toggle.\n\n§4§lWARNING: §cThis feature is dangerous!\nIt can and will be flagged on servers with anticheat!\nFurthermore, \"In Wall\" damage is possible.\nThis setting will §lNOT §cbe saved between sessions for your safety.\n\nPlease use with extreme caution!")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
+end
 
 -- Return action wheel pages
 return t

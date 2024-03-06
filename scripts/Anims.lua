@@ -1,9 +1,8 @@
 -- Required scripts
 require("lib.GSAnimBlend")
-local parts      = require("lib.GroupIndex")(models)
-local waterTicks = require("scripts.WaterTicks")
-local pose       = require("scripts.Posing")
-local ground     = require("lib.GroundCheck")
+local pokemonParts = require("lib.GroupIndex")(models.models.CharizardTaur)
+local ground       = require("lib.GroundCheck")
+local pose         = require("scripts.Posing")
 
 -- Animations setup
 local anims = animations["models.CharizardTaur"]
@@ -14,8 +13,8 @@ local airTimer = 0
 -- Parrot pivots
 local parrots = {
 	
-	parts.LeftParrotPivot,
-	parts.RightParrotPivot
+	pokemonParts.LeftParrotPivot,
+	pokemonParts.RightParrotPivot
 	
 }
 
@@ -40,8 +39,8 @@ function events.TICK()
 	airTimer = not (onGround or player:isInWater()) and airTimer + 1 or 0
 	
 	-- Animation variables
-	local walking    = pose.climb and vel:length() ~= 0 or vel.xz:length() ~= 0
-	local inAir      = airTimer > 15
+	local walking = pose.climb and vel:length() ~= 0 or vel.xz:length() ~= 0
+	local inAir   = airTimer > 15
 	
 	-- Animation states
 	local groundIdle = ((not inAir or pose.climb) or player:getVehicle()) and not pose.swim and not pose.sleep 
@@ -101,7 +100,7 @@ function events.RENDER(delta, context)
 	
 	local rot = vanilla_model.HEAD:getOriginRot()
 	rot.x = math.clamp(rot.x, -90, 30)
-	parts.UpperBody.Spyglass:rot(rot)
+	pokemonParts.Spyglass:rot(rot)
 		:pos(pose.crouch and vec(0, -4, 0) or nil)
 	
 end

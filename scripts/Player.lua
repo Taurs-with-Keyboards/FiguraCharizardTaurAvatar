@@ -1,44 +1,43 @@
 -- Required scripts
-local parts = require("lib.GroupIndex")(models)
-
--- Glowing outline
-renderer:outlineColor(vectors.hexToRGB("D8741E"))
+local pokemonParts  = require("lib.GroupIndex")(models.models.CharizardTaur)
+local pokeballParts = require("lib.GroupIndex")(models.models.Pokeball)
+local itemCheck     = require("lib.ItemCheck")
+local color         = require("scripts.ColorProperties")
 
 -- Config setup
 config:name("CharizardTaur")
 local vanillaSkin = config:load("AvatarVanillaSkin")
 local slim        = config:load("AvatarSlim") or false
-local shiny       = config:load("AvatarShiny") or false
 if vanillaSkin == nil then vanillaSkin = true end
 
 -- Set skull and portrait groups to visible (incase disabled in blockbench)
-parts.Skull   :visible(true)
-parts.Portrait:visible(true)
+pokemonParts.Skull   :visible(true)
+pokemonParts.Portrait:visible(true)
 
 -- All vanilla skin parts
 local skin = {
 	
-	parts.Head.Head,
-	parts.Head.Layer,
+	pokemonParts.Head.Head,
+	pokemonParts.Head.Layer,
 	
-	parts.Body.Body,
-	parts.Body.Layer,
+	pokemonParts.Body.Body,
+	pokemonParts.Body.Layer,
 	
-	parts.leftArmDefault,
-	parts.leftArmSlim,
-	parts.leftArmDefaultFP,
-	parts.leftArmSlimFP,
+	pokemonParts.leftArmDefault,
+	pokemonParts.leftArmSlim,
+	pokemonParts.leftArmDefaultFP,
+	pokemonParts.leftArmSlimFP,
 	
-	parts.rightArmDefault,
-	parts.rightArmSlim,
-	parts.rightArmDefaultFP,
-	parts.rightArmSlimFP,
+	pokemonParts.rightArmDefault,
+	pokemonParts.rightArmSlim,
+	pokemonParts.rightArmDefaultFP,
+	pokemonParts.rightArmSlimFP,
 	
-	parts.Portrait.Head,
-	parts.Portrait.Layer,
+	pokemonParts.Portrait.Head,
+	pokemonParts.Portrait.Layer,
 	
-	parts.Skull.Head,
-	parts.Skull.Layer
+	pokemonParts.Skull.Head,
+	pokemonParts.Skull.Layer
 	
 }
 
@@ -46,88 +45,52 @@ local skin = {
 local layer = {
 	
 	HAT = {
-		parts.Head.Layer
+		pokemonParts.Head.Layer
 	},
 	JACKET = {
-		parts.Body.Layer
+		pokemonParts.Body.Layer
 	},
 	LEFT_SLEEVE = {
-		parts.leftArmDefault.Layer,
-		parts.leftArmSlim.Layer,
-		parts.LowerLeftArm.Layer,
-		parts.LeftForearm.Layer,
-		parts.LeftFingerF.Layer,
-		parts.LeftFingerM.Layer,
-		parts.LeftFingerB.Layer,
-		parts.leftArmDefaultFP.Layer,
-		parts.leftArmSlimFP.Layer
+		pokemonParts.leftArmDefault.Layer,
+		pokemonParts.leftArmSlim.Layer,
+		pokemonParts.LowerLeftArm.Layer,
+		pokemonParts.LeftForearm.Layer,
+		pokemonParts.LeftFingerF.Layer,
+		pokemonParts.LeftFingerM.Layer,
+		pokemonParts.LeftFingerB.Layer,
+		pokemonParts.leftArmDefaultFP.Layer,
+		pokemonParts.leftArmSlimFP.Layer
 	},
 	RIGHT_SLEEVE = {
-		parts.rightArmDefault.Layer,
-		parts.rightArmSlim.Layer,
-		parts.LowerRightArm.Layer,
-		parts.RightForearm.Layer,
-		parts.RightFingerF.Layer,
-		parts.RightFingerM.Layer,
-		parts.RightFingerB.Layer,
-		parts.rightArmDefaultFP.Layer,
-		parts.rightArmSlimFP.Layer
+		pokemonParts.rightArmDefault.Layer,
+		pokemonParts.rightArmSlim.Layer,
+		pokemonParts.LowerRightArm.Layer,
+		pokemonParts.RightForearm.Layer,
+		pokemonParts.RightFingerF.Layer,
+		pokemonParts.RightFingerM.Layer,
+		pokemonParts.RightFingerB.Layer,
+		pokemonParts.rightArmDefaultFP.Layer,
+		pokemonParts.rightArmSlimFP.Layer
 	},
 	LEFT_PANTS_LEG = {
-		parts.leftLeg.Layer,
-		parts.LeftFoot.Layer
+		pokemonParts.leftLeg.Layer,
+		pokemonParts.LeftFoot.Layer
 	},
 	RIGHT_PANTS_LEG = {
-		parts.rightLeg.Layer,
-		parts.RightFoot.Layer
+		pokemonParts.rightLeg.Layer,
+		pokemonParts.RightFoot.Layer
 	},
 	CAPE = {
-		parts.Cape
+		pokemonParts.Cape
 	},
 	LOWER_BODY = {
-		parts.Merge.Layer,
-		parts.Torso.Layer,
-		parts.Hips.Layer,
-		parts.Tail1.Layer,
-		parts.Tail2.Layer,
-		parts.Tail3.Layer
+		pokemonParts.Merge.Layer,
+		pokemonParts.Torso.Layer,
+		pokemonParts.Hips.Layer,
+		pokemonParts.Tail1.Layer,
+		pokemonParts.Tail2.Layer,
+		pokemonParts.Tail3.Layer
 	}
-}
-
--- All shiny parts
-local shinyParts = {
-	
-	parts.Horns,
-	parts.HornsSkull,
-	
-	parts.Merge.Merge,
-	parts.Torso.Torso,
-	
-	parts.LowerLeftArm.Arm,
-	parts.LeftForearm.Arm,
-	parts.LeftFingerF.Finger,
-	parts.LeftFingerM.Finger,
-	parts.LeftFingerB.Finger,
-	
-	parts.LowerRightArm.Arm,
-	parts.RightForearm.Arm,
-	parts.RightFingerF.Finger,
-	parts.RightFingerM.Finger,
-	parts.RightFingerB.Finger,
-	
-	parts.LeftWing1,
-	parts.RightWing1,
-	
-	parts.Hips.Hips,
-	parts.leftLeg.Leg,
-	parts.LeftFoot.Foot,
-	parts.rightLeg.Leg,
-	parts.RightFoot.Foot,
-	
-	parts.Tail1.Tail,
-	parts.Tail2.Tail,
-	parts.Tail3.Tail
-	
 }
 
 --[[
@@ -146,37 +109,34 @@ local shinyParts = {
 local planes = {
 	
 	-- Left wing
-	parts.LeftWing1.Membrane,
-	parts.LeftWing2.Membrane,
-	parts.LeftWing3.Membrane,
+	pokemonParts.LeftWing1.Membrane,
+	pokemonParts.LeftWing2.Membrane,
+	pokemonParts.LeftWing3.Membrane,
 	
 	-- Right wing
-	parts.RightWing1.Membrane,
-	parts.RightWing2.Membrane,
-	parts.RightWing3.Membrane,
+	pokemonParts.RightWing1.Membrane,
+	pokemonParts.RightWing2.Membrane,
+	pokemonParts.RightWing3.Membrane,
 	
 	-- Left arm claws
-	parts.LeftFingerF.Claw,
-	parts.LeftFingerM.Claw,
-	parts.LeftFingerB.Claw,
+	pokemonParts.LeftFingerFClaw.Claw,
+	pokemonParts.LeftFingerMClaw.Claw,
+	pokemonParts.LeftFingerBClaw.Claw,
 	
 	-- Right arm claws
-	parts.RightFingerF.Claw,
-	parts.RightFingerM.Claw,
-	parts.RightFingerB.Claw,
+	pokemonParts.RightFingerFClaw.Claw,
+	pokemonParts.RightFingerMClaw.Claw,
+	pokemonParts.RightFingerBClaw.Claw,
 	
 	-- Left leg claws
-	parts.LeftFoot.ClawL,
-	parts.LeftFoot.ClawM,
-	parts.LeftFoot.ClawR,
+	pokemonParts.LeftFootClawL.Claw,
+	pokemonParts.LeftFootClawM.Claw,
+	pokemonParts.LeftFootClawR.Claw,
 	
 	-- Right leg claws
-	parts.RightFoot.ClawL,
-	parts.RightFoot.ClawM,
-	parts.RightFoot.ClawR,
-	
-	-- Fire
-	parts.Fire
+	pokemonParts.RightFootClawL.Claw,
+	pokemonParts.RightFootClawM.Claw,
+	pokemonParts.RightFootClawR.Claw,
 	
 }
 
@@ -188,12 +148,12 @@ end
 -- Outer wing parts
 local wings = {
 	
-	parts.LeftWing1,
-	parts.LeftWing2,
-	parts.LeftWing3,
-	parts.RightWing1,
-	parts.RightWing2,
-	parts.RightWing3
+	pokemonParts.LeftWing1,
+	pokemonParts.LeftWing2,
+	pokemonParts.LeftWing3,
+	pokemonParts.RightWing1,
+	pokemonParts.RightWing2,
+	pokemonParts.RightWing3
 	
 }
 
@@ -211,15 +171,15 @@ function events.TICK()
 	-- Model shape
 	local slimShape = (vanillaSkin and vanillaAvatarType == "SLIM") or (slim and not vanillaSkin)
 	
-	parts.leftArmDefault:visible(not slimShape)
-	parts.rightArmDefault:visible(not slimShape)
-	parts.leftArmDefaultFP:visible(not slimShape)
-	parts.rightArmDefaultFP:visible(not slimShape)
+	pokemonParts.leftArmDefault:visible(not slimShape)
+	pokemonParts.rightArmDefault:visible(not slimShape)
+	pokemonParts.leftArmDefaultFP:visible(not slimShape)
+	pokemonParts.rightArmDefaultFP:visible(not slimShape)
 	
-	parts.leftArmSlim:visible(slimShape)
-	parts.rightArmSlim:visible(slimShape)
-	parts.leftArmSlimFP:visible(slimShape)
-	parts.rightArmSlimFP:visible(slimShape)
+	pokemonParts.leftArmSlim:visible(slimShape)
+	pokemonParts.rightArmSlim:visible(slimShape)
+	pokemonParts.leftArmSlimFP:visible(slimShape)
+	pokemonParts.rightArmSlimFP:visible(slimShape)
 	
 	-- Skin textures
 	local skinType = vanillaSkin and "SKIN" or "PRIMARY"
@@ -227,14 +187,8 @@ function events.TICK()
 		part:primaryTexture(skinType)
 	end
 	
-	-- Shiny textures
-	local textureType = shiny and textures["textures.charizard_shiny"] or textures["textures.charizard"]
-	for _, part in ipairs(shinyParts) do
-		part:primaryTexture("Custom", textureType)
-	end
-	
 	-- Cape Texture
-	parts.Cape:primaryTexture(vanillaSkin and "CAPE" or "PRIMARY")
+	pokemonParts.Cape:primaryTexture(vanillaSkin and "CAPE" or "PRIMARY")
 	
 	-- Elytra glint
 	local item  = player:getItem(5)
@@ -244,7 +198,7 @@ function events.TICK()
 	end
 	
 	-- Disables lower body if player is in spectator mode
-	parts.LowerBody:parentType(player:getGamemode() == "SPECTATOR" and "BODY" or "NONE")
+	pokemonParts.LowerBody:parentType(player:getGamemode() == "SPECTATOR" and "BODY" or "NONE")
 	
 	-- Layer toggling
 	for layerType, parts in pairs(layer) do
@@ -265,8 +219,8 @@ function events.RENDER(delta, context)
 	
 	-- Scales models to fit GUIs better
 	if context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL" then
-		parts.Player:scale(0.6)
-		parts.Ball:scale(0.6)
+		pokemonParts.Player:scale(0.6)
+		pokeballParts.Ball:scale(0.6)
 	end
 	
 end
@@ -274,8 +228,8 @@ end
 function events.POST_RENDER(delta, context)
 	
 	-- After scaling models to fit GUIs, immediately scale back
-	parts.Player:scale(1)
-	parts.Ball:scale(1)
+	pokemonParts.Player:scale(1)
+	pokeballParts.Ball:scale(1)
 	
 end
 
@@ -295,30 +249,17 @@ local function setModelType(boolean)
 	
 end
 
--- Shiny toggle
-local function setShiny(boolean)
-	
-	shiny = boolean
-	config:save("AvatarShiny", shiny)
-	if player:isLoaded() and shiny then
-		sounds:playSound("block.amethyst_block.chime", player:getPos(), 1)
-	end
-	
-end
-
 -- Sync variables
-local function syncPlayer(a, b, c)
+local function syncPlayer(a, b)
 	
 	vanillaSkin = a
 	slim        = b
-	shiny       = c
 	
 end
 
 -- Pings setup
 pings.setAvatarVanillaSkin = setVanillaSkin
 pings.setAvatarModelType   = setModelType
-pings.setAvatarShiny       = setShiny
 pings.syncPlayer           = syncPlayer
 
 -- Sync on tick
@@ -335,37 +276,36 @@ end
 -- Activate actions
 setVanillaSkin(vanillaSkin)
 setModelType(slim)
-setShiny(shiny)
 
 -- Setup table
 local t = {}
 
 -- Action wheel pages
-t.vanillaSkinPage = action_wheel:newAction("VanillaSkin")
-	:title("§6§lToggle Vanilla Texture\n\n§3Toggles the usage of your vanilla skin for the upper body.")
-	:hoverColor(vectors.hexToRGB("D8741E"))
-	:toggleColor(vectors.hexToRGB("BA4A0F"))
-	:item('minecraft:player_head{"SkullOwner":"'..avatar:getEntityName()..'"}')
+t.vanillaSkinPage = action_wheel:newAction()
+	:item(itemCheck("player_head{'SkullOwner':'"..avatar:getEntityName().."'}"))
 	:onToggle(pings.setAvatarVanillaSkin)
 	:toggled(vanillaSkin)
 
-t.modelPage = action_wheel:newAction("ModelShape")
-	:title("§6§lToggle Model Shape\n\n§3Adjust the model shape to use Default or Slim Proportions.\nWill be overridden by the vanilla skin toggle.")
-	:hoverColor(vectors.hexToRGB("D8741E"))
-	:toggleColor(vectors.hexToRGB("BA4A0F"))
-	:item('minecraft:player_head')
-	:toggleItem('minecraft:player_head{"SkullOwner":"MHF_Alex"}')
+t.modelPage = action_wheel:newAction()
+	:item(itemCheck("player_head"))
+	:toggleItem(itemCheck("player_head{'SkullOwner':'MHF_Alex'}"))
 	:onToggle(pings.setAvatarModelType)
 	:toggled(slim)
 
-t.shinyPage = action_wheel:newAction("ModelShiny")
-	:title("§6§lToggle Shiny Textures\n\n§3Set the lower body to use shiny textures over the default textures.")
-	:hoverColor(vectors.hexToRGB("D8741E"))
-	:toggleColor(vectors.hexToRGB("BA4A0F"))
-	:item('minecraft:gunpowder')
-	:toggleItem("minecraft:glowstone_dust")
-	:onToggle(pings.setAvatarShiny)
-	:toggled(shiny)
+-- Update action page info
+function events.TICK()
+	
+	t.vanillaSkinPage
+		:title(color.primary.."Toggle Vanilla Texture\n\n"..color.secondary.."Toggles the usage of your vanilla skin for the upper body.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
+	t.modelPage
+		:title(color.primary.."Toggle Model Shape\n\n"..color.secondary.."Adjust the model shape to use Default or Slim Proportions.\nWill be overridden by the vanilla skin toggle.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
+end
 
 -- Return action wheel pages
 return t
