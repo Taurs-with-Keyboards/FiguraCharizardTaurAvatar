@@ -5,7 +5,7 @@ local carrier      = require("lib.GSCarrier")
 -- GSCarrier rider
 carrier.rider.addRoots(models)
 carrier.rider.addTag("gscarrier:taur")
-carrier.rider.controller.setGlobalOffset(vec(0, -10, 0))
+carrier.rider.controller.setGlobalOffset(vec(0, 0, 0))
 carrier.rider.controller.setModifyCamera(false)
 carrier.rider.controller.setModifyEye(false)
 carrier.rider.controller.setAimEnabled(false)
