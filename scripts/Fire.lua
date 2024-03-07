@@ -73,7 +73,7 @@ end
 
 function events.TICK()
 	
-	if average(pokeballParts.Pokeball:getScale():unpack()) < 0.5 then
+	if average(pokeballParts.Pokeball:getScale():unpack()) < 0.25 then
 		-- Variables
 		local firePos  = pokemonParts.Fire:partToWorldMatrix():apply()
 		local exp      = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.5, 1.5)

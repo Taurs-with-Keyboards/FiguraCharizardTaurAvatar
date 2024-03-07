@@ -95,7 +95,7 @@ end
 function events.RENDER(delta, context)
 	
 	-- Base position check
-	if vehicle or isRider then
+	if vehicle and vType ~= "minecraft:player" or isRider then
 		local hitbox = player:getBoundingBox()
 		pos.target = vec(0, hitbox.y * 5.25, 0)
 	else
@@ -120,7 +120,7 @@ function events.RENDER(delta, context)
 	pokeballParts.Pokeball
 		:pos(pos.currentPos)
 		:rot(menus and 0 or vec(0, player:getBodyYaw(delta) + staticYaw, 0))
-		:scale(math.map(scale.currentPos, 0, 1, 1, 0))
+		:scale(math.map(scale.currentPos, 0, 1, vType == "minecraft:player" and 0.5 or 1, 0))
 		:visible(menus or not renderer:isFirstPerson())
 	
 	renderer:shadowRadius(math.map(scale.currentPos, 0, 1, 0.2, 1))
