@@ -64,6 +64,9 @@ function events.TICK()
 	-- Glowing outline
 	renderer:outlineColor(t.hover)
 	
+	-- Avatar color
+	avatar:color(vectors.hexToRGB(shiny and "46454F" or "D8741E"))
+	
 end
 
 -- Shiny toggle
