@@ -44,7 +44,7 @@ local pages = {
 -- Page actions
 local pageActions = {
 	
-	main = action_wheel:newAction()
+	avatar = action_wheel:newAction()
 		:item(itemCheck("armor_stand"))
 		:onLeftClick(function() descend(pages.avatar) end),
 	
@@ -73,7 +73,7 @@ local pageActions = {
 -- Update action page info
 function events.TICK()
 	
-	pageActions.main
+	pageActions.avatar
 		:title(color.primary.."Avatar Settings")
 		:hoverColor(color.hover)
 	
@@ -111,7 +111,7 @@ action_wheel:setPage(pages.main)
 
 -- Main actions
 pages.main
-	:action( -1, pageActions.main)
+	:action( -1, pageActions.avatar)
 	:action( -1, pageActions.pokemon)
 	:action( -1, pageActions.anims)
 	:action( -1, pokeball.togglePage)
