@@ -62,7 +62,7 @@ function events.TICK()
 	end
 	
 	-- Glowing outline
-	renderer:outlineColor(t.hover)
+	renderer:outlineColor(vectors.hexToRGB(shiny and "46454F" or "D8741E"))
 	
 	-- Avatar color
 	avatar:color(vectors.hexToRGB(shiny and "46454F" or "D8741E"))
