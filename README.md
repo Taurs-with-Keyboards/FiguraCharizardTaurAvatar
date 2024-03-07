@@ -1,5 +1,5 @@
 # Charizard Taur
-### Version: v1.1.0
+### Version: v1.1.1
 ### Authors:
 - Dragonearuss (Co-Maker, Original Idea)
 - Psycho Breadstick (QA, Origin)
