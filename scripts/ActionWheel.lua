@@ -149,6 +149,7 @@ pages.pokemon
 -- Fire actions
 pages.fire
 	:action( -1, fire.damagePage)
+	:action( -1, fire.fuelPage)
 	:action( -1, fire.effectsPage)
 	:action( -1, backAction)
 

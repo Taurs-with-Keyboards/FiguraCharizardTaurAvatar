@@ -7,14 +7,33 @@ local color         = require("scripts.ColorProperties")
 
 -- Config setup
 config:name("CharizardTaur")
-local damage  = config:load("FireDamage")
-local effects = config:load("FireEffects")
-if damage  == nil then damage  = true end
-if effects == nil then effects = true end
+local damage   = config:load("FireDamage")
+local reignite = config:load("FireReignite")
+local maxTimer = config:load("FireMaxTimer") or 200
+local effects  = config:load("FireEffects")
+if damage   == nil then damage   = true end
+if reignite == nil then reignite = true end
+if effects  == nil then effects  = true end
 
 -- Variable setup
-local timer  = 200
-local _timer = timer
+local timer = maxTimer
+
+-- Fire tail triggers
+local trigger = {
+	water  = false,
+	rain   = false,
+	splash = false,
+	fire   = false,
+	lava   = false,
+	lit    = false
+}
+
+local fireBlocks = {
+	"minecraft:fire",
+	"minecraft:soul_fire",
+	"minecraft:torch",
+	"minecraft:soul_torch"
+}
 
 -- Texture variables setup
 local normalText = textures["textures.normalFlame"]
@@ -59,14 +78,13 @@ local hue = {
 }
 
 -- Check if a splash potion is broken near the player
-local splash = false
 function events.ON_PLAY_SOUND(id, pos, vol, pitch, loop, category, path)
 	
 	if player:isLoaded() then
-		local firePos    = pokemonParts.Fire:partToWorldMatrix():apply()
-		local atPos      = pos < firePos + 2 and pos > firePos - 2
-		local splashID   = id == "minecraft:entity.splash_potion.break" or id == "minecraft:entity.lingering_potion.break"
-		splash = atPos and splashID and path
+		local firePos  = pokemonParts.Fire:partToWorldMatrix():apply()
+		local atPos    = pos < firePos + 2 and pos > firePos - 2
+		local splashID = id == "minecraft:entity.splash_potion.break" or id == "minecraft:entity.lingering_potion.break"
+		trigger.splash = atPos and splashID and path
 	end
 	
 end
@@ -75,36 +93,56 @@ function events.TICK()
 	
 	if average(pokeballParts.Pokeball:getScale():unpack()) < 0.25 then
 		-- Variables
-		local firePos  = pokemonParts.Fire:partToWorldMatrix():apply()
-		local exp      = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.5, 1.5)
-		local health   = math.clamp(math.map((player:getHealth() / player:getMaxHealth()) * 1, 0.25, 1, 1, 0), 0, 1)
+		local firePos = pokemonParts.Fire:partToWorldMatrix():apply()
+		local block   = world.getBlockState(firePos)
+		local exp     = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.5, 1.5)
+		local health  = math.clamp(math.map((player:getHealth() / player:getMaxHealth()) * 1, 0.25, 1, 1, 0), 0, 1)
 		
-		-- Timer manipulation
-		timer = timer + 1
-		if player:isWet()
-		or splash
-		or world.getBlockState(firePos):getFluidTags()[1] == "minecraft:water"
-		or (world.getRainGradient() > 0.2 and world.isOpenSky(firePos) and world.getBiome(firePos):getPrecipitation() == "RAIN") then
-			timer  = 0
-			splash = false
-		elseif player:isOnFire() then
-			timer = 200
+		-- Check fluid tags
+		for _, tag in ipairs(block:getFluidTags()) do
+			trigger.water = tag == "minecraft:water" or tag == "c:water"
+			trigger.lava  = tag == "minecraft:lava"  or tag == "c:lava"
+		end
+		-- If no fluid tags, reset
+		if next(block:getFluidTags()) == nil then
+			trigger.water = false
+			trigger.lava  = false
 		end
 		
-		-- Disable fire if below 200
-		if timer < 200 then
-			for enrty, value in pairs(scale) do
-				scale[enrty] = 0
+		-- Check rain
+		trigger.rain = world.getRainGradient() > 0.2 and world.isOpenSky(firePos) and world.getBiome(firePos):getPrecipitation() == "RAIN"
+		
+		-- Check fire
+		if block.id ~= "minecraft:air" then
+			for _, type in ipairs(fireBlocks) do
+				if block.id == type then
+					trigger.fire = true
+					break
+				end
 			end
+		else
+			trigger.fire = false
+		end
+		
+		-- Check campfire lit tags
+		if next(block.properties) ~= nil then
+			trigger.lit = block.properties["lit"] == "true"
+		else
+			trigger.lit = false
+		end
+		
+		-- Timer manipulation
+		if trigger.water or trigger.rain or trigger.splash then
+			timer = 0
+			trigger.splash = false
+		elseif trigger.lava or trigger.fire or trigger.lit or timer >= maxTimer then
+			timer = maxTimer
+		elseif reignite and timer < maxTimer then
+			timer = timer + 1
 		end
 		
 		-- Extinguish fire
-		if timer == 0 and _timer >= 200 then
-			
-			-- Set scale
-			for enrty, value in pairs(scale) do
-				scale[enrty] = 0
-			end
+		if timer == 0 and scale.currentPos ~= 0 then
 			
 			-- Effects
 			if effects then
@@ -113,7 +151,7 @@ function events.TICK()
 				sounds:playSound("entity.generic.extinguish_fire", firePos, 0.75)
 			
 				-- Spawn particles
-				for i = 1, 30 do
+				for i = 1, math.floor(math.map(scale.currentPos, 0, 1.5, 0, 20)) do
 					particles["campfire_cosy_smoke"]
 						:pos(firePos + vec(math.random(-8, 8)/16, math.random(-8, 8)/16, math.random(-8, 8)/16))
 						:velocity(0, 0.1, 0)
@@ -122,14 +160,40 @@ function events.TICK()
 				
 			end
 			
+			-- Set scale
+			for enrty, value in pairs(scale) do
+				scale[enrty] = 0
+			end
+			
 		end
 		
-		-- Store previous values
+		-- Effects
+		if effects and scale.currentPos > 0.25 then
+			
+			-- Chance
+			local weight = math.map(scale.currentPos, 0, 2, 4000, 0)
+			local chance = math.random(1, math.max(weight, 1))
+			
+			if chance <= 5 then -- Campfire sound
+				sounds:playSound("block.campfire.crackle", firePos, 0.75)
+			elseif chance <= 20 then -- Lava bubble chance
+				particles["lava"]
+					:pos(firePos)
+					:spawn()
+			elseif chance <= 125 then -- Smoke chance
+				particles["campfire_cosy_smoke"]
+					:pos(firePos + vec(math.random(-2, 2)/16, math.random(0, 8)/16, math.random(-2, 2)/16))
+					:velocity(0, 0.1, 0)
+					:spawn()
+			end
+			
+		end
+		
+		-- Store previous value
 		hue.prev = hue.curr
-		_timer   = timer
 		
 		-- Targets
-		scale.target = timer < 200 and 0 or exp
+		scale.target = math.max((timer / maxTimer) * 2 - 1, 0) * exp
 		hue.next     = damage and math.round(health * 1000) / 1000 or 0
 		
 		-- Tick lerps
@@ -137,6 +201,8 @@ function events.TICK()
 		scale.nextTick = math.lerp(scale.nextTick, scale.target, 0.05)
 		hue.curr       = math.round(math.lerp(hue.prev, hue.next, avatar:getPermissionLevel() == "MAX" and 0.05 or 1) * 1000) / 1000
 		
+		-- Force hue values to match if close
+		-- Reduces instruction count
 		if hue.prev == hue.curr and hue.curr ~= hue.next then
 			for k, v in pairs(hue) do
 				hue[k] = hue.next
@@ -158,25 +224,6 @@ function events.TICK()
 				midwayText:update()
 				
 			end
-		end
-		
-		-- Effects
-		if effects and scale.currentPos >= 0.5 then
-			
-			local chance = math.random(1, math.map(exp, 0.5, 1.5, 1.5, 0.5) * 2000)
-			if chance <= 5 then -- Campfire sound
-				sounds:playSound("block.campfire.crackle", firePos, 0.75)
-			elseif chance <= 15 and hue.curr < 0.5 then -- Lava bubble chance
-				particles["lava"]
-					:pos(firePos)
-					:spawn()
-			elseif chance <= 125 then -- Smoke chance
-				particles["campfire_cosy_smoke"]
-					:pos(firePos + vec(math.random(-2, 2)/16, math.random(0, 8)/16, math.random(-2, 2)/16))
-					:velocity(0, 0.1, 0)
-					:spawn()
-			end
-			
 		end
 	end
 	
@@ -202,8 +249,29 @@ local function setDamage(boolean)
 	
 	damage = boolean
 	config:save("FireDamage", damage)
+	if host:isHost() and player:isLoaded() and damage then
+		sounds:playSound("entity.player.hurt", player:getPos(), 0.75)
+	end
+	
+end
+
+-- Reignite toggle
+local function setReignite(boolean)
+	
+	reignite = boolean
+	config:save("FireReignite", reignite)
 	if host:isHost() and player:isLoaded() then
-		sounds:playSound("item.flintandsteel.use", player:getPos(), 0.75)
+		sounds:playSound(reignite and "item.flintandsteel.use" or "entity.generic.extinguish_fire", player:getPos(), 0.75)
+	end
+	
+end
+
+-- Set max timer
+local function setMaxTimer(x)
+	
+	if reignite then
+		maxTimer = math.clamp(maxTimer + (x * 20), 100, 6000)
+		config:save("FireMaxTimer", maxTimer)
 	end
 	
 end
@@ -213,31 +281,34 @@ local function setEffects(boolean)
 	
 	effects = boolean
 	config:save("FireEffects", effects)
-	if host:isHost() and player:isLoaded() then
-		sounds:playSound(effects and "item.flintandsteel.use" or "entity.generic.extinguish_fire", player:getPos(), 0.75)
+	if host:isHost() and player:isLoaded() and effects then
+		sounds:playSound("item.firecharge.use", player:getPos(), 0.75)
 	end
 	
 end
 
 -- Sync variables
-local function syncFire(a, b)
+local function syncFire(a, b, x, c)
 	
-	damage  = a
-	effects = b
+	damage   = a
+	reignite = b
+	maxTimer = x
+	effects  = c
 	
 end
 
 -- Pings setup
-pings.setFireDamage  = setDamage
-pings.setFireEffects = setEffects
-pings.syncFire       = syncFire
+pings.setFireDamage   = setDamage
+pings.setFireReignite = setReignite
+pings.setFireEffects  = setEffects
+pings.syncFire        = syncFire
 
 -- Sync on tick
 if host:isHost() then
 	function events.TICK()
 		
 		if world.getTime() % 200 == 0 then
-			pings.syncFire(damage, effects)
+			pings.syncFire(damage, reignite, maxTimer, effects)
 		end
 		
 	end
@@ -245,6 +316,7 @@ end
 
 -- Activate actions
 setDamage(damage)
+setReignite(reignite)
 setEffects(effects)
 
 -- Setup table
@@ -256,9 +328,17 @@ t.damagePage = action_wheel:newAction()
 	:onToggle(pings.setFireDamage)
 	:toggled(damage)
 
-t.effectsPage = action_wheel:newAction()
+t.fuelPage = action_wheel:newAction()
 	:item(itemCheck("flint"))
 	:toggleItem(itemCheck("flint_and_steel"))
+	:onScroll(setMaxTimer)
+	:onToggle(pings.setFireReignite)
+	:onRightClick(function() maxTimer = 200 config:save("FireMaxTimer", maxTimer) end)
+	:toggled(reignite)
+
+t.effectsPage = action_wheel:newAction()
+	:item(itemCheck("white_wool"))
+	:toggleItem(itemCheck("note_block"))
 	:onToggle(pings.setFireEffects)
 	:toggled(effects)
 
@@ -267,6 +347,13 @@ function events.TICK()
 	
 	t.damagePage
 		:title(color.primary.."Toggle Fire Damage Indicator\n\n"..color.secondary.."Allow the tail fire to indicate overall health.\n\n§cThis feature can be intensive, and will require\n\"§5Max§c\" permission level to see gradual change.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
+	t.fuelPage
+		:title(color.primary.."Set Fire Reignition/Timer\n\n"..color.secondary.."Sets the ability for your tail fire to auto-reignite, and how long until full power.\n\n"
+		.."§lCurrent ingition timer: §a"..(reignite and ((maxTimer / 20).." Seconds") or "§4Cannot auto-reignite")
+		..color.secondary.."\n\nScrolling up adds time, Scrolling down subtracts time.\nRight click resets timer to 10 seconds.")
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	

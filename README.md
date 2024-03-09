@@ -1,5 +1,7 @@
-# Charizard Taur
-### Version: v1.1.1
+# [Charizard Taur](https://github.com/TotalTakeover/FiguraCharizardTaurAvatar)
+### Version: v1.1.3
+This Figura avatar is a template designed around turning the user into a Charizard-Taur.
+
 ### Authors:
 - Dragonearuss (Co-Maker, Original Idea)
 - Psycho Breadstick (QA, Origin)
@@ -14,5 +16,7 @@
 - The Pokemon Company (Charizard design)
 - Total (Avatar Maker)
 
-# Features
+## Features
 Section under construction
+
+[<img src="https://img.youtube.com/vi/V23IA58V4Ak/maxresdefault.jpg" alt="image" width="300" height="auto">](https://youtu.be/V23IA58V4Ak)
