@@ -2,13 +2,15 @@
 require("lib.GSAnimBlend")
 local pokemonParts = require("lib.GroupIndex")(models.models.CharizardTaur)
 local ground       = require("lib.GroundCheck")
+local average      = require("lib.Average")
 local pose         = require("scripts.Posing")
 
 -- Animations setup
 local anims = animations["models.CharizardTaur"]
 
 -- Variables setup
-local airTimer = 0
+local airTimer    = 0
+local shiverTimer = 0
 
 -- Parrot pivots
 local parrots = {
@@ -49,6 +51,13 @@ function events.TICK()
 	local airFlying  = (pose.elytra or pose.swim) and not onGround
 	local sleep      = pose.sleep
 	local breathe    = true
+	local shiver     = average(pokemonParts.Fire:getScale():unpack()) == 0
+	
+	if shiver and shiverTimer < 200 then
+		shiverTimer = shiverTimer + 1
+	elseif not shiver and shiverTimer > 0 then
+		shiverTimer = shiverTimer - 1
+	end
 	
 	-- Animations
 	anims.groundIdle:playing(groundIdle)
@@ -57,6 +66,7 @@ function events.TICK()
 	anims.airFlying:playing(airFlying)
 	anims.sleep:playing(sleep)
 	anims.breathe:playing(breathe)
+	anims.shiver:playing(shiverTimer > 0)
 	
 end
 
@@ -75,6 +85,9 @@ function events.RENDER(delta, context)
 	anims.groundWalk:speed(pose.climb and udVel * 6.5 or math.clamp((fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 6.5, -2, 2))
 	anims.airFlying:speed(math.clamp(vel:length(), 0, 2))
 	anims.breathe:speed(math.min(vel:length() * 15 + 1, 8))
+	
+	-- Animation blend
+	anims.shiver:blend(math.map(shiverTimer, 0, 200, 0, 1))
 	
 	-- Parrot rot offset
 	for _, parrot in pairs(parrots) do
