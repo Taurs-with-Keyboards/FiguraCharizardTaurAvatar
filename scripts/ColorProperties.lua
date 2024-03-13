@@ -105,7 +105,7 @@ end
 -- Activate actions
 setShiny(shiny)
 
-t.shinyPage = action_wheel:newAction("ModelShiny")
+t.shinyPage = action_wheel:newAction()
 	:item(itemCheck("gunpowder"))
 	:toggleItem(itemCheck("glowstone_dust"))
 	:onToggle(pings.setColorShiny)
