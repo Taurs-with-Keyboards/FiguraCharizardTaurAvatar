@@ -29,14 +29,6 @@ local scale = {
 	currentPos = 0
 }
 
--- Lerp pos table
-local pos = {
-	current    = 0,
-	nextTick   = 0,
-	target     = 0,
-	currentPos = 0
-}
-
 -- Set lerp start on init
 function events.ENTITY_INIT()
 	
@@ -78,10 +70,6 @@ function events.TICK()
 		anims.close:playing(isInBall)
 	end
 	
-	-- Pos lerp
-	pos.current  = pos.nextTick
-	pos.nextTick = math.lerp(pos.nextTick, pos.target, 0.25)
-	
 	-- Scaling lerp
 	scale.current  = scale.nextTick
 	scale.nextTick = math.lerp(scale.nextTick, scale.target, 0.2)
@@ -94,17 +82,6 @@ end
 -- Rendering stuff
 function events.RENDER(delta, context)
 	
-	-- Base position check
-	if vehicle and vType ~= "minecraft:player" or isRider then
-		local hitbox = player:getBoundingBox()
-		pos.target = vec(0, hitbox.y * 5.25, 0)
-	else
-		pos.target = 0
-	end
-	
-	-- Pos lerp
-	pos.currentPos = math.lerp(pos.current, pos.nextTick, delta)
-	
 	-- Scaling target and lerp
 	scale.target     = isInBall and 0 or 1
 	scale.currentPos = math.lerp(scale.current, scale.nextTick, delta)
@@ -113,12 +90,10 @@ function events.RENDER(delta, context)
 	local menus       = context == "PAPERDOLL" or context == "MINECRAFT_GUI" or context == "FIGURA_GUI"
 	
 	pokemonParts.CharizardTaur
-		:pos(pos.currentPos)
 		:scale(scale.currentPos)
 		:color(not firstPerson and vec(1, scale.currentPos, scale.currentPos) or 1)
 	
 	pokeballParts.Pokeball
-		:pos(pos.currentPos)
 		:rot(menus and 0 or vec(0, player:getBodyYaw(delta) + staticYaw, 0))
 		:scale(math.map(scale.currentPos, 0, 1, vType == "minecraft:player" and 0.5 or 1, 0))
 		:visible(menus or not renderer:isFirstPerson())
