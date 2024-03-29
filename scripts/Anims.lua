@@ -70,6 +70,7 @@ function events.TICK()
 	
 end
 
+-- Sleep rotations
 local dirRot = {
 	north = 0,
 	east  = 270,
