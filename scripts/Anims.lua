@@ -70,6 +70,13 @@ function events.TICK()
 	
 end
 
+local dirRot = {
+	north = 0,
+	east  = 270,
+	south = 180,
+	west  = 90
+}
+
 function events.RENDER(delta, context)
 	
 	-- Player variables
@@ -88,6 +95,29 @@ function events.RENDER(delta, context)
 	
 	-- Animation blend
 	anims.shiver:blend(math.map(shiverTimer, 0, 200, 0, 1))
+	
+	-- Sleep rotations
+	if pose.sleep then
+		
+		-- Disable vanilla rotation
+		renderer:rootRotationAllowed(false)
+		
+		-- Find block
+		local block = world.getBlockState(player:getPos())
+		local sleepRot = dirRot[block.properties["facing"]]
+		
+		-- Apply
+		models:rot(0, sleepRot, 0)
+		
+	else
+		
+		-- Enable vanilla rotation
+		renderer:rootRotationAllowed(true)
+		
+		-- Reset
+		models:rot(0)
+		
+	end
 	
 	-- Parrot rot offset
 	for _, parrot in pairs(parrots) do

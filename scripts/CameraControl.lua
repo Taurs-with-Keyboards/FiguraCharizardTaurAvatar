@@ -95,6 +95,9 @@ function events.RENDER(delta, context)
 		nameplate.ENTITY:pivot(posOffset + vec(0, player:getBoundingBox().y + 0.5, 0))
 			:scale(pokemonParts.CharizardTaur:getScale())
 		
+		-- Reverse camera when sleeping
+		renderer:offsetCameraRot(pose.sleep and renderer:isFirstPerson() and vec(0, 180, 0) or 0)
+		
 	end
 end
 
