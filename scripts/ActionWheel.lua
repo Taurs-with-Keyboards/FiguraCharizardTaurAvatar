@@ -139,7 +139,7 @@ pages.camera
 	:action( -1, camera.eyePage)
 	:action( -1, backAction)
 
--- Charizard actions
+-- Pokemon actions
 pages.pokemon
 	:action( -1, arms.holdPage)
 	:action( -1, color.shinyPage)
