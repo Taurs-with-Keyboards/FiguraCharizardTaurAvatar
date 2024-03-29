@@ -12,7 +12,7 @@ This Figura avatar is a template designed around turning the user into a Chariza
 - MitchOfTarcoola (APIs)
 - 4P5 (APIs, Better Action Wheel)
 - The_Beyond (Animated Fire Texture Support)
-- The Cobblemon Team (Original models,animations, textures, icons, and sounds)
+- The Cobblemon Team (Original models, animations, textures, icons, and sounds)
 - The Pokemon Company (Charizard design)
 - Total (Avatar Maker)
 
