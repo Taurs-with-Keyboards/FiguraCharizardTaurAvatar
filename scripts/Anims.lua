@@ -129,14 +129,14 @@ end
 
 -- GS Blending Setup
 local blendAnims = {
-	{ anim = anims.groundIdle, ticks = 7 },
-	{ anim = anims.groundWalk, ticks = 7 },
-	{ anim = anims.airIdle,    ticks = 7 },
-	{ anim = anims.airFlying,  ticks = 7 }
+	{ anim = anims.groundIdle, ticks = {7,7} },
+	{ anim = anims.groundWalk, ticks = {7,7} },
+	{ anim = anims.airIdle,    ticks = {7,7} },
+	{ anim = anims.airFlying,  ticks = {7,7} }
 }
 	
 for _, blend in ipairs(blendAnims) do
-	blend.anim:blendTime(blend.ticks):onBlend("easeOutQuad")
+	blend.anim:blendTime(table.unpack(blend.ticks)):onBlend("easeOutQuad")
 end
 
 -- Fixing spyglass jank
