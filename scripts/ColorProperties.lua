@@ -52,8 +52,8 @@ function events.TICK()
 	-- Set colors
 	t.hover     = vectors.hexToRGB(shiny and "46454F" or "D8741E")
 	t.active    = vectors.hexToRGB(shiny and "791E36" or "1E7A73")
-	t.primary   = (shiny and "§8" or "§6").."§l"
-	t.secondary = shiny and "§4" or "§3"
+	t.primary   = "#"..(shiny and "46454F" or "D8741E")
+	t.secondary = "#"..(shiny and "791E36" or "1E7A73")
 	
 	-- Shiny textures
 	local textureType = shiny and textures["textures.charizard_shiny"] or textures["textures.charizard"]
@@ -115,7 +115,11 @@ t.shinyPage = action_wheel:newAction()
 function events.TICK()
 	
 	t.shinyPage
-		:title(t.primary.."Toggle Shiny Textures\n\n"..t.secondary.."Set the lower body to use shiny textures over the default textures.")
+		:title(toJson
+			{"",
+			{text = "Toggle Shiny Textures\n\n", bold = true, color = t.primary},
+			{text = "Set the lower body to use shiny textures over the default textures.", color = t.secondary}}
+		)
 		:hoverColor(t.hover)
 		:toggleColor(t.active)
 	
