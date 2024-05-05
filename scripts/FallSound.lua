@@ -66,7 +66,7 @@ setToggle(fallSound)
 local t = {}
 
 -- Action wheel pages
-t.soundPage = action_wheel:newAction("FallSound")
+t.soundPage = action_wheel:newAction()
 	:item(itemCheck("snowball"))
 	:toggleItem(itemCheck("cobblemon:luxury_ball", "ender_pearl"))
 	:onToggle(pings.setFallSoundToggle)
