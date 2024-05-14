@@ -1,5 +1,5 @@
 # [Charizard Taur](https://github.com/TotalTakeover/FiguraCharizardTaurAvatar)
-### Version: v1.1.5
+### Version: v1.1.6
 This Figura avatar is a template designed around turning the user into a Charizard-Taur.
 
 ### Authors:
