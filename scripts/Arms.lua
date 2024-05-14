@@ -193,12 +193,22 @@ t.holdPage = action_wheel:newAction()
 function events.TICK()
 	
 	t.movePage
-		:title(color.primary.."Arm Movement Toggle\n\n"..color.secondary.."Toggles the movement swing movement of the arms.\nActions are not effected.")
+		:title(toJson
+			{"",
+			{text = "Arm Movement Toggle\n\n", bold = true, color = color.primary},
+			{text = "Toggles the movement swing movement of the arms.\nActions are not effected.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
 	t.holdPage
-		:title(color.primary.."Lower Arms Items Toggle\n\n"..color.secondary.."Toggles the usage of your lower arms for holding and using items.\nUses slots 1 & 2 respectively.\n\n§4§lWARNING: §cThis feature is still in testing!\nSome animations will not function properly, such as some usable items.\nFurthermore, even with this setting off, the upper arms will still refuse to work.\n\nI'll do my best to get this working properly in future updates!\n\n- Total")
+		:title(toJson
+			{"",
+			{text = "Lower Arms Items Toggle\n\n", bold = true, color = color.primary},
+			{text = "Toggles the usage of your lower arms for holding and using items.\nUses slots 1 & 2 respectively.\n\n", color = color.secondary},
+			{text = "WARNING: ", bold = true, color = "dark_red"},
+			{text = "This feature is still in testing!\nSome animations will not function properly, such as some usable items.\nFurthermore, even with this setting off, the upper arms will still refuse to work.\n\nI'll do my best to get this working properly in future updates!\n\n- Total", color = "red"}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	

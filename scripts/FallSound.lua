@@ -66,7 +66,7 @@ setToggle(fallSound)
 local t = {}
 
 -- Action wheel pages
-t.soundPage = action_wheel:newAction("FallSound")
+t.soundPage = action_wheel:newAction()
 	:item(itemCheck("snowball"))
 	:toggleItem(itemCheck("cobblemon:luxury_ball", "ender_pearl"))
 	:onToggle(pings.setFallSoundToggle)
@@ -75,7 +75,11 @@ t.soundPage = action_wheel:newAction("FallSound")
 function events.TICK()
 	
 	t.soundPage
-		:title(color.primary.."Toggle Falling Sound\n\n"..color.secondary.."Toggles pokeball sound effects when landing on the ground.")
+		:title(toJson
+			{"",
+			{text = "Toggle Falling Sound\n\n", bold = true, color = color.primary},
+			{text = "Toggles pokeball sound effects when landing on the ground.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	

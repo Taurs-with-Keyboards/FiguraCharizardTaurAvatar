@@ -346,19 +346,35 @@ t.effectsPage = action_wheel:newAction()
 function events.TICK()
 	
 	t.damagePage
-		:title(color.primary.."Toggle Fire Damage Indicator\n\n"..color.secondary.."Allow the tail fire to indicate overall health.\n\n§cThis feature can be intensive, and will require\n\"§5Max§c\" permission level to see gradual change.")
+		:title(toJson
+			{"",
+			{text = "Toggle Fire Damage Indicator\n\n", bold = true, color = color.primary},
+			{text = "Allow the tail fire to indicate overall health.\n\n", color = color.secondary},
+			{text = "This feature can be intensive, and will require\n\"", color = "red"},
+			{text = "Max", color = "dark_purple"},
+			{text = "\" permission level to see gradual change.", color = "red"}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
 	t.fuelPage
-		:title(color.primary.."Set Fire Reignition/Timer\n\n"..color.secondary.."Sets the ability for your tail fire to auto-reignite, and how long until full power.\n\n"
-		.."§lCurrent ingition timer: §a"..(reignite and ((maxTimer / 20).." Seconds") or "§4Cannot auto-reignite")
-		..color.secondary.."\n\nScrolling up adds time, Scrolling down subtracts time.\nRight click resets timer to 10 seconds.")
+		:title(toJson
+			{"",
+			{text = "Set Fire Reignition/Timer\n\n", bold = true, color = color.primary},
+			{text = "Sets the ability for your tail fire to auto-reignite, and how long until full power.\n\n", color = color.secondary},
+			{text = "Current ingition timer: ", bold = true, color = color.secondary},
+			{text = (reignite and ((maxTimer / 20).." Seconds") or "Cannot auto-reignite").."\n\n", color = not reignite and "red"},
+			{text = "Scroll to adjust the timer.\nRight click resets timer to 10 seconds.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
 	t.effectsPage
-		:title(color.primary.."Toggle Fire Effects\n\n"..color.secondary.."Allow the tail fire to create particles and sounds.")
+		:title(toJson
+			{"",
+			{text = "Toggle Fire Effects\n\n", bold = true, color = color.primary},
+			{text = "Allow the tail fire to create particles and sounds.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
