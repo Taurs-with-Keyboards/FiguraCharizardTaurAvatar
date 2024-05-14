@@ -364,7 +364,7 @@ function events.TICK()
 			{text = "Sets the ability for your tail fire to auto-reignite, and how long until full power.\n\n", color = color.secondary},
 			{text = "Current ingition timer: ", bold = true, color = color.secondary},
 			{text = (reignite and ((maxTimer / 20).." Seconds") or "Cannot auto-reignite").."\n\n", color = not reignite and "red"},
-			{text = "Scrolling up adds time, Scrolling down subtracts time.\nRight click resets timer to 10 seconds.", color = color.secondary}}
+			{text = "Scroll to adjust the timer.\nRight click resets timer to 10 seconds.", color = color.secondary}}
 		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
