@@ -65,6 +65,7 @@ function events.TICK()
 	local using       = player:isUsingItem()
 	local usingL      = activeness == leftActive and leftItem:getUseAction() or "NONE"
 	local usingR      = activeness == rightActive and rightItem:getUseAction() or "NONE"
+	local bow         = using and (usingL == "BOW" or usingR == "BOW")
 	local crossL      = leftItem.tag and leftItem.tag["Charged"] == 1
 	local crossR      = rightItem.tag and rightItem.tag["Charged"] == 1
 	
@@ -72,10 +73,10 @@ function events.TICK()
 	local shouldMove = pose.swim or pose.crawl
 	
 	-- Targets
-	leftMove  = (armMove or shouldMove or ((crossL or crossR) or (using and usingL ~= "NONE"))) and 1 or 0
-	rightMove = (armMove or shouldMove or ((crossL or crossR) or (using and usingR ~= "NONE"))) and 1 or 0
 	
 	--log(leftMove, rightMove)
+	leftMove  = (armMove or shouldMove or bow or ((crossL or crossR) or (using and usingL ~= "NONE"))) and 1 or 0
+	rightMove = (armMove or shouldMove or bow or ((crossL or crossR) or (using and usingR ~= "NONE"))) and 1 or 0
 	
 	upperLeftArm.AnimOptions.WALK      = leftMove
 	upperLeftArm.AnimOptions.OVERRIDE  = leftMove
