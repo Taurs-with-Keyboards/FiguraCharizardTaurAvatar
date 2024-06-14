@@ -73,8 +73,6 @@ function events.TICK()
 	local shouldMove = pose.swim or pose.crawl
 	
 	-- Targets
-	
-	--log(leftMove, rightMove)
 	leftMove  = (armMove or shouldMove or bow or ((crossL or crossR) or (using and usingL ~= "NONE"))) and 1 or 0
 	rightMove = (armMove or shouldMove or bow or ((crossL or crossR) or (using and usingR ~= "NONE"))) and 1 or 0
 	
