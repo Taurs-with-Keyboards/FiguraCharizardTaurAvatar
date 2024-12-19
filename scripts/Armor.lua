@@ -1,17 +1,17 @@
 -- Required scripts
-local pokemonParts = require("lib.GroupIndex")(models.models.CharizardTaur)
-local kattArmor    = require("lib.KattArmor")()
-local itemCheck    = require("lib.ItemCheck")
-local color        = require("scripts.ColorProperties")
+local pokemonParts   = require("lib.GroupIndex")(models.models.CharizardTaur)
+local charizardArmor = require("lib.KattArmor")()
+local itemCheck      = require("lib.ItemCheck")
+local color          = require("scripts.ColorProperties")
 
 -- Setting the leggings to layer 1
-kattArmor.Armor.Leggings:setLayer(1)
+charizardArmor.Armor.Leggings:setLayer(1)
 
 -- Armor parts
-kattArmor.Armor.Helmet
+charizardArmor.Armor.Helmet
 	:addParts(pokemonParts.headArmorHelmet.Helmet)
 	:addTrimParts(pokemonParts.headArmorHelmet.Trim)
-kattArmor.Armor.Chestplate
+charizardArmor.Armor.Chestplate
 	:addParts(
 		pokemonParts.bodyArmorChestplate.Chestplate,
 		pokemonParts.bodyArmorChestplate.Belt,
@@ -54,7 +54,7 @@ kattArmor.Armor.Chestplate
 		pokemonParts.leftArmArmorChestplateFP.Trim,
 		pokemonParts.rightArmArmorChestplateFP.Trim
 	)
-kattArmor.Armor.Leggings
+charizardArmor.Armor.Leggings
 	:addParts(
 		pokemonParts.TorsoArmorLeggings.Leggings,
 		pokemonParts.HipsArmorLeggings.Leggings,
@@ -73,7 +73,7 @@ kattArmor.Armor.Leggings
 		pokemonParts.leftLegArmorLeggings.Trim,
 		pokemonParts.rightLegArmorLeggings.Trim
 	)
-kattArmor.Armor.Boots
+charizardArmor.Armor.Boots
 	:addParts(
 		pokemonParts.LeftFootArmorBoot.Boot,
 		pokemonParts.RightFootArmorBoot.Boot
@@ -84,12 +84,12 @@ kattArmor.Armor.Boots
 	)
 
 -- Leather armor
-kattArmor.Materials.leather
+charizardArmor.Materials.leather
 	:setTexture(textures["textures.armor.leatherArmor"])
-	:addParts(kattArmor.Armor.Helmet,
+	:addParts(charizardArmor.Armor.Helmet,
 		pokemonParts.headArmorHelmet.Leather
 	)
-	:addParts(kattArmor.Armor.Chestplate,
+	:addParts(charizardArmor.Armor.Chestplate,
 		pokemonParts.bodyArmorChestplate.Leather,
 		pokemonParts.bodyArmorChestplate.BeltLeather,
 		pokemonParts.leftArmArmorChestplate.Leather,
@@ -110,7 +110,7 @@ kattArmor.Materials.leather
 		pokemonParts.leftArmArmorChestplateFP.Leather,
 		pokemonParts.rightArmArmorChestplateFP.Leather
 	)
-	:addParts(kattArmor.Armor.Leggings,
+	:addParts(charizardArmor.Armor.Leggings,
 		pokemonParts.TorsoArmorLeggings.Leather,
 		pokemonParts.HipsArmorLeggings.Leather,
 		pokemonParts.Tail1ArmorLeggings.Leather,
@@ -119,99 +119,99 @@ kattArmor.Materials.leather
 		pokemonParts.leftLegArmorLeggings.Leather,
 		pokemonParts.rightLegArmorLeggings.Leather
 	)
-	:addParts(kattArmor.Armor.Boots,
+	:addParts(charizardArmor.Armor.Boots,
 		pokemonParts.LeftFootArmorBoot.Leather,
 		pokemonParts.RightFootArmorBoot.Leather
 	)
 
 -- Chainmail armor
-kattArmor.Materials.chainmail
+charizardArmor.Materials.chainmail
 	:setTexture(textures["textures.armor.chainmailArmor"])
 
 -- Iron armor
-kattArmor.Materials.iron
+charizardArmor.Materials.iron
 	:setTexture(textures["textures.armor.ironArmor"])
 
 -- Golden armor
-kattArmor.Materials.golden
+charizardArmor.Materials.golden
 	:setTexture(textures["textures.armor.goldenArmor"])
 
 -- Diamond armor
-kattArmor.Materials.diamond
+charizardArmor.Materials.diamond
 	:setTexture(textures["textures.armor.diamondArmor"])
 
 -- Netherite armor
-kattArmor.Materials.netherite
+charizardArmor.Materials.netherite
 	:setTexture(textures["textures.armor.netheriteArmor"])
 
 -- Turtle helmet
-kattArmor.Materials.turtle
+charizardArmor.Materials.turtle
 	:setTexture(textures["textures.armor.turtleHelmet"])
 	:setEmissiveTexture(textures["textures.armor.turtleHelmet_e"])
 
 -- Trims
 -- Coast
-kattArmor.TrimPatterns.coast
+charizardArmor.TrimPatterns.coast
 	:setTexture(textures["textures.armor.trims.coastTrim"])
 
 -- Dune
-kattArmor.TrimPatterns.dune
+charizardArmor.TrimPatterns.dune
 	:setTexture(textures["textures.armor.trims.duneTrim"])
 
 -- Eye
-kattArmor.TrimPatterns.eye
+charizardArmor.TrimPatterns.eye
 	:setTexture(textures["textures.armor.trims.eyeTrim"])
 
 -- Host
-kattArmor.TrimPatterns.host
+charizardArmor.TrimPatterns.host
 	:setTexture(textures["textures.armor.trims.hostTrim"])
 
 -- Raiser
-kattArmor.TrimPatterns.raiser
+charizardArmor.TrimPatterns.raiser
 	:setTexture(textures["textures.armor.trims.raiserTrim"])
 
 -- Rib
-kattArmor.TrimPatterns.rib
+charizardArmor.TrimPatterns.rib
 	:setTexture(textures["textures.armor.trims.ribTrim"])
 
 -- Sentry
-kattArmor.TrimPatterns.sentry
+charizardArmor.TrimPatterns.sentry
 	:setTexture(textures["textures.armor.trims.sentryTrim"])
 
 -- Shaper
-kattArmor.TrimPatterns.shaper
+charizardArmor.TrimPatterns.shaper
 	:setTexture(textures["textures.armor.trims.shaperTrim"])
 
 -- Silence
-kattArmor.TrimPatterns.silence
+charizardArmor.TrimPatterns.silence
 	:setTexture(textures["textures.armor.trims.silenceTrim"])
 
 -- Snout
-kattArmor.TrimPatterns.snout
+charizardArmor.TrimPatterns.snout
 	:setTexture(textures["textures.armor.trims.snoutTrim"])
 
 -- Spire
-kattArmor.TrimPatterns.spire
+charizardArmor.TrimPatterns.spire
 	:setTexture(textures["textures.armor.trims.spireTrim"])
 
 -- Tide
-kattArmor.TrimPatterns.tide
+charizardArmor.TrimPatterns.tide
 	:setTexture(textures["textures.armor.trims.tideTrim"])
 
 -- Vex
-kattArmor.TrimPatterns.vex
+charizardArmor.TrimPatterns.vex
 	:setTexture(textures["textures.armor.trims.vexTrim"])
 
 -- Ward
-kattArmor.TrimPatterns.ward
+charizardArmor.TrimPatterns.ward
 	:setTexture(textures["textures.armor.trims.wardTrim"])
 
 -- Wayfinder
-kattArmor.TrimPatterns.wayfinder
+charizardArmor.TrimPatterns.wayfinder
 	:setTexture(textures["textures.armor.trims.wayfinderTrim"])
 
 -- Wild
-kattArmor.TrimPatterns.wild
+charizardArmor.TrimPatterns.wild
 	:setTexture(textures["textures.armor.trims.wildTrim"])
 
 -- Config setup
