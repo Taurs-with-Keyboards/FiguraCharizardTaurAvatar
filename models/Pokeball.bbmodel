@@ -321,9 +321,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "0",
-									"z": "0"
+									"x": 0,
+									"y": 0,
+									"z": 0
 								}
 							],
 							"uuid": "9fbec81e-8cf5-f28d-4fb1-1131f47bbd4c",

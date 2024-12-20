@@ -16701,7 +16701,7 @@
 							"data_points": [
 								{
 									"x": 10,
-									"y": "0",
+									"y": 0,
 									"z": "math.sin(math.rad(({...})[2]:getTime()*270))*2+57"
 								}
 							],
@@ -16722,7 +16722,7 @@
 								{
 									"x": 0,
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*135))*3+46",
-									"z": "-1"
+									"z": -1
 								}
 							],
 							"uuid": "e79e8ab0-4a61-8039-4485-125c5afc67d8",
@@ -16740,7 +16740,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": 15,
 									"z": "math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*15)+15"
 								}
@@ -16760,7 +16760,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-5",
+									"x": -5,
 									"y": -15,
 									"z": "math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*15)+30"
 								}
@@ -16781,7 +16781,7 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "0",
+									"y": 0,
 									"z": "math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*15)+15"
 								}
 							],
@@ -16801,7 +16801,7 @@
 							"data_points": [
 								{
 									"x": 10,
-									"y": "0",
+									"y": 0,
 									"z": "-math.sin(math.rad(({...})[2]:getTime()*270))*2-57"
 								}
 							],
@@ -16820,9 +16820,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "math.sin(math.rad(({...})[2]:getTime()*135))*3-46\n",
-									"z": "1"
+									"x": 0,
+									"y": "math.sin(math.rad(({...})[2]:getTime()*135))*3-46",
+									"z": 1
 								}
 							],
 							"uuid": "4fe74bc2-83ee-8c43-5130-8c975b3df876",
@@ -16840,7 +16840,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": -15,
 									"z": "-math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*15)-15"
 								}
@@ -16860,7 +16860,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-5",
+									"x": -5,
 									"y": 15,
 									"z": "-math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*15)-30"
 								}
@@ -16881,7 +16881,7 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "0",
+									"y": 0,
 									"z": "-math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*15)-15"
 								}
 							],
@@ -16902,7 +16902,7 @@
 								{
 									"x": "-math.sin(math.rad(({...})[2]:getTime()*270+90))+1",
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*270))+39",
-									"z": "0"
+									"z": 0
 								}
 							],
 							"uuid": "f1885c6b-ab03-d745-5d90-eac350bc6936",
@@ -16921,8 +16921,8 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "-math.sin(math.rad(({...})[2]:getTime()*270-90))*2-52\n",
-									"z": "0"
+									"y": "-math.sin(math.rad(({...})[2]:getTime()*270-90))*2-52",
+									"z": 0
 								}
 							],
 							"uuid": "5ce16816-20fd-e27c-86f0-55cd7c61daee",
@@ -16942,7 +16942,7 @@
 								{
 									"x": "-math.sin(math.rad(({...})[2]:getTime()*270+90))+1",
 									"y": "math.sin(math.rad(({...})[2]:getTime()*270))-39",
-									"z": "0"
+									"z": 0
 								}
 							],
 							"uuid": "a2356b8b-71a0-32c7-752b-29f08d4c26ce",
@@ -16961,8 +16961,8 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "math.sin(math.rad(({...})[2]:getTime()*270-90))*2+52\n",
-									"z": "0"
+									"y": "math.sin(math.rad(({...})[2]:getTime()*270-90))*2+52",
+									"z": 0
 								}
 							],
 							"uuid": "50cd1eee-7ee3-2313-bc5a-55c8d68efeff",
@@ -16981,8 +16981,8 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "math.sin(math.rad(({...})[2]:getTime()*270-90))*2+22\n",
-									"z": "0"
+									"y": "math.sin(math.rad(({...})[2]:getTime()*270-90))*2+22",
+									"z": 0
 								}
 							],
 							"uuid": "d81b99e7-a987-75a1-0fb4-c5996bea114d",
@@ -17001,8 +17001,8 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "-math.sin(math.rad(({...})[2]:getTime()*270-90))*2-22\n",
-									"z": "0"
+									"y": "-math.sin(math.rad(({...})[2]:getTime()*270-90))*2-22",
+									"z": 0
 								}
 							],
 							"uuid": "5ac15ad1-d2bc-86c5-ae6f-625ceca713d0",
@@ -17021,8 +17021,8 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "-math.sin(math.rad(({...})[2]:getTime()*270-90))*0.1-0.1\n",
-									"z": "0"
+									"y": "-math.sin(math.rad(({...})[2]:getTime()*270-90))*0.1-0.1",
+									"z": 0
 								}
 							],
 							"uuid": "e025a39a-5992-ae68-426d-9279e9073804",
@@ -17040,9 +17040,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-5",
-									"y": "0",
-									"z": "0"
+									"x": -5,
+									"y": 0,
+									"z": 0
 								}
 							],
 							"uuid": "f4b82295-2233-8636-6dc7-3afdd67b4e57",
@@ -17055,7 +17055,7 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "math.sin(math.rad(({...})[2]:getTime()*270-90))*0.1+0.1\n",
+									"y": "math.sin(math.rad(({...})[2]:getTime()*270-90))*0.1+0.1",
 									"z": 0
 								}
 							],
@@ -17074,9 +17074,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-5",
-									"y": "0",
-									"z": "0"
+									"x": -5,
+									"y": 0,
+									"z": 0
 								}
 							],
 							"uuid": "0d34b425-8267-9f5e-8cdf-2bb6eaf31d8f",
@@ -17089,7 +17089,7 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "math.sin(math.rad(({...})[2]:getTime()*270-90))*0.1+0.1\n",
+									"y": "math.sin(math.rad(({...})[2]:getTime()*270-90))*0.1+0.1",
 									"z": 0
 								}
 							],
@@ -17123,8 +17123,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+45))*20,-15,14)-math.max(math.sin(math.rad(({...})[2]:getTime()*405+45))*20,0)+math.max(-math.sin(math.rad(({...})[2]:getTime()*405+180))*15,5)-5\n",
-									"y": "0",
+									"x": "-math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+45))*20,-15,14)-math.max(math.sin(math.rad(({...})[2]:getTime()*405+45))*20,0)+math.max(-math.sin(math.rad(({...})[2]:getTime()*405+180))*15,5)-5",
+									"y": 0,
 									"z": 0
 								}
 							],
@@ -17137,8 +17137,8 @@
 							"channel": "position",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "-math.max(math.sin(math.rad(({...})[2]:getTime()*405+25))*0.2,0)-math.clamp(-math.sin(math.rad(({...})[2]:getTime()*405+25))*0.4,0,0.3)+math.max(-math.sin(math.rad(({...})[2]:getTime()*405+25))*0.8,0.5)-math.max(-math.sin(math.rad(({...})[2]:getTime()*405+205))*0.8,0.5)\n",
+									"x": 0,
+									"y": "-math.max(math.sin(math.rad(({...})[2]:getTime()*405+25))*0.2,0)-math.clamp(-math.sin(math.rad(({...})[2]:getTime()*405+25))*0.4,0,0.3)+math.max(-math.sin(math.rad(({...})[2]:getTime()*405+25))*0.8,0.5)-math.max(-math.sin(math.rad(({...})[2]:getTime()*405+205))*0.8,0.5)",
 									"z": "-math.max(math.sin(math.rad(({...})[2]:getTime()*405))*0.5,-0.25)-math.min(math.sin(math.rad(({...})[2]:getTime()*405))*0.25,0)"
 								}
 							],
@@ -17157,8 +17157,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+45))*15,-14,14)+math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+45))*15,0,8)\n",
-									"y": "0",
+									"x": "math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+45))*15,-14,14)+math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+45))*15,0,8)",
+									"y": 0,
 									"z": 0
 								}
 							],
@@ -17177,8 +17177,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+225))*20,-15,14)-math.max(math.sin(math.rad(({...})[2]:getTime()*405+225))*20,0)+math.max(-math.sin(math.rad(({...})[2]:getTime()*405+360))*15,5)-5\n",
-									"y": "0",
+									"x": "-math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+225))*20,-15,14)-math.max(math.sin(math.rad(({...})[2]:getTime()*405+225))*20,0)+math.max(-math.sin(math.rad(({...})[2]:getTime()*405+360))*15,5)-5",
+									"y": 0,
 									"z": 0
 								}
 							],
@@ -17191,9 +17191,9 @@
 							"channel": "position",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "-math.max(math.sin(math.rad(({...})[2]:getTime()*405+205))*0.2,0)-math.clamp(-math.sin(math.rad(({...})[2]:getTime()*405+205))*0.4,0,0.3)+math.max(-math.sin(math.rad(({...})[2]:getTime()*405+205))*0.8,0.5)-math.max(-math.sin(math.rad(({...})[2]:getTime()*405+385))*0.8,0.5)\n",
-									"z": "-math.max(math.sin(math.rad(({...})[2]:getTime()*405+180))*0.5,-0.25)-math.min(math.sin(math.rad(({...})[2]:getTime()*405+180))*0.25,0)\n"
+									"x": 0,
+									"y": "-math.max(math.sin(math.rad(({...})[2]:getTime()*405+205))*0.2,0)-math.clamp(-math.sin(math.rad(({...})[2]:getTime()*405+205))*0.4,0,0.3)+math.max(-math.sin(math.rad(({...})[2]:getTime()*405+205))*0.8,0.5)-math.max(-math.sin(math.rad(({...})[2]:getTime()*405+385))*0.8,0.5)",
+									"z": "-math.max(math.sin(math.rad(({...})[2]:getTime()*405+180))*0.5,-0.25)-math.min(math.sin(math.rad(({...})[2]:getTime()*405+180))*0.25,0)"
 								}
 							],
 							"uuid": "5980dd0b-3f21-4585-5c38-0fac7e51c3ee",
@@ -17211,8 +17211,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+225))*15,-14,14)+math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+225))*15,0,8)\n",
-									"y": "0",
+									"x": "math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+225))*15,-14,14)+math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+225))*15,0,8)",
+									"y": 0,
 									"z": 0
 								}
 							],
@@ -17231,7 +17231,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*405))*10",
 									"z": "math.sin(math.rad(({...})[2]:getTime()*810))*2-3"
 								}
@@ -17251,7 +17251,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*405))*6+5",
 									"z": 0
 								}
@@ -17291,7 +17291,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*405+30))*10",
 									"z": "-math.sin(math.rad(({...})[2]:getTime()*810))*2+3"
 								}
@@ -17311,7 +17311,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*405+30))*6-5",
 									"z": 0
 								}
@@ -17391,8 +17391,8 @@
 							"channel": "position",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "-math.max(math.sin(math.rad(-({...})[2]:getTime()*405-67.5))*0.5,0)-math.max(math.sin(math.rad(-({...})[2]:getTime()*405+112.5))*0.5,0)+0.3\n",
+									"x": 0,
+									"y": "-math.max(math.sin(math.rad(-({...})[2]:getTime()*405-67.5))*0.5,0)-math.max(math.sin(math.rad(-({...})[2]:getTime()*405+112.5))*0.5,0)+0.3",
 									"z": "-math.abs(math.sin(math.rad(({...})[2]:getTime()*405+90))*0.2)"
 								}
 							],
@@ -17411,8 +17411,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+20)),0.2,0.9)+math.clamp(-math.sin(math.rad(({...})[2]:getTime()*405)),0.2,0.9)-0.8\n",
-									"y": "0",
+									"x": "math.clamp(math.sin(math.rad(({...})[2]:getTime()*405+20)),0.2,0.9)+math.clamp(-math.sin(math.rad(({...})[2]:getTime()*405)),0.2,0.9)-0.8",
+									"y": 0,
 									"z": 0
 								}
 							],
@@ -17446,7 +17446,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "10",
+									"x": 10,
 									"y": -0.75,
 									"z": "math.sin(math.rad(({...})[2]:getTime()*405-30))*5+55"
 								}
@@ -17467,8 +17467,8 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "-math.min(math.sin(math.rad(({...})[2]:getTime()*135))*2,0)+math.min(-math.sin(math.rad(({...})[2]:getTime()*135))*4,0)+47\n",
-									"z": "-1"
+									"y": "-math.min(math.sin(math.rad(({...})[2]:getTime()*135))*2,0)+math.min(-math.sin(math.rad(({...})[2]:getTime()*135))*4,0)+47",
+									"z": -1
 								}
 							],
 							"uuid": "94f02e44-65b6-d594-58b8-21ce0717d28f",
@@ -17486,7 +17486,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": 15,
 									"z": "math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*15)+15"
 								}
@@ -17506,7 +17506,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-5",
+									"x": -5,
 									"y": -15,
 									"z": "math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*15)+30"
 								}
@@ -17527,7 +17527,7 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "0",
+									"y": 0,
 									"z": "math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*15)+15"
 								}
 							],
@@ -17546,8 +17546,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "10",
-									"y": "0.75",
+									"x": 10,
+									"y": 0.75,
 									"z": "-math.sin(math.rad(({...})[2]:getTime()*405-30))*5-55"
 								}
 							],
@@ -17566,9 +17566,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": "math.min(math.sin(math.rad(({...})[2]:getTime()*135))*2,0)+math.max(math.sin(math.rad(({...})[2]:getTime()*135))*4,0)-47",
-									"z": "1"
+									"z": 1
 								}
 							],
 							"uuid": "7ff20c46-c11e-89f7-037c-29cc714564be",
@@ -17586,7 +17586,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": -15,
 									"z": "-math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*15)-15"
 								}
@@ -17607,7 +17607,7 @@
 							"data_points": [
 								{
 									"x": -5,
-									"y": "15",
+									"y": 15,
 									"z": "-math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*15)-30"
 								}
 							],
@@ -17627,7 +17627,7 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "0",
+									"y": 0,
 									"z": "-math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*15)-15"
 								}
 							],
@@ -17662,7 +17662,7 @@
 								{
 									"x": 0.5,
 									"y": "math.sin(math.rad(({...})[2]:getTime()*405-150))*0.2",
-									"z": "0"
+									"z": 0
 								}
 							],
 							"uuid": "5df01c28-7c73-ebe9-1832-5c901b29c9e3",
@@ -17681,7 +17681,7 @@
 							"data_points": [
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*405-60))*5+30",
-									"y": "0",
+									"y": 0,
 									"z": 0
 								}
 							],
@@ -17716,7 +17716,7 @@
 								{
 									"x": -0.5,
 									"y": "math.sin(math.rad(({...})[2]:getTime()*405-150))*0.2",
-									"z": "0"
+									"z": 0
 								}
 							],
 							"uuid": "073bbaa3-9ddf-501c-7467-a515c50acf5a",
@@ -17735,7 +17735,7 @@
 							"data_points": [
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*405-60))*5+30",
-									"y": "0",
+									"y": 0,
 									"z": 0
 								}
 							],
@@ -17754,8 +17754,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-math.sin(math.rad(({...})[2]:getTime()*270+90))*2+22\n",
-									"y": "-math.sin(math.rad(({...})[2]:getTime()*405))*10+math.min(-math.sin(math.rad(({...})[2]:getTime()*405))*10+10,15)+20\n",
+									"x": "-math.sin(math.rad(({...})[2]:getTime()*270+90))*2+22",
+									"y": "-math.sin(math.rad(({...})[2]:getTime()*405))*10+math.min(-math.sin(math.rad(({...})[2]:getTime()*405))*10+10,15)+20",
 									"z": "math.sin(math.rad(({...})[2]:getTime()*270))+1"
 								}
 							],
@@ -17774,8 +17774,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "-math.sin(math.rad(({...})[2]:getTime()*405-90))*30-math.max(-math.sin(math.rad(({...})[2]:getTime()*405-90))*20-20,-15)-40\n",
+									"x": 0,
+									"y": "-math.sin(math.rad(({...})[2]:getTime()*405-90))*30-math.max(-math.sin(math.rad(({...})[2]:getTime()*405-90))*20-20,-15)-40",
 									"z": 0
 								}
 							],
@@ -17794,8 +17794,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-math.sin(math.rad(({...})[2]:getTime()*270+90))*2+22\n",
-									"y": "math.sin(math.rad(({...})[2]:getTime()*405))*10-math.min(-math.sin(math.rad(({...})[2]:getTime()*405))*10+10,15)-20\n",
+									"x": "-math.sin(math.rad(({...})[2]:getTime()*270+90))*2+22",
+									"y": "math.sin(math.rad(({...})[2]:getTime()*405))*10-math.min(-math.sin(math.rad(({...})[2]:getTime()*405))*10+10,15)-20",
 									"z": "-math.sin(math.rad(({...})[2]:getTime()*270))-1"
 								}
 							],
@@ -17814,8 +17814,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "math.sin(math.rad(({...})[2]:getTime()*405-90))*30+math.max(-math.sin(math.rad(({...})[2]:getTime()*405-90))*20-20,-15)+40\n",
+									"x": 0,
+									"y": "math.sin(math.rad(({...})[2]:getTime()*405-90))*30+math.max(-math.sin(math.rad(({...})[2]:getTime()*405-90))*20-20,-15)+40",
 									"z": 0
 								}
 							],
@@ -17834,8 +17834,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0\n",
-									"y": "math.sin(math.rad(({...})[2]:getTime()*405-60))*20+math.max(-math.sin(math.rad(({...})[2]:getTime()*405-60))*15-15,-15)+30\n",
+									"x": 0,
+									"y": "math.sin(math.rad(({...})[2]:getTime()*405-60))*20+math.max(-math.sin(math.rad(({...})[2]:getTime()*405-60))*15-15,-15)+30",
 									"z": 0
 								}
 							],
@@ -17854,8 +17854,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0\n",
-									"y": "-math.sin(math.rad(({...})[2]:getTime()*405-60))*20-math.max(-math.sin(math.rad(({...})[2]:getTime()*405-60))*15-15,-15)-30\n",
+									"x": 0,
+									"y": "-math.sin(math.rad(({...})[2]:getTime()*405-60))*20-math.max(-math.sin(math.rad(({...})[2]:getTime()*405-60))*15-15,-15)-30",
 									"z": 0
 								}
 							],
@@ -17888,7 +17888,7 @@
 							"channel": "position",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": "math.sin(math.rad(({...})[2]:getTime()*405-90))*2+8",
 									"z": 12
 								}
@@ -17909,8 +17909,8 @@
 							"data_points": [
 								{
 									"x": -25,
-									"y": "0",
-									"z": "0"
+									"y": 0,
+									"z": 0
 								}
 							],
 							"uuid": "9656b6e9-cfb1-f991-d987-5d01e364a03d",
@@ -17922,7 +17922,7 @@
 							"channel": "position",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": -1,
 									"z": -1
 								}
@@ -17942,7 +17942,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-47.5",
+									"x": -47.5,
 									"y": 0,
 									"z": 0
 								}
@@ -17992,7 +17992,7 @@
 							"data_points": [
 								{
 									"x": "-math.sin(math.rad(({...})[2]:getTime()*405-60))*4-57.5",
-									"y": "0",
+									"y": 0,
 									"z": 0
 								}
 							],
@@ -18026,7 +18026,7 @@
 							"data_points": [
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*405+150))*2+25.5",
-									"y": "3.25",
+									"y": 3.25,
 									"z": -6.75
 								}
 							],
@@ -18060,7 +18060,7 @@
 							"data_points": [
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*405+90))*2+25",
-									"y": "0",
+									"y": 0,
 									"z": 0
 								}
 							],
@@ -18081,7 +18081,7 @@
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*405+150))*2+25",
 									"y": -3.25,
-									"z": "6.75"
+									"z": 6.75
 								}
 							],
 							"uuid": "da25142b-60c5-76bc-c63a-759da62554dc",
@@ -18114,7 +18114,7 @@
 							"data_points": [
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*405+90))*2+25",
-									"y": "0",
+									"y": 0,
 									"z": 0
 								}
 							],
@@ -18134,7 +18134,7 @@
 							"data_points": [
 								{
 									"x": -10,
-									"y": "40",
+									"y": 40,
 									"z": "math.sin(math.rad(({...})[2]:getTime()*405))*2+52"
 								}
 							],
@@ -18154,7 +18154,7 @@
 							"data_points": [
 								{
 									"x": 25,
-									"y": "20",
+									"y": 20,
 									"z": "math.sin(math.rad(({...})[2]:getTime()*405+180))*4+64"
 								}
 							],
@@ -18173,7 +18173,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": 15,
 									"z": "math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*6)+23"
 								}
@@ -18193,7 +18193,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-5",
+									"x": -5,
 									"y": -15,
 									"z": "math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*6)+38"
 								}
@@ -18214,7 +18214,7 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "0",
+									"y": 0,
 									"z": "math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*6)+28"
 								}
 							],
@@ -18233,7 +18233,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-10",
+									"x": -10,
 									"y": -40,
 									"z": "-math.sin(math.rad(({...})[2]:getTime()*405))*2-52"
 								}
@@ -18253,7 +18253,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "25",
+									"x": 25,
 									"y": -20,
 									"z": "-math.sin(math.rad(({...})[2]:getTime()*405+180))*4-64"
 								}
@@ -18273,7 +18273,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": -15,
 									"z": "-math.abs(math.sin(math.abs(({...})[2]:getTime()*135))*6)-23"
 								}
@@ -18294,7 +18294,7 @@
 							"data_points": [
 								{
 									"x": -5,
-									"y": "15",
+									"y": 15,
 									"z": "-math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*6)-38"
 								}
 							],
@@ -18314,7 +18314,7 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "0",
+									"y": 0,
 									"z": "-math.abs(math.sin(math.rad(({...})[2]:getTime()*135))*6)-28"
 								}
 							],
@@ -18335,7 +18335,7 @@
 								{
 									"x": "-math.sin(math.rad(({...})[2]:getTime()*270+90))*2+22",
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*405))*10+math.clamp(-math.sin(math.rad(({...})[2]:getTime()*405))*10+10,0,15)+20",
-									"z": "math.sin(math.rad(({...})[2]:getTime()*270))+1\n"
+									"z": "math.sin(math.rad(({...})[2]:getTime()*270))+1"
 								}
 							],
 							"uuid": "62c632e5-f0c3-52cb-502f-2c6da99f5b8c",
@@ -18353,7 +18353,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*405-90))*30-math.clamp(-math.sin(math.rad(({...})[2]:getTime()*405-90))*20-20,-15,0)-40",
 									"z": 0
 								}
@@ -18375,7 +18375,7 @@
 								{
 									"x": "-math.sin(math.rad(({...})[2]:getTime()*270+90))*2+22",
 									"y": "math.sin(math.rad(({...})[2]:getTime()*405))*10-math.clamp(-math.sin(math.rad(({...})[2]:getTime()*405))*10+10,0,15)-20",
-									"z": "-math.sin(math.rad(({...})[2]:getTime()*270))-1\n"
+									"z": "-math.sin(math.rad(({...})[2]:getTime()*270))-1"
 								}
 							],
 							"uuid": "22c6d591-f817-bafd-9851-d360f27b4bb2",
@@ -18393,7 +18393,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": "math.sin(math.rad(({...})[2]:getTime()*405-90))*30+math.clamp(-math.sin(math.rad(({...})[2]:getTime()*405-90))*20-20,-15,0)+40",
 									"z": 0
 								}
@@ -18413,8 +18413,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "math.sin(math.rad(({...})[2]:getTime()*405-60))*20+math.max(-math.sin(math.rad(({...})[2]:getTime()*405-60))*15,0)+15\n",
+									"x": 0,
+									"y": "math.sin(math.rad(({...})[2]:getTime()*405-60))*20+math.max(-math.sin(math.rad(({...})[2]:getTime()*405-60))*15,0)+15",
 									"z": 0
 								}
 							],
@@ -18433,8 +18433,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "-math.sin(math.rad(({...})[2]:getTime()*405-60))*20-math.max(-math.sin(math.rad(({...})[2]:getTime()*405-60))*15,0)-15\n",
+									"x": 0,
+									"y": "-math.sin(math.rad(({...})[2]:getTime()*405-60))*20-math.max(-math.sin(math.rad(({...})[2]:getTime()*405-60))*15,0)-15",
 									"z": 0
 								}
 							],
@@ -18453,7 +18453,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "math.sin(math.rad(({...})[2]:getTime()*405+90))*3\n",
+									"x": "math.sin(math.rad(({...})[2]:getTime()*405+90))*3",
 									"y": 0,
 									"z": 0
 								}
@@ -18468,7 +18468,7 @@
 							"data_points": [
 								{
 									"x": 0,
-									"y": "0",
+									"y": 0,
 									"z": "math.sin(math.rad(({...})[2]:getTime()*405-90))*2+8"
 								}
 							],
@@ -18488,7 +18488,7 @@
 							"data_points": [
 								{
 									"x": "-math.sin(math.rad(({...})[2]:getTime()*405-90))*8",
-									"y": "0",
+									"y": 0,
 									"z": 0
 								}
 							],
@@ -18508,7 +18508,7 @@
 							"data_points": [
 								{
 									"x": "-math.sin(math.rad(({...})[2]:getTime()*405-120))*8-2",
-									"y": "0",
+									"y": 0,
 									"z": 0
 								}
 							],
@@ -18543,7 +18543,7 @@
 							"data_points": [
 								{
 									"x": "math.clamp(math.sin(math.rad(({...})[2]:getTime()*180))*1.5,-0.5,1.45)-104.5",
-									"y": "-4",
+									"y": -4,
 									"z": 11.5
 								}
 							],
@@ -18578,7 +18578,7 @@
 								{
 									"x": "math.clamp(math.sin(math.rad(({...})[2]:getTime()*180-40))*2,-0.75,1.75)-17.5",
 									"y": -39.5,
-									"z": "20.75\n"
+									"z": 20.75
 								}
 							],
 							"uuid": "fc27868e-04d6-fc4f-84eb-758d1b5a9e58",
@@ -18597,8 +18597,8 @@
 							"data_points": [
 								{
 									"x": "math.max(math.sin(math.rad(({...})[2]:getTime()*180-80))*3,-0.75)-16.25",
-									"y": "-49",
-									"z": "13"
+									"y": -49,
+									"z": 13
 								}
 							],
 							"uuid": "ce96bec1-53ef-a39c-3c8c-573325517f97",
@@ -18638,7 +18638,7 @@
 								{
 									"x": 9.5,
 									"y": -41.5,
-									"z": "11"
+									"z": 11
 								}
 							],
 							"uuid": "88dc0354-376e-7642-0ecf-30be12b6d24a",
@@ -18798,7 +18798,7 @@
 								{
 									"x": 0,
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*180))*0.5+40",
-									"z": "0"
+									"z": 0
 								}
 							],
 							"uuid": "99b016b8-a51a-d553-89f2-0a8bf49389b4",
@@ -18818,7 +18818,7 @@
 								{
 									"x": 0,
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*180-40))-20",
-									"z": "0"
+									"z": 0
 								}
 							],
 							"uuid": "00935c23-9aa8-e98c-4602-8d73c711fd68",
@@ -18838,7 +18838,7 @@
 								{
 									"x": 0,
 									"y": "math.sin(math.rad(({...})[2]:getTime()*180-80))*1.5-107.5",
-									"z": "0"
+									"z": 0
 								}
 							],
 							"uuid": "583b6bda-b49e-c0ff-8f9e-320964324272",
@@ -18892,7 +18892,7 @@
 								{
 									"x": 0,
 									"y": "math.sin(math.rad(({...})[2]:getTime()*180-40))*1.75+17.5",
-									"z": "0"
+									"z": 0
 								}
 							],
 							"uuid": "4fc4fc45-5318-2f7e-49b8-9392d1ecbc6c",
@@ -18912,7 +18912,7 @@
 								{
 									"x": 0,
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*180-80))*1.75+115",
-									"z": "0"
+									"z": 0
 								}
 							],
 							"uuid": "1dc08246-90d2-2c4a-c6ef-11cf244aca8c",
@@ -19067,8 +19067,8 @@
 							"data_points": [
 								{
 									"x": -90,
-									"y": "0",
-									"z": "0"
+									"y": 0,
+									"z": 0
 								}
 							],
 							"uuid": "e9273d8c-e8d4-ddd8-a7c3-8dc361d2a594",
@@ -19080,7 +19080,7 @@
 							"channel": "position",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": 2,
 									"z": -4
 								}
@@ -19101,8 +19101,8 @@
 							"data_points": [
 								{
 									"x": 90,
-									"y": "0",
-									"z": "0"
+									"y": 0,
+									"z": 0
 								}
 							],
 							"uuid": "5458175d-96f8-8316-0aa0-92eb35b555c7",
@@ -19114,9 +19114,9 @@
 							"channel": "position",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": 8,
-									"z": "0"
+									"z": 0
 								}
 							],
 							"uuid": "d93bc1f7-43ee-24eb-c668-39af7b1feb47",
@@ -19149,8 +19149,8 @@
 							"channel": "position",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "0",
+									"x": 0,
+									"y": 0,
 									"z": 5
 								}
 							],
@@ -19204,8 +19204,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "0",
+									"x": 0,
+									"y": 0,
 									"z": 45
 								}
 							],
@@ -19259,9 +19259,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "10",
-									"y": "-10",
-									"z": "-50"
+									"x": 10,
+									"y": -10,
+									"z": -50
 								}
 							],
 							"uuid": "17cf0720-c2ba-0b77-2bd4-fa2ad131a917",
@@ -19279,9 +19279,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "0",
-									"z": "-45"
+									"x": 0,
+									"y": 0,
+									"z": -45
 								}
 							],
 							"uuid": "b5b14b39-662c-9025-1aaf-fa3ed26ba5c4",
@@ -19299,9 +19299,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-10",
-									"y": "10",
-									"z": "-50"
+									"x": -10,
+									"y": 10,
+									"z": -50
 								}
 							],
 							"uuid": "4281ee2c-dc35-c184-2bb3-cef2ec5ef791",
@@ -19355,9 +19355,9 @@
 							"channel": "scale",
 							"data_points": [
 								{
-									"x": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875\n",
-									"y": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875\n",
-									"z": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875\n"
+									"x": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875",
+									"y": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875",
+									"z": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875"
 								}
 							],
 							"uuid": "f3181353-eb7d-b752-c84c-059128ccca76",
@@ -19376,9 +19376,9 @@
 							"channel": "scale",
 							"data_points": [
 								{
-									"x": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875\n",
-									"y": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875\n",
-									"z": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875\n"
+									"x": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875",
+									"y": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875",
+									"z": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875"
 								}
 							],
 							"uuid": "15a83ecb-06c8-de67-eb1f-4c08e0af8a3c",
@@ -19397,9 +19397,9 @@
 							"channel": "scale",
 							"data_points": [
 								{
-									"x": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875\n",
-									"y": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875\n",
-									"z": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875\n"
+									"x": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875",
+									"y": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875",
+									"z": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875"
 								}
 							],
 							"uuid": "cac8c195-4e2f-80d8-39ff-dafc7e2c30e3",
@@ -19418,9 +19418,9 @@
 							"channel": "scale",
 							"data_points": [
 								{
-									"x": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875\n",
-									"y": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875\n",
-									"z": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875\n"
+									"x": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875",
+									"y": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875",
+									"z": "-math.sin(math.rad(({...})[2]:getTime()*90))*0.0125+0.9875"
 								}
 							],
 							"uuid": "36362976-16e7-cec7-9b57-68e95d8aae66",
@@ -19454,9 +19454,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": "math.sin(math.rad(({...})[2]:getTime()*2880))*1.5",
-									"z": "0"
+									"z": 0
 								}
 							],
 							"uuid": "5b711609-cccf-cedd-425e-a2e3b4c3606c",
@@ -19474,9 +19474,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*2880))*1.5",
-									"z": "0"
+									"z": 0
 								}
 							],
 							"uuid": "284fe1dd-c02b-f6b4-db3e-a8b438edf9e2",
@@ -19488,8 +19488,8 @@
 							"channel": "position",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "0",
+									"x": 0,
+									"y": 0,
 									"z": "math.sin(math.rad(({...})[2]:getTime()*2880))*0.23"
 								}
 							],
@@ -19508,9 +19508,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "0",
+									"x": 0,
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*2880))*1.5",
-									"z": "0"
+									"z": 0
 								}
 							],
 							"uuid": "05dec4cc-2c58-52fe-e108-ba8cf8463d05",
@@ -19522,8 +19522,8 @@
 							"channel": "position",
 							"data_points": [
 								{
-									"x": "0",
-									"y": "0",
+									"x": 0,
+									"y": 0,
 									"z": "-math.sin(math.rad(({...})[2]:getTime()*2880))*0.23"
 								}
 							],
