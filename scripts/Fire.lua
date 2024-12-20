@@ -36,9 +36,9 @@ local fireBlocks = {
 }
 
 -- Texture variables setup
-local normalText = textures["textures.normalFlame"]
-local midwayText = textures:copy("textures.midwayFlame", textures["textures.normalFlame"])
-local damageText = textures["textures.damageFlame"]
+local normalText = textures["textures.normalFlame"] or textures["models.CharizardTaur.normalFlame"]
+local midwayText = textures:copy("midwayFlame", textures["textures.normalFlame"] or textures["models.CharizardTaur.normalFlame"])
+local damageText = textures["textures.damageFlame"] or textures["models.CharizardTaur.damageFlame"]
 local dim = normalText:getDimensions()-1
 
 -- Set Fire Parent Type

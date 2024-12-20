@@ -56,7 +56,7 @@ function events.TICK()
 	t.secondary = "#"..(shiny and "791E36" or "1E7A73")
 	
 	-- Shiny textures
-	local textureType = shiny and textures["textures.charizard_shiny"] or textures["textures.charizard"]
+	local textureType = shiny and (textures["textures.charizard_shiny"] or textures["models.CharizardTaur.charizard_shiny"]) or (textures["textures.charizard"] or textures["models.CharizardTaur.charizard"])
 	for _, part in ipairs(shinyParts) do
 		part:primaryTexture("Custom", textureType)
 	end

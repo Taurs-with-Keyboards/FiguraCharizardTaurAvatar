@@ -85,7 +85,7 @@ charizardArmor.Armor.Boots
 
 -- Leather armor
 charizardArmor.Materials.leather
-	:setTexture(textures["textures.armor.leatherArmor"])
+	:setTexture(textures["textures.armor.leatherArmor"] or textures["models.CharizardTaur.leatherArmor"])
 	:addParts(charizardArmor.Armor.Helmet,
 		pokemonParts.headArmorHelmet.Leather
 	)
@@ -126,93 +126,93 @@ charizardArmor.Materials.leather
 
 -- Chainmail armor
 charizardArmor.Materials.chainmail
-	:setTexture(textures["textures.armor.chainmailArmor"])
+	:setTexture(textures["textures.armor.chainmailArmor"] or textures["models.CharizardTaur.chainmailArmor"])
 
 -- Iron armor
 charizardArmor.Materials.iron
-	:setTexture(textures["textures.armor.ironArmor"])
+	:setTexture(textures["textures.armor.ironArmor"] or textures["models.CharizardTaur.ironArmor"])
 
 -- Golden armor
 charizardArmor.Materials.golden
-	:setTexture(textures["textures.armor.goldenArmor"])
+	:setTexture(textures["textures.armor.goldenArmor"] or textures["models.CharizardTaur.goldenArmor"])
 
 -- Diamond armor
 charizardArmor.Materials.diamond
-	:setTexture(textures["textures.armor.diamondArmor"])
+	:setTexture(textures["textures.armor.diamondArmor"] or textures["models.CharizardTaur.diamondArmor"])
 
 -- Netherite armor
 charizardArmor.Materials.netherite
-	:setTexture(textures["textures.armor.netheriteArmor"])
+	:setTexture(textures["textures.armor.netheriteArmor"] or textures["models.CharizardTaur.netheriteArmor"])
 
 -- Turtle helmet
 charizardArmor.Materials.turtle
-	:setTexture(textures["textures.armor.turtleHelmet"])
-	:setEmissiveTexture(textures["textures.armor.turtleHelmet_e"])
+	:setTexture(textures["textures.armor.turtleHelmet"] or textures["models.CharizardTaur.turtleHelmet"])
+	:setEmissiveTexture(textures["textures.armor.turtleHelmet_e"] or textures["models.CharizardTaur.turtleHelmet_e"])
 
 -- Trims
 -- Coast
 charizardArmor.TrimPatterns.coast
-	:setTexture(textures["textures.armor.trims.coastTrim"])
+	:setTexture(textures["textures.armor.trims.coastTrim"] or textures["models.CharizardTaur.coastTrim"])
 
 -- Dune
 charizardArmor.TrimPatterns.dune
-	:setTexture(textures["textures.armor.trims.duneTrim"])
+	:setTexture(textures["textures.armor.trims.duneTrim"] or textures["models.CharizardTaur.duneTrim"])
 
 -- Eye
 charizardArmor.TrimPatterns.eye
-	:setTexture(textures["textures.armor.trims.eyeTrim"])
+	:setTexture(textures["textures.armor.trims.eyeTrim"] or textures["models.CharizardTaur.eyeTrim"])
 
 -- Host
 charizardArmor.TrimPatterns.host
-	:setTexture(textures["textures.armor.trims.hostTrim"])
+	:setTexture(textures["textures.armor.trims.hostTrim"] or textures["models.CharizardTaur.hostTrim"])
 
 -- Raiser
 charizardArmor.TrimPatterns.raiser
-	:setTexture(textures["textures.armor.trims.raiserTrim"])
+	:setTexture(textures["textures.armor.trims.raiserTrim"] or textures["models.CharizardTaur.raiserTrim"])
 
 -- Rib
 charizardArmor.TrimPatterns.rib
-	:setTexture(textures["textures.armor.trims.ribTrim"])
+	:setTexture(textures["textures.armor.trims.ribTrim"] or textures["models.CharizardTaur.ribTrim"])
 
 -- Sentry
 charizardArmor.TrimPatterns.sentry
-	:setTexture(textures["textures.armor.trims.sentryTrim"])
+	:setTexture(textures["textures.armor.trims.sentryTrim"] or textures["models.CharizardTaur.sentryTrim"])
 
 -- Shaper
 charizardArmor.TrimPatterns.shaper
-	:setTexture(textures["textures.armor.trims.shaperTrim"])
+	:setTexture(textures["textures.armor.trims.shaperTrim"] or textures["models.CharizardTaur.shaperTrim"])
 
 -- Silence
 charizardArmor.TrimPatterns.silence
-	:setTexture(textures["textures.armor.trims.silenceTrim"])
+	:setTexture(textures["textures.armor.trims.silenceTrim"] or textures["models.CharizardTaur.silenceTrim"])
 
 -- Snout
 charizardArmor.TrimPatterns.snout
-	:setTexture(textures["textures.armor.trims.snoutTrim"])
+	:setTexture(textures["textures.armor.trims.snoutTrim"] or textures["models.CharizardTaur.snoutTrim"])
 
 -- Spire
 charizardArmor.TrimPatterns.spire
-	:setTexture(textures["textures.armor.trims.spireTrim"])
+	:setTexture(textures["textures.armor.trims.spireTrim"] or textures["models.CharizardTaur.spireTrim"])
 
 -- Tide
 charizardArmor.TrimPatterns.tide
-	:setTexture(textures["textures.armor.trims.tideTrim"])
+	:setTexture(textures["textures.armor.trims.tideTrim"] or textures["models.CharizardTaur.tideTrim"])
 
 -- Vex
 charizardArmor.TrimPatterns.vex
-	:setTexture(textures["textures.armor.trims.vexTrim"])
+	:setTexture(textures["textures.armor.trims.vexTrim"] or textures["models.CharizardTaur.vexTrim"])
 
 -- Ward
 charizardArmor.TrimPatterns.ward
-	:setTexture(textures["textures.armor.trims.wardTrim"])
+	:setTexture(textures["textures.armor.trims.wardTrim"] or textures["models.CharizardTaur.wardTrim"])
 
 -- Wayfinder
 charizardArmor.TrimPatterns.wayfinder
-	:setTexture(textures["textures.armor.trims.wayfinderTrim"])
+	:setTexture(textures["textures.armor.trims.wayfinderTrim"] or textures["models.CharizardTaur.wayfinderTrim"])
 
 -- Wild
 charizardArmor.TrimPatterns.wild
-	:setTexture(textures["textures.armor.trims.wildTrim"])
+	:setTexture(textures["textures.armor.trims.wildTrim"] or textures["models.CharizardTaur.wildTrim"])
 
 -- Config setup
 config:name("CharizardTaur")
