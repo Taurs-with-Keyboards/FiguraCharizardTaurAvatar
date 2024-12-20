@@ -271,7 +271,7 @@
 	],
 	"textures": [
 		{
-			"path": "C:\\Users\\Total\\OneDrive\\Documents\\Misc Docs\\Video Game Assets\\Modding Assets\\Minecraft Assets\\Figura Avatars\\avatars\\GitHubRepos\\FiguraCharizardTaurAvatar\\textures\\misc\\pokeballModel.png",
+			"path": "D:\\Total\\OneDrive\\Documents\\Misc Docs\\Video Game Assets\\Modding Assets\\Minecraft Assets\\Figura Avatars\\avatars\\GitHubRepos\\FiguraCharizardTaurAvatar\\textures\\misc\\pokeballModel.png",
 			"name": "pokeballModel.png",
 			"folder": "",
 			"namespace": "",
@@ -293,10 +293,10 @@
 			"frame_interpolate": false,
 			"visible": true,
 			"internal": true,
-			"saved": false,
+			"saved": true,
 			"uuid": "d86f1222-a2d2-08e9-c6c4-11ba74bfd4bf",
-			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAgCAYAAACinX6EAAAAAXNSR0IArs4c6QAABCdJREFUaEPtWWlIVFEU/h6i1ZuZJsMZwzIriijyRwvtRRBttiFRVGAL1Y8K608LUVQ/iqgIok1owTBsj2izjUAqosLoh2G0J5rUjGijM6/S5MW5032893zLwGjP0PtnZs4997xzvnvOvWe+J/wOHJTlb4/wMe82aAw8Jgnsy9+ROTRbvr6gCN0yuqrF+F5ehzkXs3B5zF18b5AwaDjQpVdU5Ucl8PoF0C1JbGZPYySGH2/WiLKV/Rn3Jlha+fj+riYevbLQWDpPlgPl+HSlzBCAT3s6yRR8w6k+mrVJKz4zEAIffuHYEz8GeBo18+/qE7FmbACjTsLSATsMnq2EbGV/UfG0+ACwc6D2rE+m4Mtrq7E1LYup764qQkZyCgiEhFAQh04ngwL+IiWw+Z5iEwNk3bJadF0dHwB1eZCt7I87no1IvWQYhssjovTlVesMiAUA1/XBmBkeAtEtMnUpLOGW+xUic8rg9gSxd1cyir911pialPoTm7fVInF2fAA03oBsZX/Y9mzluRwICpyPuAFoeDBCxgkX5mMks+np7kJ9TQSX8BxYFYEglTgKwIQDOYiEwsYZ4HXjafGZ+DKAAXDHB1RICggs+HQRmB7Ez7cljpbA1As5lkncIgAI/gzIBRIS0v3sYU0VAQhLRNDh+fJciaOH4Pr3UQA8bu0tVR+uY/K4AZgya61ctOcrMyakRq8cujZpZG3pgSO98x29BpeWzWsWPE8JAsEWALrnaYHL6zZEkoT88NPnGh2G+sGRN6tLvf7DjY8VkTtzomE6h0sfIvA4opnzj3fBSl+tTNe10aDrXejXf5qsPjXNgCAQTh7exOyszN3HbgL1MArc6FRWr6H5wrwNzXzz9Yp2VKLXq8xJoRCaDg9nvxNyXzSbI3mwstIwUBLWBAKaue7+aDkLtwoLWQZwAX3nDnhTUpRFoepqjQP6Ob0D+geaeZa7owC0ARx40tPXM197Nn8n+7p4efRTP/gmkJwy0Kw/UK8TqNUkQVJ6kyLnbS9PnYaKaIOjH3yNXp/0zNbobfBWlmehGgiuawaIOmCuy0svluBZBpjtTHuRdwDQXnbaLM6ODOjIgHaOQEcJtPMEiK0P4LSYGixqkvpu+dUmMojaeaONtOMDY2qE7DhBp0EwC54DYgeC7Q7acYLJi4O2NlqzzOjfrKOcYFsAQPkf8Jcc/aecYNLkEkczYPSkHNlRTrAtAGBVYraMkF19EilqxQm2FQBajRMkgOjtEbsydJxgYuYVR9Ofbx7xlkYbef/mUVv/mAKdpEZUGDcwd+FGwwdcO7+frVc7oKbG+EsJzjvqnbR7aWGXnS0x/99wgmlpaZrdrKqqUjaF+EIarcoJ+nw+jQPBYFBxgPhCvQP/DSfYEmkUrw01M63mBPkJblfjdBUacYK8C7Rqlf8A8VGIBGnvi8YAAAAASUVORK5CYII=",
-			"relative_path": "C:/Users/Total/OneDrive/Documents/Misc Docs/Video Game Assets/Modding Assets/Minecraft Assets/Figura Avatars/avatars/GitHubRepos/FiguraCharizardTaurAvatar/textures/misc/pokeballModel.png"
+			"relative_path": "../textures/misc/pokeballModel.png",
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAgCAYAAACinX6EAAAAAXNSR0IArs4c6QAABCdJREFUaEPtWWlIVFEU/h6i1ZuZJsMZwzIriijyRwvtRRBttiFRVGAL1Y8K608LUVQ/iqgIok1owTBsj2izjUAqosLoh2G0J5rUjGijM6/S5MW5032893zLwGjP0PtnZs4997xzvnvOvWe+J/wOHJTlb4/wMe82aAw8Jgnsy9+ROTRbvr6gCN0yuqrF+F5ehzkXs3B5zF18b5AwaDjQpVdU5Ucl8PoF0C1JbGZPYySGH2/WiLKV/Rn3Jlha+fj+riYevbLQWDpPlgPl+HSlzBCAT3s6yRR8w6k+mrVJKz4zEAIffuHYEz8GeBo18+/qE7FmbACjTsLSATsMnq2EbGV/UfG0+ACwc6D2rE+m4Mtrq7E1LYup764qQkZyCgiEhFAQh04ngwL+IiWw+Z5iEwNk3bJadF0dHwB1eZCt7I87no1IvWQYhssjovTlVesMiAUA1/XBmBkeAtEtMnUpLOGW+xUic8rg9gSxd1cyir911pialPoTm7fVInF2fAA03oBsZX/Y9mzluRwICpyPuAFoeDBCxgkX5mMks+np7kJ9TQSX8BxYFYEglTgKwIQDOYiEwsYZ4HXjafGZ+DKAAXDHB1RICggs+HQRmB7Ez7cljpbA1As5lkncIgAI/gzIBRIS0v3sYU0VAQhLRNDh+fJciaOH4Pr3UQA8bu0tVR+uY/K4AZgya61ctOcrMyakRq8cujZpZG3pgSO98x29BpeWzWsWPE8JAsEWALrnaYHL6zZEkoT88NPnGh2G+sGRN6tLvf7DjY8VkTtzomE6h0sfIvA4opnzj3fBSl+tTNe10aDrXejXf5qsPjXNgCAQTh7exOyszN3HbgL1MArc6FRWr6H5wrwNzXzz9Yp2VKLXq8xJoRCaDg9nvxNyXzSbI3mwstIwUBLWBAKaue7+aDkLtwoLWQZwAX3nDnhTUpRFoepqjQP6Ob0D+geaeZa7owC0ARx40tPXM197Nn8n+7p4efRTP/gmkJwy0Kw/UK8TqNUkQVJ6kyLnbS9PnYaKaIOjH3yNXp/0zNbobfBWlmehGgiuawaIOmCuy0svluBZBpjtTHuRdwDQXnbaLM6ODOjIgHaOQEcJtPMEiK0P4LSYGixqkvpu+dUmMojaeaONtOMDY2qE7DhBp0EwC54DYgeC7Q7acYLJi4O2NlqzzOjfrKOcYFsAQPkf8Jcc/aecYNLkEkczYPSkHNlRTrAtAGBVYraMkF19EilqxQm2FQBajRMkgOjtEbsydJxgYuYVR9Ofbx7xlkYbef/mUVv/mAKdpEZUGDcwd+FGwwdcO7+frVc7oKbG+EsJzjvqnbR7aWGXnS0x/99wgmlpaZrdrKqqUjaF+EIarcoJ+nw+jQPBYFBxgPhCvQP/DSfYEmkUrw01M63mBPkJblfjdBUacYK8C7Rqlf8A8VGIBGnvi8YAAAAASUVORK5CYII="
 		}
 	],
 	"animations": [
