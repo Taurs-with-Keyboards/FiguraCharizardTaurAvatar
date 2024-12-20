@@ -150,6 +150,10 @@ charizardArmor.Materials.turtle
 	:setEmissiveTexture(textures["textures.armor.turtleHelmet_e"] or textures["models.CharizardTaur.turtleHelmet_e"])
 
 -- Trims
+-- Bolt
+charizardArmor.TrimPatterns.bolt
+	:setTexture(textures["textures.armor.trims.boltTrim"] or textures["models.CharizardTaur.boltTrim"])
+
 -- Coast
 charizardArmor.TrimPatterns.coast
 	:setTexture(textures["textures.armor.trims.coastTrim"] or textures["models.CharizardTaur.coastTrim"])
@@ -161,6 +165,10 @@ charizardArmor.TrimPatterns.dune
 -- Eye
 charizardArmor.TrimPatterns.eye
 	:setTexture(textures["textures.armor.trims.eyeTrim"] or textures["models.CharizardTaur.eyeTrim"])
+
+-- Flow
+charizardArmor.TrimPatterns.flow
+	:setTexture(textures["textures.armor.trims.flowTrim"] or textures["models.CharizardTaur.flowTrim"])
 
 -- Host
 charizardArmor.TrimPatterns.host

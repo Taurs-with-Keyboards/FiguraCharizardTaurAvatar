@@ -7530,27 +7530,27 @@
 			"faces": {
 				"north": {
 					"uv": [28, 20, 36, 32],
-					"texture": 2
+					"texture": 11
 				},
 				"east": {
 					"uv": [24, 20, 28, 32],
-					"texture": 2
+					"texture": 11
 				},
 				"south": {
 					"uv": [40, 20, 48, 32],
-					"texture": 2
+					"texture": 11
 				},
 				"west": {
 					"uv": [36, 20, 40, 32],
-					"texture": 2
+					"texture": 11
 				},
 				"up": {
 					"uv": [36, 20, 28, 16],
-					"texture": 2
+					"texture": 11
 				},
 				"down": {
 					"uv": [44, 16, 36, 20],
-					"texture": 2
+					"texture": 11
 				}
 			},
 			"type": "cube",
@@ -7574,27 +7574,27 @@
 			"faces": {
 				"north": {
 					"uv": [28, 20, 36, 32],
-					"texture": 10
+					"texture": 11
 				},
 				"east": {
 					"uv": [24, 20, 28, 32],
-					"texture": 10
+					"texture": 11
 				},
 				"south": {
 					"uv": [40, 20, 48, 32],
-					"texture": 10
+					"texture": 11
 				},
 				"west": {
 					"uv": [36, 20, 40, 32],
-					"texture": 10
+					"texture": 11
 				},
 				"up": {
 					"uv": [36, 20, 28, 16],
-					"texture": 10
+					"texture": 11
 				},
 				"down": {
 					"uv": [44, 16, 36, 20],
-					"texture": 10
+					"texture": 11
 				}
 			},
 			"type": "cube",
@@ -7661,7 +7661,7 @@
 			"faces": {
 				"north": {
 					"uv": [0, 0, 11, 18],
-					"texture": 15
+					"texture": 16
 				},
 				"east": {
 					"uv": [0, 0, 0, 0],
@@ -7703,27 +7703,27 @@
 			"faces": {
 				"north": {
 					"uv": [1, 1, 11, 17],
-					"texture": 17
+					"texture": 18
 				},
 				"east": {
 					"uv": [0, 1, 1, 17],
-					"texture": 17
+					"texture": 18
 				},
 				"south": {
 					"uv": [12, 1, 22, 17],
-					"texture": 17
+					"texture": 18
 				},
 				"west": {
 					"uv": [11, 1, 12, 17],
-					"texture": 17
+					"texture": 18
 				},
 				"up": {
 					"uv": [11, 1, 1, 0],
-					"texture": 17
+					"texture": 18
 				},
 				"down": {
 					"uv": [21, 0, 11, 1],
-					"texture": 17
+					"texture": 18
 				}
 			},
 			"type": "cube",
@@ -16084,6 +16084,34 @@
 			"source": "data:image/png;base64,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+CzfwkMCYOHiwH0UAyDf7X+6uz0PNfoMcLx+cnj97mPx2AbOr1n6pkn5lCqGymskAKLrbU7OqIMiAJa1os8AI+g1yq+5GwLQbOHYHVw8Tm7dVxf1bp3R9EZAhwulCCk4arhC3QevuZf/kg+W5/U12izrOua8Wfoqnza37vuvEd5yL/+lOl7aoh7uajK5tO03h4B06qelvvVe/ktCt55JqDGCv1X0vVvfrQE0EOR7PXqPya9P1IDK8Nd3leZn/ZB7/dberZkNLJ5eqpltRtl2E4C9n31LA/S8KFT6ARD3/m0c1ReCUpfoKX9vT1pbxPJK4J5rD+/zQlC5V1NuyQtBU8ZaPigYAK9evvh6uvtWyPH6cHj7Yf1LJsolr2/Zu16r3ijtYQDIsVkCz18CBGrN0LtelABbdUABSFfv0kzQC4AEnucZSmswvdp3AaDHKaMcApYzDgHYxwgGgATy7NjvTqK1O5huTrewNce+tWNs0QWAhxkAF0gOXI96Y8S7rxIKgBzz07Sc/kafBfSqt2/tGFuYACB7Xwo2/zu//m55Lb53vTGi1KmEAqCTtN9qC4D9ltxi6YAJAPJhS/poNv8bZXfveqhxROjXBADUVL9lUO96EYJCaTABACWO/eIdIAB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NXIACh48GLIwB4j0NX+B+XTE202JbC6AAAAABJRU5ErkJggg=="
 		},
 		{
+			"path": "D:\\Total\\OneDrive\\Documents\\Misc Docs\\Video Game Assets\\Modding Assets\\Minecraft Assets\\Figura Avatars\\avatars\\GitHubRepos\\FiguraCharizardTaurAvatar\\textures\\armor\\trims\\boltTrim.png",
+			"name": "boltTrim.png",
+			"folder": "",
+			"namespace": "",
+			"id": "36",
+			"group": "f7acf1b4-085a-5f42-e5fd-f95270e318b3",
+			"width": 128,
+			"height": 256,
+			"uv_width": 128,
+			"uv_height": 256,
+			"particle": false,
+			"use_as_default": false,
+			"layers_enabled": false,
+			"sync_to_project": "",
+			"render_mode": "default",
+			"render_sides": "auto",
+			"frame_time": 1,
+			"frame_order_type": "loop",
+			"frame_order": "",
+			"frame_interpolate": false,
+			"visible": true,
+			"internal": true,
+			"saved": true,
+			"uuid": "02394a0e-880c-3ed0-5d32-78aceb9996d3",
+			"relative_path": "../textures/armor/trims/boltTrim.png",
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAEACAYAAAB7+X6nAAAAAXNSR0IArs4c6QAAA4lJREFUeF7t1AENAAAMg7DPv+kLKXMAIds12sBo+uCvAPAICqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7ADyAB5CtAQGPLMdNAAAAAElFTkSuQmCC"
+		},
+		{
 			"path": "D:\\Total\\OneDrive\\Documents\\Misc Docs\\Video Game Assets\\Modding Assets\\Minecraft Assets\\Figura Avatars\\avatars\\GitHubRepos\\FiguraCharizardTaurAvatar\\textures\\armor\\trims\\coastTrim.png",
 			"name": "coastTrim.png",
 			"folder": "",
@@ -16278,6 +16306,34 @@
 			"uuid": "6aebd9fa-d9e3-3e57-93d8-856939d9abe7",
 			"relative_path": "../textures/misc/cape.png",
 			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAgCAYAAACinX6EAAAAAXNSR0IArs4c6QAAAFBJREFUaEPt1QERADAMArHi33SFfOagHBm7+Fv8/hOABsQTQCBeAJ8gAgjEE0AgXgArgAAC8QQQiBfACiCAQDwBBOIFsAIIIBBPAIF4AazAAzJOACHu+VYgAAAAAElFTkSuQmCC"
+		},
+		{
+			"path": "D:\\Total\\OneDrive\\Documents\\Misc Docs\\Video Game Assets\\Modding Assets\\Minecraft Assets\\Figura Avatars\\avatars\\GitHubRepos\\FiguraCharizardTaurAvatar\\textures\\armor\\trims\\flowTrim.png",
+			"name": "flowTrim.png",
+			"folder": "",
+			"namespace": "",
+			"id": "37",
+			"group": "f7acf1b4-085a-5f42-e5fd-f95270e318b3",
+			"width": 128,
+			"height": 256,
+			"uv_width": 128,
+			"uv_height": 256,
+			"particle": false,
+			"use_as_default": false,
+			"layers_enabled": false,
+			"sync_to_project": "",
+			"render_mode": "default",
+			"render_sides": "auto",
+			"frame_time": 1,
+			"frame_order_type": "loop",
+			"frame_order": "",
+			"frame_interpolate": false,
+			"visible": true,
+			"internal": true,
+			"saved": true,
+			"uuid": "62dcbfc3-2e0a-eedf-85c8-a21a26915f90",
+			"relative_path": "../textures/armor/trims/flowTrim.png",
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAEACAYAAAB7+X6nAAAAAXNSR0IArs4c6QAAA4lJREFUeF7t1AENAAAMg7DPv+kLKXMAIds12sBo+uCvAPAICqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7gALADeD4PUAB4AZw/B6gAHADOH4PUAC4ARy/BygA3ACO3wMUAG4Ax+8BCgA3gOP3AAWAG8Dxe4ACwA3g+D1AAeAGcPweoABwAzh+D1AAuAEcvwcoANwAjt8DFABuAMfvAQoAN4Dj9wAFgBvA8XuAAsAN4Pg9QAHgBnD8HqAAcAM4fg9QALgBHL8HKADcAI7fAxQAbgDH7wEKADeA4/cABYAbwPF7ADyAB5CtAQGPLMdNAAAAAElFTkSuQmCC"
 		},
 		{
 			"path": "D:\\Total\\OneDrive\\Documents\\Misc Docs\\Video Game Assets\\Modding Assets\\Minecraft Assets\\Figura Avatars\\avatars\\GitHubRepos\\FiguraCharizardTaurAvatar\\textures\\armor\\trims\\hostTrim.png",
