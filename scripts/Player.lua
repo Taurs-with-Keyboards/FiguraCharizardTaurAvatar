@@ -212,24 +212,6 @@ function events.TICK()
 	
 end
 
-function events.RENDER(delta, context)
-	
-	-- Scales models to fit GUIs better
-	if context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL" then
-		pokemonParts.Player:scale(0.6)
-		pokeballParts.Ball:scale(0.6)
-	end
-	
-end
-
-function events.POST_RENDER(delta, context)
-	
-	-- After scaling models to fit GUIs, immediately scale back
-	pokemonParts.Player:scale(1)
-	pokeballParts.Ball:scale(1)
-	
-end
-
 -- Vanilla skin toggle
 local function setVanillaSkin(boolean)
 	
