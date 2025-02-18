@@ -19342,41 +19342,6 @@
 			}
 		},
 		{
-			"uuid": "dec3847c-1846-f6ef-ef2a-c2758419f813",
-			"name": "crouch",
-			"loop": "loop",
-			"override": false,
-			"length": 0,
-			"snapping": 24,
-			"selected": false,
-			"anim_time_update": "",
-			"blend_weight": "",
-			"start_delay": "",
-			"loop_delay": "",
-			"animators": {
-				"597b04fb-2201-c93c-6fee-9ac41bbce5c8": {
-					"name": "LowerBody",
-					"type": "bone",
-					"keyframes": [
-						{
-							"channel": "position",
-							"data_points": [
-								{
-									"x": "0",
-									"y": "0",
-									"z": "5"
-								}
-							],
-							"uuid": "91cdff8f-18ed-a7aa-e734-692dbe87a4cf",
-							"time": 0,
-							"color": -1,
-							"interpolation": "linear"
-						}
-					]
-				}
-			}
-		},
-		{
 			"uuid": "5e06026c-d7f3-b2b5-f0d5-68b43a29b6e5",
 			"name": "holdLeft",
 			"loop": "loop",

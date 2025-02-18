@@ -20,9 +20,6 @@ end
 -- Squishy smooth torso
 squapi.smoothTorso(pokemonParts.UpperBody, 0.3)
 
--- Squishy crounch
-squapi.crouch(anims.crouch)
-
 -- All tail segments
 local tail = {
 	
@@ -86,9 +83,6 @@ function events.render(delta, context)
 end
 
 function events.RENDER(delta, context)
-	
-	-- Set upper pivot to proper pos when crouching
-	pokemonParts.UpperBody:offsetPivot(anims.crouch:isPlaying() and -pokemonParts.UpperBody:getAnimPos() or 0)
 	
 	-- Offset smooth torso in various parts
 	-- Note: acts strangely with `pokemonParts.body` and when sleeping
