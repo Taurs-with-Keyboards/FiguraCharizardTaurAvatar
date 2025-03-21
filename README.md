@@ -17,6 +17,9 @@ This Figura avatar is a template designed around turning the user into a Chariza
 - The Pokemon Company (Charizard design)
 - Total (Avatar Maker)
 
+### Origin Datapack:
+- [Charizardtaur Origin](https://github.com/PsychoBreadstick/Charizardtaur-Origin) (Created by Psycho Breadstick)
+
 ## Features
 Section under construction
 
