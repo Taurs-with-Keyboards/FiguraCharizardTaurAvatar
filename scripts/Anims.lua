@@ -141,6 +141,7 @@ local blendAnims = {
 	{ anim = anims.airFlying,  ticks = {7,7} }
 }
 	
+-- Apply GS Blending
 for _, blend in ipairs(blendAnims) do
 	blend.anim:blendTime(table.unpack(blend.ticks)):blendCurve("easeOutQuad")
 end
