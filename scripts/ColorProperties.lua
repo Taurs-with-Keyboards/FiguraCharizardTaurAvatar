@@ -4,7 +4,7 @@ local itemCheck    = require("lib.ItemCheck")
 
 -- Config setup
 config:name("CharizardTaur")
-local shiny = config:load("ColorShiny") or false
+local shiny = config:load("ShinyToggle") == nil and vec(client.uuidToIntArray(avatar:getUUID())).x % 4096 == 0 or config:load("ShinyToggle")
 
 -- All shiny parts
 local shinyParts = {
