@@ -4,11 +4,16 @@ local avatar    = require("scripts.Player")
 local armor     = require("scripts.Armor")
 local camera    = require("scripts.CameraControl")
 local arms      = require("scripts.Arms")
-local color     = require("scripts.ColorProperties")
 local fall      = require("scripts.FallSound")
 local fire      = require("scripts.Fire")
 local anims     = require("scripts.Anims")
 local pokeball  = require("scripts.Pokeball")
+
+local s, shiny = pcall(require, "scripts.Shiny")
+if not s then shiny = {} end
+
+local s, c = pcall(require, "scripts.ColorProperties")
+if not s then c = {} end
 
 -- Logs pages for navigation
 local navigation = {}
@@ -75,39 +80,39 @@ function events.TICK()
 	
 	pageActions.avatar
 		:title(toJson(
-			{text = "Avatar Settings", bold = true, color = color.primary}
+			{text = "Avatar Settings", bold = true, color = c.primary}
 		))
-		:hoverColor(color.hover)
+		:hoverColor(c.hover)
 	
 	pageActions.pokemon
 		:title(toJson(
-			{text = "Pokemon Settings", bold = true, color = color.primary}
+			{text = "Pokemon Settings", bold = true, color = c.primary}
 		))
-		:hoverColor(color.hover)
+		:hoverColor(c.hover)
 	
 	pageActions.anims
 		:title(toJson(
-			{text = "Animations", bold = true, color = color.primary}
+			{text = "Animations", bold = true, color = c.primary}
 		))
-		:hoverColor(color.hover)
+		:hoverColor(c.hover)
 	
 	pageActions.armor
 		:title(toJson(
-			{text = "Armor Settings", bold = true, color = color.primary}
+			{text = "Armor Settings", bold = true, color = c.primary}
 		))
-		:hoverColor(color.hover)
+		:hoverColor(c.hover)
 	
 	pageActions.camera
 		:title(toJson(
-			{text = "Camera Settings", bold = true, color = color.primary}
+			{text = "Camera Settings", bold = true, color = c.primary}
 		))
-		:hoverColor(color.hover)
+		:hoverColor(c.hover)
 	
 	pageActions.fire
 		:title(toJson(
-			{text = "Tail Fire Settings", bold = true, color = color.primary}
+			{text = "Tail Fire Settings", bold = true, color = c.primary}
 		))
-		:hoverColor(color.hover)
+		:hoverColor(c.hover)
 	
 end
 
@@ -156,7 +161,7 @@ pages.camera
 -- Pokemon actions
 pages.pokemon
 	:action( -1, arms.holdPage)
-	:action( -1, color.shinyPage)
+	:action( -1, shiny.shinyAct)
 	:action( -1, fall.soundPage)
 	:action( -1, pageActions.fire)
 	:action( -1, backAction)

@@ -109,34 +109,34 @@ local layer = {
 local planes = {
 	
 	-- Left wing
-	pokemonParts.LeftWing1.Membrane,
-	pokemonParts.LeftWing2.Membrane,
-	pokemonParts.LeftWing3.Membrane,
+	pokemonParts.LeftWing1.Membrane_Shiny,
+	pokemonParts.LeftWing2.Membrane_Shiny,
+	pokemonParts.LeftWing3.Membrane_Shiny,
 	
 	-- Right wing
-	pokemonParts.RightWing1.Membrane,
-	pokemonParts.RightWing2.Membrane,
-	pokemonParts.RightWing3.Membrane,
+	pokemonParts.RightWing1.Membrane_Shiny,
+	pokemonParts.RightWing2.Membrane_Shiny,
+	pokemonParts.RightWing3.Membrane_Shiny,
 	
 	-- Left arm claws
-	pokemonParts.LeftFingerFClaw.Claw,
-	pokemonParts.LeftFingerMClaw.Claw,
-	pokemonParts.LeftFingerBClaw.Claw,
+	pokemonParts.LeftFingerFClaw.Claw_Shiny,
+	pokemonParts.LeftFingerMClaw.Claw_Shiny,
+	pokemonParts.LeftFingerBClaw.Claw_Shiny,
 	
 	-- Right arm claws
-	pokemonParts.RightFingerFClaw.Claw,
-	pokemonParts.RightFingerMClaw.Claw,
-	pokemonParts.RightFingerBClaw.Claw,
+	pokemonParts.RightFingerFClaw.Claw_Shiny,
+	pokemonParts.RightFingerMClaw.Claw_Shiny,
+	pokemonParts.RightFingerBClaw.Claw_Shiny,
 	
 	-- Left leg claws
-	pokemonParts.LeftFootClawL.Claw,
-	pokemonParts.LeftFootClawM.Claw,
-	pokemonParts.LeftFootClawR.Claw,
+	pokemonParts.LeftFootClawL.Claw_Shiny,
+	pokemonParts.LeftFootClawM.Claw_Shiny,
+	pokemonParts.LeftFootClawR.Claw_Shiny,
 	
 	-- Right leg claws
-	pokemonParts.RightFootClawL.Claw,
-	pokemonParts.RightFootClawM.Claw,
-	pokemonParts.RightFootClawR.Claw,
+	pokemonParts.RightFootClawL.Claw_Shiny,
+	pokemonParts.RightFootClawM.Claw_Shiny,
+	pokemonParts.RightFootClawR.Claw_Shiny,
 	
 }
 
@@ -194,7 +194,7 @@ function events.TICK()
 	local item  = player:getItem(5)
 	local glint = item.id == "minecraft:elytra" and item:hasGlint() and "GLINT" or "NONE"
 	for _, part in ipairs(wings) do
-		part.Wing:secondaryRenderType(glint)
+		part.Wing_Shiny:secondaryRenderType(glint)
 	end
 	
 	-- Layer toggling

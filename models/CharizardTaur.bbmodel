@@ -15,7 +15,7 @@
 	},
 	"elements": [
 		{
-			"name": "Torso",
+			"name": "Torso_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -58,7 +58,7 @@
 			"uuid": "d19c6271-103a-6c83-cd0d-e6f478dc23d9"
 		},
 		{
-			"name": "Hips",
+			"name": "Hips_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -101,7 +101,7 @@
 			"uuid": "54f0ae8b-d573-bd1a-01bb-59bce5a2342b"
 		},
 		{
-			"name": "Tail",
+			"name": "Tail_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -144,7 +144,7 @@
 			"uuid": "22f4fc64-5bbf-0d61-b76f-8d5f30de79a5"
 		},
 		{
-			"name": "Tail",
+			"name": "Tail_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -187,7 +187,7 @@
 			"uuid": "1735a3a6-42bd-8d90-ab31-5f2ddd791b32"
 		},
 		{
-			"name": "Tail",
+			"name": "Tail_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -230,7 +230,7 @@
 			"uuid": "6dcb2d01-c83d-c1ec-0eea-044c0b42f787"
 		},
 		{
-			"name": "Arm",
+			"name": "Arm_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -275,7 +275,7 @@
 			"uuid": "7434e709-504f-a040-dda9-b50c9c83417d"
 		},
 		{
-			"name": "Arm",
+			"name": "Arm_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -320,7 +320,7 @@
 			"uuid": "e7e29ebd-7095-be22-8c8d-60a42e4edbc3"
 		},
 		{
-			"name": "Claw",
+			"name": "Claw_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -363,7 +363,7 @@
 			"uuid": "2faf6eea-53f4-c2de-1653-b8357c586a1b"
 		},
 		{
-			"name": "Finger",
+			"name": "Finger_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -408,7 +408,7 @@
 			"uuid": "7dce1b59-16ab-354a-b140-fc2aa91e16af"
 		},
 		{
-			"name": "Claw",
+			"name": "Claw_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -451,7 +451,7 @@
 			"uuid": "859148ea-524f-0f1b-c324-82c0983a0609"
 		},
 		{
-			"name": "Finger",
+			"name": "Finger_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -496,7 +496,7 @@
 			"uuid": "0b5d0a99-8690-7bba-51f1-0f523353863c"
 		},
 		{
-			"name": "Claw",
+			"name": "Claw_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -539,7 +539,7 @@
 			"uuid": "5cf4821d-a0a7-8725-71ee-44d92accb537"
 		},
 		{
-			"name": "Finger",
+			"name": "Finger_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -584,7 +584,7 @@
 			"uuid": "3bed708b-518d-58eb-f6b6-a1de542c2e0a"
 		},
 		{
-			"name": "Arm",
+			"name": "Arm_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -627,7 +627,7 @@
 			"uuid": "4154d0a1-92fc-5270-d3fb-4b4088cbe5cc"
 		},
 		{
-			"name": "Arm",
+			"name": "Arm_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -670,7 +670,7 @@
 			"uuid": "d68953ac-3623-19f3-43d3-e7992409a25c"
 		},
 		{
-			"name": "Claw",
+			"name": "Claw_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -713,7 +713,7 @@
 			"uuid": "fa15f26e-6c04-104f-2ac5-1e8456f2798b"
 		},
 		{
-			"name": "Finger",
+			"name": "Finger_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -756,7 +756,7 @@
 			"uuid": "58d47010-d041-e57e-4801-a24fbde8638d"
 		},
 		{
-			"name": "Claw",
+			"name": "Claw_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -799,7 +799,7 @@
 			"uuid": "f75bd60f-aa40-3483-efac-78ae88554501"
 		},
 		{
-			"name": "Finger",
+			"name": "Finger_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -842,7 +842,7 @@
 			"uuid": "fa00f9fb-f763-aa67-849c-46dcd41b61ac"
 		},
 		{
-			"name": "Claw",
+			"name": "Claw_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -885,7 +885,7 @@
 			"uuid": "3b4b2ee4-d90f-899b-08bf-b5ab7989b9e8"
 		},
 		{
-			"name": "Finger",
+			"name": "Finger_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -928,7 +928,7 @@
 			"uuid": "70a6ff0d-fbdb-1d03-f6f4-9bb0fe97a970"
 		},
 		{
-			"name": "Leg",
+			"name": "Leg_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -971,7 +971,7 @@
 			"uuid": "2045a965-c3ca-cb2a-1a33-f641c1bbb74b"
 		},
 		{
-			"name": "Claw",
+			"name": "Claw_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1014,7 +1014,7 @@
 			"uuid": "a40efe75-f389-06e0-52e8-d32d6966056c"
 		},
 		{
-			"name": "Claw",
+			"name": "Claw_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1057,7 +1057,7 @@
 			"uuid": "0ca6719c-5914-4cd8-1a5d-a3c4794444dc"
 		},
 		{
-			"name": "Claw",
+			"name": "Claw_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1100,7 +1100,7 @@
 			"uuid": "d66f5494-0086-61b2-dc83-cc045e722bf2"
 		},
 		{
-			"name": "Foot",
+			"name": "Foot_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1143,7 +1143,7 @@
 			"uuid": "7940b966-a1f6-27ca-5907-fa0b0d38964c"
 		},
 		{
-			"name": "Leg",
+			"name": "Leg_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1186,7 +1186,7 @@
 			"uuid": "6ec3ec74-46b7-1941-cee7-e64ab87a3766"
 		},
 		{
-			"name": "Claw",
+			"name": "Claw_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1229,7 +1229,7 @@
 			"uuid": "10ab8d40-3a3f-5e9b-001a-c859b741b287"
 		},
 		{
-			"name": "Claw",
+			"name": "Claw_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1272,7 +1272,7 @@
 			"uuid": "6d124bf3-ef4d-1497-1eef-668787b23373"
 		},
 		{
-			"name": "Claw",
+			"name": "Claw_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1315,7 +1315,7 @@
 			"uuid": "ac893574-707c-55ef-9363-51626ca90962"
 		},
 		{
-			"name": "Foot",
+			"name": "Foot_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1358,7 +1358,7 @@
 			"uuid": "d8ce0828-ba70-66d1-8721-742091d59ffc"
 		},
 		{
-			"name": "Membrane",
+			"name": "Membrane_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1401,7 +1401,7 @@
 			"uuid": "a64048fc-941d-2df0-3226-502ada92cc39"
 		},
 		{
-			"name": "Membrane",
+			"name": "Membrane_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1443,7 +1443,7 @@
 			"uuid": "6cbe2138-cee7-67bd-6871-aa535611a78b"
 		},
 		{
-			"name": "Membrane",
+			"name": "Membrane_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1488,7 +1488,7 @@
 			"uuid": "4a981f0c-7da9-af6a-d1e7-7edff5945f35"
 		},
 		{
-			"name": "Membrane",
+			"name": "Membrane_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1533,7 +1533,7 @@
 			"uuid": "5b84edbc-4842-3730-d0a9-5b283669e336"
 		},
 		{
-			"name": "Membrane",
+			"name": "Membrane_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1578,7 +1578,7 @@
 			"uuid": "331f063d-c4b4-1974-9b70-b928b3c674cd"
 		},
 		{
-			"name": "Membrane",
+			"name": "Membrane_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -2148,7 +2148,7 @@
 			"uuid": "0ec4ba35-cd62-fef3-b029-5b9e741c1f0e"
 		},
 		{
-			"name": "Merge",
+			"name": "Merge_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -2191,7 +2191,7 @@
 			"uuid": "d4a71762-1024-ed13-acd8-f7380da0ef2d"
 		},
 		{
-			"name": "Horn",
+			"name": "Horn_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -2236,7 +2236,7 @@
 			"uuid": "01e7422a-08e2-ee64-ed80-0ad4fc7af6ad"
 		},
 		{
-			"name": "Horn",
+			"name": "Horn_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -2367,7 +2367,7 @@
 			"uuid": "6156964d-269d-91dc-4e74-e78969c4e8dc"
 		},
 		{
-			"name": "Horn",
+			"name": "Horn_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -2378,7 +2378,6 @@
 			"to": [-2.5, 8, 11.5],
 			"autouv": 0,
 			"color": 0,
-			"visibility": false,
 			"shade": false,
 			"mirror_uv": true,
 			"origin": [0, 0, 0],
@@ -2413,7 +2412,7 @@
 			"uuid": "df74dbb7-7c0b-1476-452e-7185f2183399"
 		},
 		{
-			"name": "Horn",
+			"name": "Horn_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -2424,7 +2423,6 @@
 			"to": [4, 8, 11.5],
 			"autouv": 0,
 			"color": 0,
-			"visibility": false,
 			"origin": [0, 0, 0],
 			"uv_offset": [81, 49],
 			"faces": {
@@ -2990,7 +2988,7 @@
 			"uuid": "bf78fd81-1195-8e8b-274f-954fb9535f90"
 		},
 		{
-			"name": "Layer",
+			"name": "Layer_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -3001,7 +2999,6 @@
 			"to": [-4.5, 17, 4.5],
 			"autouv": 0,
 			"color": 0,
-			"visibility": false,
 			"inflate": 0.25,
 			"origin": [0, 0, 0],
 			"uv_offset": [49, 43],
@@ -7837,7 +7834,7 @@
 			"uuid": "6ace2bfe-8180-2684-1a85-da003d657cd1"
 		},
 		{
-			"name": "Wing",
+			"name": "Wing_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -8378,7 +8375,7 @@
 			"uuid": "a2d603f6-cd87-031c-e2e2-27096497efa5"
 		},
 		{
-			"name": "Wing",
+			"name": "Wing_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -10195,7 +10192,7 @@
 			"uuid": "3d7f62b1-2c5d-7c15-9cbe-212e683e195f"
 		},
 		{
-			"name": "Wing",
+			"name": "Wing_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -11110,7 +11107,7 @@
 			"uuid": "f0263014-fb8b-c0d4-df7b-186c4d3327f8"
 		},
 		{
-			"name": "Wing",
+			"name": "Wing_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -11651,7 +11648,7 @@
 			"uuid": "a13c3186-014c-0168-e679-1c874dc2a92a"
 		},
 		{
-			"name": "Wing",
+			"name": "Wing_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -12566,7 +12563,7 @@
 			"uuid": "2f22381f-51ee-c206-092c-d434004950b9"
 		},
 		{
-			"name": "Wing",
+			"name": "Wing_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -16979,6 +16976,66 @@
 			},
 			"name": "Armor Trims",
 			"is_material": false
+		}
+	],
+	"collections": [
+		{
+			"uuid": "35a6e9e5-c923-9994-7321-2740a6833e42",
+			"name": "shinyParts",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"d19c6271-103a-6c83-cd0d-e6f478dc23d9",
+				"54f0ae8b-d573-bd1a-01bb-59bce5a2342b",
+				"22f4fc64-5bbf-0d61-b76f-8d5f30de79a5",
+				"1735a3a6-42bd-8d90-ab31-5f2ddd791b32",
+				"6dcb2d01-c83d-c1ec-0eea-044c0b42f787",
+				"7434e709-504f-a040-dda9-b50c9c83417d",
+				"e7e29ebd-7095-be22-8c8d-60a42e4edbc3",
+				"2faf6eea-53f4-c2de-1653-b8357c586a1b",
+				"7dce1b59-16ab-354a-b140-fc2aa91e16af",
+				"859148ea-524f-0f1b-c324-82c0983a0609",
+				"0b5d0a99-8690-7bba-51f1-0f523353863c",
+				"5cf4821d-a0a7-8725-71ee-44d92accb537",
+				"3bed708b-518d-58eb-f6b6-a1de542c2e0a",
+				"4154d0a1-92fc-5270-d3fb-4b4088cbe5cc",
+				"d68953ac-3623-19f3-43d3-e7992409a25c",
+				"fa15f26e-6c04-104f-2ac5-1e8456f2798b",
+				"58d47010-d041-e57e-4801-a24fbde8638d",
+				"f75bd60f-aa40-3483-efac-78ae88554501",
+				"fa00f9fb-f763-aa67-849c-46dcd41b61ac",
+				"3b4b2ee4-d90f-899b-08bf-b5ab7989b9e8",
+				"70a6ff0d-fbdb-1d03-f6f4-9bb0fe97a970",
+				"2045a965-c3ca-cb2a-1a33-f641c1bbb74b",
+				"a40efe75-f389-06e0-52e8-d32d6966056c",
+				"0ca6719c-5914-4cd8-1a5d-a3c4794444dc",
+				"d66f5494-0086-61b2-dc83-cc045e722bf2",
+				"7940b966-a1f6-27ca-5907-fa0b0d38964c",
+				"6ec3ec74-46b7-1941-cee7-e64ab87a3766",
+				"10ab8d40-3a3f-5e9b-001a-c859b741b287",
+				"6d124bf3-ef4d-1497-1eef-668787b23373",
+				"ac893574-707c-55ef-9363-51626ca90962",
+				"d8ce0828-ba70-66d1-8721-742091d59ffc",
+				"a64048fc-941d-2df0-3226-502ada92cc39",
+				"6cbe2138-cee7-67bd-6871-aa535611a78b",
+				"4a981f0c-7da9-af6a-d1e7-7edff5945f35",
+				"5b84edbc-4842-3730-d0a9-5b283669e336",
+				"331f063d-c4b4-1974-9b70-b928b3c674cd",
+				"f92d1d86-3c73-71ed-f41c-e1af4de51415",
+				"d4a71762-1024-ed13-acd8-f7380da0ef2d",
+				"01e7422a-08e2-ee64-ed80-0ad4fc7af6ad",
+				"b0bc5d22-d659-9655-6d84-0fdbf2cb6673",
+				"df74dbb7-7c0b-1476-452e-7185f2183399",
+				"a72f8051-b8ea-2c30-90b8-fa1f9d5c2e9a",
+				"f82fddf9-59d5-09d7-7470-b11cf2578b3f",
+				"a2d603f6-cd87-031c-e2e2-27096497efa5",
+				"3d7f62b1-2c5d-7c15-9cbe-212e683e195f",
+				"f0263014-fb8b-c0d4-df7b-186c4d3327f8",
+				"a13c3186-014c-0168-e679-1c874dc2a92a",
+				"2f22381f-51ee-c206-092c-d434004950b9",
+				"f721de54-535a-961a-2650-32e1bdd4c589"
+			],
+			"visibility": false
 		}
 	],
 	"animations": [
