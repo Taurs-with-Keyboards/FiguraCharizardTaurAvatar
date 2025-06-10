@@ -201,25 +201,29 @@ t.eyePage = action_wheel:newAction()
 function events.TICK()
 	
 	t.posPage
-		:title(toJson
-			{"",
-			{text = "Camera Position Toggle\n\n", bold = true, color = color.primary},
-			{text = "Sets the camera position to where your avatar's head is.\n\n", color = color.secondary},
-			{text = "To prevent x-ray, the camera will reset to its default position if inside a block.", color = "red"}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Camera Position Toggle\n\n", bold = true, color = color.primary},
+				{text = "Sets the camera position to where your avatar's head is.\n\n", color = color.secondary},
+				{text = "To prevent x-ray, the camera will reset to its default position if inside a block.", color = "red"}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
 	t.eyePage
-		:title(toJson
-			{"",
-			{text = "Eye Position Toggle\n\n", bold = true, color = color.primary},
-			{text = "Sets the eye position to match the avatar's head.\nRequires camera position toggle.\n\n", color = color.secondary},
-			{text = "WARNING: ", bold = true, color = "dark_red"},
-			{text = "This feature is dangerous!\nIt can and will be flagged on servers with anticheat!\nFurthermore, \"In Wall\" damage is possible. (The x-ray prevention will try to avoid this)\nThis setting will ", color = "red"},
-			{text = "NOT ", bold = true, color = "red"},
-			{text = "be saved between sessions for your safety.\n\nPlease use with extreme caution!", color = "red"}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Eye Position Toggle\n\n", bold = true, color = color.primary},
+				{text = "Sets the eye position to match the avatar's head.\nRequires camera position toggle.\n\n", color = color.secondary},
+				{text = "WARNING: ", bold = true, color = "dark_red"},
+				{text = "This feature is dangerous!\nIt can and will be flagged on servers with anticheat!\nFurthermore, \"In Wall\" damage is possible. (The x-ray prevention will try to avoid this)\nThis setting will ", color = "red"},
+				{text = "NOT ", bold = true, color = "red"},
+				{text = "be saved between sessions for your safety.\n\nPlease use with extreme caution!", color = "red"}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	

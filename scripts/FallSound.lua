@@ -75,11 +75,13 @@ t.soundPage = action_wheel:newAction()
 function events.TICK()
 	
 	t.soundPage
-		:title(toJson
-			{"",
-			{text = "Toggle Falling Sound\n\n", bold = true, color = color.primary},
-			{text = "Toggles pokeball sound effects when landing on the ground.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Falling Sound\n\n", bold = true, color = color.primary},
+				{text = "Toggles pokeball sound effects when landing on the ground.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	

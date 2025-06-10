@@ -74,48 +74,48 @@ local pageActions = {
 function events.TICK()
 	
 	pageActions.avatar
-		:title(toJson
+		:title(toJson(
 			{text = "Avatar Settings", bold = true, color = color.primary}
-		)
+		))
 		:hoverColor(color.hover)
 	
 	pageActions.pokemon
-		:title(toJson
+		:title(toJson(
 			{text = "Pokemon Settings", bold = true, color = color.primary}
-		)
+		))
 		:hoverColor(color.hover)
 	
 	pageActions.anims
-		:title(toJson
+		:title(toJson(
 			{text = "Animations", bold = true, color = color.primary}
-		)
+		))
 		:hoverColor(color.hover)
 	
 	pageActions.armor
-		:title(toJson
+		:title(toJson(
 			{text = "Armor Settings", bold = true, color = color.primary}
-		)
+		))
 		:hoverColor(color.hover)
 	
 	pageActions.camera
-		:title(toJson
+		:title(toJson(
 			{text = "Camera Settings", bold = true, color = color.primary}
-		)
+		))
 		:hoverColor(color.hover)
 	
 	pageActions.fire
-		:title(toJson
+		:title(toJson(
 			{text = "Tail Fire Settings", bold = true, color = color.primary}
-		)
+		))
 		:hoverColor(color.hover)
 	
 end
 
 -- Action back to previous page
 local backAction = action_wheel:newAction()
-	:title(toJson
+	:title(toJson(
 		{text = "Go Back?", bold = true, color = "red"}
-	)
+	))
 	:hoverColor(vectors.hexToRGB("FF5555"))
 	:item(itemCheck("barrier"))
 	:onLeftClick(function() ascend() end)

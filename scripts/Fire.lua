@@ -346,35 +346,41 @@ t.effectsPage = action_wheel:newAction()
 function events.TICK()
 	
 	t.damagePage
-		:title(toJson
-			{"",
-			{text = "Toggle Fire Damage Indicator\n\n", bold = true, color = color.primary},
-			{text = "Allow the tail fire to indicate overall health.\n\n", color = color.secondary},
-			{text = "This feature can be intensive, and will require\n\"", color = "red"},
-			{text = "Max", color = "dark_purple"},
-			{text = "\" permission level to see gradual change.", color = "red"}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Fire Damage Indicator\n\n", bold = true, color = color.primary},
+				{text = "Allow the tail fire to indicate overall health.\n\n", color = color.secondary},
+				{text = "This feature can be intensive, and will require\n\"", color = "red"},
+				{text = "Max", color = "dark_purple"},
+				{text = "\" permission level to see gradual change.", color = "red"}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
 	t.fuelPage
-		:title(toJson
-			{"",
-			{text = "Set Fire Reignition/Timer\n\n", bold = true, color = color.primary},
-			{text = "Sets the ability for your tail fire to auto-reignite, and how long until full power.\n\n", color = color.secondary},
-			{text = "Current ingition timer: ", bold = true, color = color.secondary},
-			{text = (reignite and ((maxTimer / 20).." Seconds") or "Cannot auto-reignite").."\n\n", color = not reignite and "red"},
-			{text = "Scroll to adjust the timer.\nRight click resets timer to 10 seconds.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Set Fire Reignition/Timer\n\n", bold = true, color = color.primary},
+				{text = "Sets the ability for your tail fire to auto-reignite, and how long until full power.\n\n", color = color.secondary},
+				{text = "Current ingition timer: ", bold = true, color = color.secondary},
+				{text = (reignite and ((maxTimer / 20).." Seconds") or "Cannot auto-reignite").."\n\n", color = not reignite and "red"},
+				{text = "Scroll to adjust the timer.\nRight click resets timer to 10 seconds.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
 	t.effectsPage
-		:title(toJson
-			{"",
-			{text = "Toggle Fire Effects\n\n", bold = true, color = color.primary},
-			{text = "Allow the tail fire to create particles and sounds.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Fire Effects\n\n", bold = true, color = color.primary},
+				{text = "Allow the tail fire to create particles and sounds.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	

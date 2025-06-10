@@ -275,20 +275,24 @@ t.modelPage = action_wheel:newAction()
 function events.TICK()
 	
 	t.vanillaSkinPage
-		:title(toJson
-			{"",
-			{text = "Toggle Vanilla Texture\n\n", bold = true, color = color.primary},
-			{text = "Toggles the usage of your vanilla skin for the upper body.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Vanilla Texture\n\n", bold = true, color = color.primary},
+				{text = "Toggles the usage of your vanilla skin for the upper body.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
 	t.modelPage
-		:title(toJson
-			{"",
-			{text = "Toggle Model Shape\n\n", bold = true, color = color.primary},
-			{text = "Adjust the model shape to use Default or Slim Proportions.\nWill be overridden by the vanilla skin toggle.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Model Shape\n\n", bold = true, color = color.primary},
+				{text = "Adjust the model shape to use Default or Slim Proportions.\nWill be overridden by the vanilla skin toggle.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	

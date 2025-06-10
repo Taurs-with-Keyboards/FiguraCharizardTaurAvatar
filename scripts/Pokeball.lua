@@ -241,11 +241,13 @@ t.togglePage = action_wheel:newAction()
 function events.TICK()
 	
 	t.togglePage
-		:title(toJson
-			{"",
-			{text = "Toggle Pokeball\n\n", bold = true, color = color.primary},
-			{text = "Auto activates/deactivates on vehicles.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Pokeball\n\n", bold = true, color = color.primary},
+				{text = "Auto activates/deactivates on vehicles.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(toggle)

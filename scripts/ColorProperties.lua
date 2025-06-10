@@ -115,11 +115,13 @@ t.shinyPage = action_wheel:newAction()
 function events.TICK()
 	
 	t.shinyPage
-		:title(toJson
-			{"",
-			{text = "Toggle Shiny Textures\n\n", bold = true, color = t.primary},
-			{text = "Set the lower body to use shiny textures over the default textures.", color = t.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Shiny Textures\n\n", bold = true, color = t.primary},
+				{text = "Set the lower body to use shiny textures over the default textures.", color = t.secondary}
+			}
+		))
 		:hoverColor(t.hover)
 		:toggleColor(t.active)
 	
