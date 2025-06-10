@@ -5,7 +5,7 @@
 		"box_uv": false
 	},
 	"visible_box": [7, 4, 1],
-	"variable_placeholders": "Fire rots:\n# groundWalk\n## x: -20\n## y: 0\n## z: 0\n# airFlying\n## x: -math.sin(math.rad(({...})[2]:getTime()*405-180))*16-68\n## y: 0\n## z: math.sin(math.rad(({...})[2]:getTime()*810-180))*8+math.sin(math.rad(({...})[2]:getTime()*135-90))*6+1\n# groundWalk\n## x: math.sin(math.rad(({...})[2]:getTime()*540-90))*3+math.sin(math.rad(({...})[2]:getTime()*135-90))*3-1\n## y: 0\n## z: math.sin(math.rad(({...})[2]:getTime()*270-150))*6+math.sin(math.rad(({...})[2]:getTime()*135-90))*3-34\n",
+	"variable_placeholders": "Fire rots:\n# groundWalk\n## x: -20\n## y: 0\n## z: 0\n# airFlying\n## x: -math.sin(math.rad(({...})[2]:getTime()*405-180))*16-68\n## y: 0\n## z: math.sin(math.rad(({...})[2]:getTime()*810-180))*8+math.sin(math.rad(({...})[2]:getTime()*135-90))*6+1\n# groundWalk\n## x: math.sin(math.rad(({...})[2]:getTime()*540-90))*3+math.sin(math.rad(({...})[2]:getTime()*135-90))*3-1\n## y: 0\n## z: math.sin(math.rad(({...})[2]:getTime()*270-150))*6+math.sin(math.rad(({...})[2]:getTime()*135-90))*3-34",
 	"variable_placeholder_buttons": [],
 	"timeline_setups": [],
 	"unhandled_root_fields": {},
@@ -19882,5 +19882,5 @@
 			}
 		}
 	],
-	"animation_variable_placeholders": "Fire rots:\n# groundWalk\n## x: -20\n## y: 0\n## z: 0\n# airFlying\n## x: -math.sin(math.rad(({...})[2]:getTime()*405-180))*16-68\n## y: 0\n## z: math.sin(math.rad(({...})[2]:getTime()*810-180))*8+math.sin(math.rad(({...})[2]:getTime()*135-90))*6+1\n# groundWalk\n## x: math.sin(math.rad(({...})[2]:getTime()*540-90))*3+math.sin(math.rad(({...})[2]:getTime()*135-90))*3-1\n## y: 0\n## z: math.sin(math.rad(({...})[2]:getTime()*270-150))*6+math.sin(math.rad(({...})[2]:getTime()*135-90))*3-34\n"
+	"animation_variable_placeholders": "Fire rots:\n# groundWalk\n## x: -20\n## y: 0\n## z: 0\n# airFlying\n## x: -math.sin(math.rad(({...})[2]:getTime()*405-180))*16-68\n## y: 0\n## z: math.sin(math.rad(({...})[2]:getTime()*810-180))*8+math.sin(math.rad(({...})[2]:getTime()*135-90))*6+1\n# groundWalk\n## x: math.sin(math.rad(({...})[2]:getTime()*540-90))*3+math.sin(math.rad(({...})[2]:getTime()*135-90))*3-1\n## y: 0\n## z: math.sin(math.rad(({...})[2]:getTime()*270-150))*6+math.sin(math.rad(({...})[2]:getTime()*135-90))*3-34"
 }
