@@ -7800,12 +7800,13 @@
 			"light_emission": 0,
 			"render_order": "default",
 			"allow_mirror_modeling": true,
-			"from": [-5, 28, 2],
-			"to": [5, 44, 3],
+			"from": [-5, 27, 2],
+			"to": [5, 43, 3],
 			"autouv": 0,
 			"color": 0,
 			"visibility": false,
-			"origin": [0, 0, 0],
+			"rotation": [0, -180, 0],
+			"origin": [0, 43, 2.5],
 			"faces": {
 				"north": {
 					"uv": [1, 1, 11, 17],
@@ -14516,7 +14517,7 @@
 								"5529e933-219c-cf3b-87df-b84b8b9f76e5",
 								{
 									"name": "Cape",
-									"origin": [0, 44, 2],
+									"origin": [0, 43, 2],
 									"color": 0,
 									"uuid": "3f52de85-f356-591d-9cee-f05c02dfd038",
 									"export": true,
