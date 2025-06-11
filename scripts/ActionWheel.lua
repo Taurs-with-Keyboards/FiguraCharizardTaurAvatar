@@ -1,6 +1,9 @@
 -- Required scripts
 local itemCheck = require("lib.ItemCheck")
-local avatar    = require("scripts.Player")
+
+local s, avatar = pcall(require, "scripts.Player")
+if not s then avatar = {} end
+
 local armor     = require("scripts.Armor")
 local camera    = require("scripts.CameraControl")
 local arms      = require("scripts.Arms")
@@ -137,8 +140,8 @@ pages.main
 
 -- Avatar actions
 pages.avatar
-	:action( -1, avatar.vanillaSkinPage)
-	:action( -1, avatar.modelPage)
+	:action( -1, avatar.vanillaSkinAct)
+	:action( -1, avatar.modelAct)
 	:action( -1, pageActions.armor)
 	:action( -1, pageActions.camera)
 	:action( -1, backAction)
