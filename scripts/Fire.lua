@@ -1,9 +1,8 @@
 -- Required scripts
-local pokemonParts  = require("lib.GroupIndex")(models.CharizardTaur)
-local pokeballParts = require("lib.GroupIndex")(models.Pokeball)
-local average       = require("lib.Average")
-local itemCheck     = require("lib.ItemCheck")
-local color         = require("scripts.ColorProperties")
+local pokemonParts = require("lib.GroupIndex")(models.CharizardTaur)
+local average      = require("lib.Average")
+local itemCheck    = require("lib.ItemCheck")
+local color        = require("scripts.ColorProperties")
 
 -- Config setup
 config:name("CharizardTaur")
@@ -91,7 +90,7 @@ end
 
 function events.TICK()
 	
-	if average(pokeballParts.Pokeball:getScale():unpack()) < 0.25 then
+	if average(pokemonParts.PokeBall:getAnimScale():unpack()) < 0.25 then
 		-- Variables
 		local firePos = pokemonParts.Fire:partToWorldMatrix():apply()
 		local block   = world.getBlockState(firePos)

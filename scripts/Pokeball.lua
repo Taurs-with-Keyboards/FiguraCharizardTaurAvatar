@@ -1,256 +1,291 @@
--- Required scripts
-local pokemonParts  = require("lib.GroupIndex")(models.CharizardTaur)
-local pokeballParts = require("lib.GroupIndex")(models.Pokeball)
-local squapi        = require("lib.SquAPIOld")
-local itemCheck     = require("lib.ItemCheck")
-local color         = require("scripts.ColorProperties")
+-- Required script
+local parts = require("lib.PartsAPI")
 
--- Animations setup
-local anims = animations.Pokeball
+-- Pokeball part
+local pokeBall = parts.group.PokeBall
+
+-- Kills script if it cannot find pokeBall
+if not pokeBall then return {} end
+
+-- Animation setup
+local anims = animations.CharizardTaur
+local openAnim  = anims.pokeballOpen
+local closeAnim = anims.pokeballClose
 
 -- Config setup
 config:name("CharizardTaur")
 local toggle = config:load("PokeballToggle") or false
 
--- Variables setup
-local vehicle
-local vType
-local isRider
-local hasRider
+-- Variables
 local isInBall  = toggle
 local wasInBall = toggle
 local staticYaw = 0
 
--- Lerp scale table
-local scale = {
-	current    = 0,
-	nextTick   = 0,
-	target     = 0,
-	currentPos = 0
-}
-
--- Set lerp start on init
-function events.ENTITY_INIT()
+-- Play pokeball sound
+local function pokeballSound(state)
 	
-	staticYaw = -player:getBodyYaw()
-	
-	local apply = toggle and 0 or 1
-	for k, v in pairs(scale) do
-		scale[k] = apply
+	if player:isLoaded() then
+		sounds:playSound("cobblemon:poke_ball."..(state and "recall" or "send_out"), player:getPos(), 0.25)
 	end
 	
 end
 
-function events.TICK()
+-- Deep copy
+local function deepCopy(model)
+	local copy = model:copy(model:getName().."Copy")
+	for _, child in pairs(copy:getChildren()) do
+		copy:removeChild(child):addChild(deepCopy(child))
+	end
+	return copy
+end
+
+-- Deep copy animations
+local function deepAnim(model, original)
+	local pos, rot, scale = original:getAnimPos(), original:getAnimRot(), original:getAnimScale()
+	model:pos(pos):offsetRot(rot):scale(scale)
+	for i, child in pairs(model:getChildren()) do
+		if child:getType() == "GROUP" then
+			deepAnim(child, original:getChildren()[i])
+		end
+	end
+end
+
+-- Play an animation based on toggle
+do
+	
+	-- Start with an animation
+	local startAnim = toggle and closeAnim or openAnim
+	startAnim:play()
+	
+	-- Set each pokeball animation to be at the end of their length
+	openAnim:time(openAnim:getLength())
+	closeAnim:time(closeAnim:getLength())
+	
+end
+
+-- Model variables
+local worldPart = models:newPart("world", "WORLD")
+local worldBall = deepCopy(parts.group.PokeBall)
+
+-- Set pokeball copy to world
+worldPart:addChild(worldBall)
+
+function events.ENTITY_INIT()
+	
+	staticYaw = -player:getBodyYaw() + 180
+	
+end
+
+function events.RENDER(delta, context)
 	
 	-- Variables
-	vehicle  = player:getVehicle() or false
-	vType    = vehicle and vehicle:getType() or false
-	isRider  = vehicle and vehicle:getControllingPassenger() and vehicle:getControllingPassenger():getName() ~= player:getName()
-	hasRider = (vehicle and #vehicle:getPassengers() > 1 and not isRider) or #player:getPassengers() > 0
+	local hasRider = #player:getPassengers() > 0
+	local menu = context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL"
 	
-	-- Pokeball check
-	isInBall =
-		toggle and not hasRider
-		or vehicle
-		or isRider
+	-- Pokeball state
+	isInBall = toggle and not hasRider
 	
-	-- Compare states
+	-- Activate pokeball
 	if isInBall ~= wasInBall then
-		-- Pokeball sounds
-		if isInBall     then sounds:stopSound() sounds:playSound("cobblemon:poke_ball.recall",   player:getPos(), 0.15) end
-		if not isInBall then sounds:stopSound() sounds:playSound("cobblemon:poke_ball.send_out", player:getPos(), 0.15) end
 		
+		anims.pokeballOpen:playing(not isInBall)
+		anims.pokeballClose:playing(isInBall)
+		
+		pokeballSound(isInBall)
+		
+		-- Set pokeball rotation
 		if isInBall then 
-			staticYaw = -player:getBodyYaw()
+			staticYaw = -player:getBodyYaw(delta) + 180
 		end
 		
-		-- Animations
-		anims.open:playing(not isInBall)
-		anims.close:playing(isInBall)
 	end
 	
-	-- Scaling lerp
-	scale.current  = scale.nextTick
-	scale.nextTick = math.lerp(scale.nextTick, scale.target, 0.2)
+	-- Copy animations from original
+	deepAnim(worldBall, parts.group.PokeBall)
 	
-	-- Store previous states
+	-- Apply
+	parts.group.PokeBall
+		:visible(menu)
+		:offsetRot(0, 0, 0)
+	worldBall
+		:pos(worldBall:getPos() + player:getPos(delta) * 16)
+		:offsetRot(worldBall:getOffsetRot() + vec(0, staticYaw, 0))
+		:visible(not renderer:isFirstPerson())
+		:light(world.getLightLevel(player:getPos(delta) + vec(0, 0.5, 0)))
+	
+	-- Determine color based on player scale
+	local pokeColor = parts.group.Player:getAnimScale():lengthSquared() / 3
+	
+	-- Apply Color
+	parts.group.Player:color(1, pokeColor, pokeColor)
+	
+	-- Store last state
 	wasInBall = isInBall
 	
 end
 
--- Rendering stuff
-function events.RENDER(delta, context)
+-- Pokeball toggle
+function pings.setPokeball(boolean)
 	
-	-- Scaling target and lerp
-	scale.target     = isInBall and 0 or 1
-	scale.currentPos = math.lerp(scale.current, scale.nextTick, delta)
+	-- If animations both animations are done playing, allow the switching of animations
+	local canToggle = openAnim:getTime() == openAnim:getLength() and closeAnim:getTime() == closeAnim:getLength()
 	
-	local firstPerson = context == "FIRST_PERSON"
-	local menus       = context == "PAPERDOLL" or context == "MINECRAFT_GUI" or context == "FIGURA_GUI"
-	
-	pokemonParts.CharizardTaur
-		:scale(scale.currentPos)
-		:color(not firstPerson and vec(1, scale.currentPos, scale.currentPos) or 1)
-	
-	pokeballParts.Pokeball
-		:rot(menus and 0 or vec(0, player:getBodyYaw(delta) + staticYaw, 0))
-		:scale(math.map(scale.currentPos, 0, 1, vType == "minecraft:player" and 0.5 or 1, 0))
-		:visible(menus or not renderer:isFirstPerson())
-	
-end
-
--- Pokeball toggler
-local function setPokeball(boolean)
-	
-	if player:isLoaded() and (toggle or player:getVelocity().xz:length() == 0) then
+	if canToggle then
 		toggle = boolean
 		config:save("PokeballToggle", toggle)
 	end
 	
 end
 
+-- Bob animations
+local bobs = {}
+for _, child in ipairs(animations:getAnimations()) do
+	if child:getName():find("pokeballBob") then
+		table.insert(bobs, child)
+	end
+end
+
+-- Pokeball bob
+function pings.playPokeballBob(x)
+	
+	bobs[x]:play()
+	
+	if player:isLoaded() then
+		sounds:playSound("cobblemon:poke_ball.shake", player:getPos(), 0.35)
+	end
+	
+end
+
+-- Pokeball bounce
+function pings.playPokeballBounce()
+	
+	anims.pokeballBounce:play()
+	
+	if player:isLoaded() then
+		sounds:playSound("cobblemon:poke_ball.shake", player:getPos(), 0.35)
+	end
+	
+end
+
+-- Pokeball bounce
+function pings.playPokeballInteract()
+	
+	anims.pokeballInteract:restart()
+	
+	if player:isLoaded() then
+		sounds:playSound("cobblemon:poke_ball.capture_succeeded", player:getPos(), 0.35)
+	end
+	
+end
+
 -- Sync variable
-local function syncPokeball(a)
+function pings.syncPokeball(a)
 	
 	toggle = a
 	
 end
 
--- Ping setup
-pings.setPokeball  = setPokeball
-pings.syncPokeball = syncPokeball
+-- Host only instructions
+if not host:isHost() then return end
 
--- Keybind
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local s, c = pcall(require, "scripts.ColorProperties")
+if not s then c = {} end
+
+-- Check if any bob animations are playing
+local function checkBob()
+	
+	local playing = false
+	
+	if #bobs == 0 then return true end
+	
+	for _, bob in ipairs(bobs) do
+		if bob:isPlaying() then
+			playing = true
+			break
+		end
+	end
+	
+	return playing
+	
+end
+
+-- Pokeball Keybind
 local toggleBind   = config:load("PokeballToggleKeybind") or "key.keyboard.keypad.1"
 local setToggleKey = keybinds:newKeybind("Pokeball Toggle"):onPress(function() pings.setPokeball(not toggle) end):key(toggleBind)
 
--- Keybind updater
+-- Movement/Action keybinds
+local setForwardKey = keybinds:newKeybind("Pokeball Forward Animation"):onPress(function() if not checkBob() then pings.playPokeballBob(math.random(1,#bobs)) end return true end)
+local setBackKey    = keybinds:newKeybind("Pokeball Back Animation")   :onPress(function() if not checkBob() then pings.playPokeballBob(math.random(1,#bobs)) end return true end)
+local setLeftKey    = keybinds:newKeybind("Pokeball Left Animation")   :onPress(function() if not checkBob() then pings.playPokeballBob(math.random(1,#bobs)) end return true end)
+local setRightKey   = keybinds:newKeybind("Pokeball Right Animation")  :onPress(function() if not checkBob() then pings.playPokeballBob(math.random(1,#bobs)) end return true end)
+local setJumpKey    = keybinds:newKeybind("Pokeball Jump Animation")   :onPress(function() if not anims.pokeballBounce:isPlaying() then pings.playPokeballBounce() end return true end)
+local setCrouchKey  = keybinds:newKeybind("Pokeball Crouch Animation") :onPress(function() return true end)
+local setAttackKey  = keybinds:newKeybind("Pokeball Attack Animation") :onPress(function() if not action_wheel:isEnabled() then pings.playPokeballInteract() end return true end)
+local setUseKey     = keybinds:newKeybind("Pokeball Use Animation")    :onPress(function() if not action_wheel:isEnabled() then pings.playPokeballInteract() end return true end)
+
+-- Keybind updaters
 function events.TICK()
 	
-	local key = setToggleKey:getKey()
-	if key ~= toggleBind then
-		toggleBind = key
-		config:save("PokeballToggleKeybind", key)
+	local toggleKey = setToggleKey:getKey()
+	if toggleKey ~= toggleBind then
+		toggleBind = toggleKey
+		config:save("PokeballToggleKeybind", toggleKey)
 	end
+	
+	-- Force keybinds
+	setForwardKey:key(keybinds:getVanillaKey("key.forward")):enabled(isInBall)
+	setBackKey   :key(keybinds:getVanillaKey("key.back"))   :enabled(isInBall)
+	setLeftKey   :key(keybinds:getVanillaKey("key.left"))   :enabled(isInBall)
+	setRightKey  :key(keybinds:getVanillaKey("key.right"))  :enabled(isInBall)
+	setJumpKey   :key(keybinds:getVanillaKey("key.jump"))   :enabled(isInBall)
+	setCrouchKey :key(keybinds:getVanillaKey("key.sneak"))  :enabled(isInBall)
+	setAttackKey :key(keybinds:getVanillaKey("key.attack")) :enabled(isInBall)
+	setUseKey    :key(keybinds:getVanillaKey("key.use"))    :enabled(isInBall)
 	
 end
 
 -- Sync on tick
-if host:isHost() then
-	function events.TICK()
-		
-		if world.getTime() % 200 == 0 then
-			pings.syncPokeball(toggle)
-		end
-	
-	end
-end
-
-local lean        = 15
-local leanForward = 0
-local leanBack    = 0
-local leanLeft    = 0
-local leanRight   = 0
-
--- Keybind animations/blockers
-local function forwardTilt(bool)
-	
-	leanForward = bool and lean or 0
-	
-end
-
-local function backTilt(bool)
-	
-	leanBack = bool and lean or 0
-	
-end
-
-local function leftTilt(bool)
-	
-	leanLeft = bool and lean or 0
-	
-end
-
-local function rightTilt(bool)
-	
-	leanRight = bool and lean or 0
-	
-end
-
--- Keybind ping setup
-pings.pokeballForwardTilt = forwardTilt
-pings.pokeballBackTilt    = backTilt
-pings.pokeballLeftTilt    = leftTilt
-pings.pokeballRightTilt   = rightTilt
-
-local stop
-local kbForward = keybinds:newKeybind("Pokeball Tilt Forward") :onPress(function() pings.pokeballForwardTilt(true) return stop end):onRelease(function() pings.pokeballForwardTilt(false) end)
-local kbBack    = keybinds:newKeybind("Pokeball Tilt Backward"):onPress(function() pings.pokeballBackTilt(true)    return stop end):onRelease(function() pings.pokeballBackTilt(false)    end)
-local kbLeft    = keybinds:newKeybind("Pokeball Tilt Left")    :onPress(function() pings.pokeballLeftTilt(true)    return stop end):onRelease(function() pings.pokeballLeftTilt(false)    end)
-local kbRight   = keybinds:newKeybind("Pokeball Tilt Right")   :onPress(function() pings.pokeballRightTilt(true)   return stop end):onRelease(function() pings.pokeballRightTilt(false)   end)
-local kbJump    = keybinds:newKeybind("Pokeball Block Jump")   :onPress(function() return stop and player:isInWater() end)
-local kbCrouch  = keybinds:newKeybind("Pokeball Block Crouch") :onPress(function() return toggle end)
-local kbAttack  = keybinds:newKeybind("Pokeball Block Attack") :onPress(function() return stop end)
-local kbUse     = keybinds:newKeybind("Pokeball Block Use")    :onPress(function() return stop end)
-
--- Keybind maintainer (Prevents changes)
 function events.TICK()
 	
-	stop         = toggle or isRider
-	local enable = scale.currentPos < 0.5
-	
-	kbForward:key(keybinds:getVanillaKey("key.forward")):enabled(enable)
-	kbBack   :key(keybinds:getVanillaKey("key.back")   ):enabled(enable)
-	kbRight  :key(keybinds:getVanillaKey("key.right")  ):enabled(enable)
-	kbLeft   :key(keybinds:getVanillaKey("key.left")   ):enabled(enable)
-	kbJump   :key(keybinds:getVanillaKey("key.jump")   ):enabled(enable)
-	kbCrouch :key(keybinds:getVanillaKey("key.sneak")  ):enabled(enable)
-	kbAttack :key(keybinds:getVanillaKey("key.attack") ):enabled(enable)
-	kbUse    :key(keybinds:getVanillaKey("key.use")    ):enabled(enable)
+	if world.getTime() % 200 == 0 then
+		pings.syncPokeball(toggle)
+	end
 	
 end
-
--- Pokeball physics
-squapi.pokeball = squapi.bounceObject:new()
-
-function events.RENDER(delta, context)
-	
-	pokeballParts.Ball:offsetRot(squapi.pokeball.pos)
-	
-	local target = vec(leanBack - leanForward, 0, leanLeft - leanRight)
-	
-	squapi.pokeball:doBounce(target, 0.01, .075)
-	
-end
-
--- Activate action
-setPokeball(toggle)
 
 -- Table setup
 local t = {}
 
--- Return action wheel page
-t.togglePage = action_wheel:newAction()
+-- Action
+t.toggleAct = action_wheel:newAction()
 	:item(itemCheck("cobblemon:luxury_ball", "ender_pearl"))
 	:onToggle(pings.setPokeball)
 
--- Update action page info
-function events.TICK()
+-- Update action
+function events.RENDER(delta, context)
 	
-	t.togglePage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Pokeball\n\n", bold = true, color = color.primary},
-				{text = "Auto activates/deactivates on vehicles.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-		:toggled(toggle)
+	if action_wheel:isEnabled() then
+		t.toggleAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Pokeball\n\n", bold = true, color = c.primary},
+					{text = "Toggle the usage of your pokeball.\n\n", color = c.secondary},
+					{text = "Notice:\n", bold = true, color = "gold"},
+					{text = "Various factors can prevent this feature from being active.\nAdditionally, when inside your pokeball, you are unable to move or preform actions.", color = "yellow"}
+				}
+			))
+			:toggled(toggle)
+		
+		for _, act in pairs(t) do
+			act:hoverColor(c.hover):toggleColor(c.active)
+		end
+		
+	end
 	
 end
 
--- Return action wheel page (and toggle)
+-- Return action
 return t
