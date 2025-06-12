@@ -14,8 +14,8 @@ local initAvatarColor = vectors.hexToRGB(avatar:getColor() or "default")
 local initGlowColor = renderer:getOutlineColor() or vec(1, 1, 1)
 
 -- Textures
-local normalTex = textures["textures.charizard"]       or textures["models.CharizardTaur.charizard"]
-local shinyTex  = textures["textures.charizard_shiny"] or textures["models.CharizardTaur.charizard_shiny"]
+local normalTex = textures["textures.charizard"]       or textures["CharizardTaur.charizard"]
+local shinyTex  = textures["textures.charizard_shiny"] or textures["CharizardTaur.charizard_shiny"]
 
 function events.RENDER(delta, context)
 	

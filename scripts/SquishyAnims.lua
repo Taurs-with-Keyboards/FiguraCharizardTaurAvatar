@@ -8,9 +8,6 @@ if not s then return {} end
 local parts = require("lib.PartsAPI")
 local pose  = require("scripts.Posing")
 
--- Animation setup
-local anims = animations["models.CharizardTaur"]
-
 -- Calculate parent's rotations
 local function calculateParentRot(m)
 	

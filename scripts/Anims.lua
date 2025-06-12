@@ -1,12 +1,12 @@
 -- Required scripts
 require("lib.GSAnimBlend")
-local pokemonParts = require("lib.GroupIndex")(models.models.CharizardTaur)
+local pokemonParts = require("lib.GroupIndex")(models.CharizardTaur)
 local ground       = require("lib.GroundCheck")
 local average      = require("lib.Average")
 local pose         = require("scripts.Posing")
 
 -- Animations setup
-local anims = animations["models.CharizardTaur"]
+local anims = animations.CharizardTaur
 
 -- Variables setup
 local airTimer    = 0

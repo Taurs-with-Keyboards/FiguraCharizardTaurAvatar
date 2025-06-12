@@ -1,12 +1,12 @@
 -- Required scripts
-local pokemonParts = require("lib.GroupIndex")(models.models.CharizardTaur)
+local pokemonParts = require("lib.GroupIndex")(models.CharizardTaur)
 local arm          = require("lib.MOARArmsAPI")
 local itemCheck    = require("lib.ItemCheck")
 local pose         = require("scripts.Posing")
 local color        = require("scripts.ColorProperties")
 
 -- Animation setup
-local anims = animations["models.CharizardTaur"]
+local anims = animations.CharizardTaur
 
 -- Config setup
 config:name("CharizardTaur")

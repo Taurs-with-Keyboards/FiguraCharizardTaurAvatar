@@ -1,12 +1,12 @@
 -- Required scripts
-local pokemonParts  = require("lib.GroupIndex")(models.models.CharizardTaur)
-local pokeballParts = require("lib.GroupIndex")(models.models.Pokeball)
+local pokemonParts  = require("lib.GroupIndex")(models.CharizardTaur)
+local pokeballParts = require("lib.GroupIndex")(models.Pokeball)
 local squapi        = require("lib.SquAPIOld")
 local itemCheck     = require("lib.ItemCheck")
 local color         = require("scripts.ColorProperties")
 
 -- Animations setup
-local anims = animations["models.Pokeball"]
+local anims = animations.Pokeball
 
 -- Config setup
 config:name("CharizardTaur")

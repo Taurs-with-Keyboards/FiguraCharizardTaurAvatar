@@ -1,5 +1,5 @@
 -- Required scripts
-local pokemonParts = require("lib.GroupIndex")(models.models.CharizardTaur)
+local pokemonParts = require("lib.GroupIndex")(models.CharizardTaur)
 local itemCheck    = require("lib.ItemCheck")
 local pose         = require("scripts.Posing")
 local color        = require("scripts.ColorProperties")

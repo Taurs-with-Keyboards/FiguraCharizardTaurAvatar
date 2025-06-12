@@ -1,6 +1,6 @@
 -- Required scripts
-local pokemonParts  = require("lib.GroupIndex")(models.models.CharizardTaur)
-local pokeballParts = require("lib.GroupIndex")(models.models.Pokeball)
+local pokemonParts  = require("lib.GroupIndex")(models.CharizardTaur)
+local pokeballParts = require("lib.GroupIndex")(models.Pokeball)
 local average       = require("lib.Average")
 local itemCheck     = require("lib.ItemCheck")
 local color         = require("scripts.ColorProperties")
@@ -36,9 +36,9 @@ local fireBlocks = {
 }
 
 -- Texture variables setup
-local normalText = textures["textures.normalFlame"] or textures["models.CharizardTaur.normalFlame"]
-local midwayText = textures:copy("midwayFlame", textures["textures.normalFlame"] or textures["models.CharizardTaur.normalFlame"])
-local damageText = textures["textures.damageFlame"] or textures["models.CharizardTaur.damageFlame"]
+local normalText = textures["textures.normalFlame"] or textures["CharizardTaur.normalFlame"]
+local midwayText = textures:copy("midwayFlame", textures["textures.normalFlame"] or textures["CharizardTaur.normalFlame"])
+local damageText = textures["textures.damageFlame"] or textures["CharizardTaur.damageFlame"]
 local dim = normalText:getDimensions()-1
 
 -- Set Fire Parent Type
