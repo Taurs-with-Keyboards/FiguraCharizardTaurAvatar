@@ -1,53 +1,42 @@
--- Required scripts
-local pokeballParts = require("lib.GroupIndex")(models.models.Pokeball)
-local average       = require("lib.Average")
+-- Play sound
+function pings.playPokemonCry()
+	
+	if player:isLoaded() then
+		sounds:playSound("cobblemon:pokemon.charizard.cry", player:getPos(), 0.6, math.random()*0.35+0.85)
+	end
+	
+end
 
--- Keybind config
+-- Host only instructions
+if not host:isHost() then return end
+
+-- Config setup
 config:name("CharizardTaur")
-local bind = config:load("PokemonCryKeybind") or "key.keyboard.keypad.2"
 
-function events.TICK()
-	
-	-- Hit sound
-	if player:getNbt()["HurtTime"] == 10 then
-		if average(pokeballParts.Pokeball:getScale():unpack()) >= 0.5 then
-			sounds:playSound("cobblemon:poke_ball.open", player:getPos(), 0.4)
-		else
-			sounds:playSound("cobblemon:pokemon.charizard.cry", player:getPos(), 0.6, math.random()*0.35+0.85)
-		end
-	end
-	
-end
-
--- Keybind cry noise
+-- Variable
 local cooldown = 0
-local function pokemonCry()
-	
-	sounds:playSound("cobblemon:pokemon.charizard.cry", player:getPos(), 0.6, math.random()*0.35+0.85)
-	cooldown = 0
-	
-end
 
--- Keybind ping setup
-pings.playPokemonCry = pokemonCry
-
--- Keybind
-local kbCry = keybinds:newKeybind("Pokemon Cry"):onPress(function() pings.playPokemonCry() end):key(bind)
+-- Cry Keybind
+local cryBind   = config:load("CryKeybind") or "key.keyboard.keypad.2"
+local setCryKey = keybinds:newKeybind("Pokemon Cry"):onPress(function() pings.playPokemonCry() cooldown = 30 end):key(cryBind)
 
 function events.TICK()
 	
-	-- Cooldown timer
-	if cooldown < 30 then
-		cooldown = cooldown + 1
-	end
+	-- Reduce cooldown
+	cooldown = math.max(cooldown - 1, 0)
 	
-	kbCry:enabled(cooldown == 30 and player:getDeathTime() == 0)
+	-- Disable keybind if cooldown is active, and player isnt dead
+	setCryKey:enabled(cooldown == 0 and player:getDeathTime() == 0)
 	
-	-- Config updater
-	local key = kbCry:getKey()
-	if key ~= bind then
-		bind = key
-		config:save("PokemonCryKeybind", key)
+end
+
+-- Keybind updater
+function events.TICK()
+	
+	local cryKey = setCryKey:getKey()
+	if cryKey ~= cryBind then
+		cryBind = cryKey
+		config:save("CryKeybind", cryKey)
 	end
 	
 end
