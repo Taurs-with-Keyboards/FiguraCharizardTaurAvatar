@@ -5077,7 +5077,7 @@
 			"uuid": "fbe67cb4-e4d3-1cb0-7bf5-beb4682a8f4f"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5122,7 +5122,7 @@
 			"uuid": "4057e873-6871-1a13-9537-b18f871f6f34"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5167,7 +5167,7 @@
 			"uuid": "9705d503-44ab-5b13-d941-a4df76ced09f"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5212,7 +5212,7 @@
 			"uuid": "e2b904f7-8c90-275d-751b-46ebfb413ed4"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5257,7 +5257,7 @@
 			"uuid": "2530e65f-630c-29e2-cf21-0fe8269015cd"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5302,7 +5302,7 @@
 			"uuid": "9fc9c680-0c57-ee39-3ad3-bfc669cb846f"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5347,7 +5347,7 @@
 			"uuid": "6bbf7851-eadd-9eec-a174-1c7c9939bfd3"
 		},
 		{
-			"name": "Leather",
+			"name": "HelmetLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5391,7 +5391,7 @@
 			"uuid": "2cd17117-8722-941c-c64c-99ecf2c0bfa7"
 		},
 		{
-			"name": "Leather",
+			"name": "BootLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5436,7 +5436,7 @@
 			"uuid": "8a6674fa-fdd1-f53f-2c51-cd15ac0bcc21"
 		},
 		{
-			"name": "Leather",
+			"name": "BootLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5481,7 +5481,7 @@
 			"uuid": "8c3d4bea-1b6d-de6d-548f-5ca963524303"
 		},
 		{
-			"name": "Trim",
+			"name": "HelmetTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5525,7 +5525,7 @@
 			"uuid": "7317b149-7190-62c5-22ff-0461f32dd43e"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5570,7 +5570,7 @@
 			"uuid": "b3a78977-5caa-47eb-bf25-759ba6728d81"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5615,7 +5615,7 @@
 			"uuid": "b53bb2aa-f2ad-b99c-b67f-80488c5bc3be"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5660,7 +5660,7 @@
 			"uuid": "5dbfa0ab-742b-feab-c799-4ce0b110cd91"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5705,7 +5705,7 @@
 			"uuid": "e790410e-c34b-5800-3d65-8ff855adb70d"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5750,7 +5750,7 @@
 			"uuid": "13f270b9-0796-ca7c-7f4b-80bb4b671ccd"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5795,7 +5795,7 @@
 			"uuid": "abdc2958-fc19-4cb1-5795-1800093a2fbd"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5840,7 +5840,7 @@
 			"uuid": "f71a31b0-bd38-5682-5e01-94f3afc85403"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5885,7 +5885,7 @@
 			"uuid": "a4ca0f17-cdf2-77b3-0c5e-1d41bd94e6c3"
 		},
 		{
-			"name": "Trim",
+			"name": "BootTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5930,7 +5930,7 @@
 			"uuid": "0bf0bd87-521e-10cf-1475-ecf13e9e88cb"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5975,7 +5975,7 @@
 			"uuid": "a39a401f-e9cf-e0de-cfd5-54af1cb51e28"
 		},
 		{
-			"name": "Trim",
+			"name": "BootTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6020,7 +6020,7 @@
 			"uuid": "d3a6efec-5f95-f28e-b919-bfbfe3affb5d"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6067,7 +6067,7 @@
 			"uuid": "8bd31124-040a-cb3a-95a6-2f7db57ca5fd"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6112,7 +6112,7 @@
 			"uuid": "1208d6b9-1548-f643-a3fa-60d6d8f8f7c7"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6157,7 +6157,7 @@
 			"uuid": "716217b2-6aa5-ca80-e66c-d72b95bd419d"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6202,7 +6202,7 @@
 			"uuid": "bd6e06ae-5d62-8070-f324-c9bcb32f1a44"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6247,7 +6247,7 @@
 			"uuid": "7e26c5a6-6f3e-044c-928c-d22e126e9af5"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6292,7 +6292,7 @@
 			"uuid": "301b086d-e52e-4f36-ac7a-fd324583bd51"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6337,7 +6337,7 @@
 			"uuid": "9a98ce6b-5954-b326-8cba-88331b064f48"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6382,7 +6382,7 @@
 			"uuid": "531c724e-1ad4-397c-ae23-e002c7653d0d"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6427,7 +6427,7 @@
 			"uuid": "d92ee4aa-12e4-3c61-4c29-5f98bccc631b"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6472,7 +6472,7 @@
 			"uuid": "d182596b-995a-c999-5ecb-18bb9d9d447c"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6517,7 +6517,7 @@
 			"uuid": "33c6cf82-398d-a3f0-1a5a-15b4823b233a"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6564,7 +6564,7 @@
 			"uuid": "dd38d5b0-7961-83f2-6438-1efeaaa3c062"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6609,7 +6609,7 @@
 			"uuid": "5b8d67c6-ca1a-0980-9df2-fb56b4f647db"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6654,7 +6654,7 @@
 			"uuid": "4f7c9339-9004-2064-8281-e2e9cb25d1a2"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6699,7 +6699,7 @@
 			"uuid": "445805cd-1d15-80a6-197b-079ceaf9412e"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6744,7 +6744,7 @@
 			"uuid": "5747dc27-8887-4fec-2c2c-3c7bb8d66632"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6789,7 +6789,7 @@
 			"uuid": "5cd27161-ee5b-6370-6be2-395c953bb594"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6834,7 +6834,7 @@
 			"uuid": "d9abce7e-c083-88e2-9a3f-5a45f1b2f380"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6879,7 +6879,7 @@
 			"uuid": "f005da0a-bc09-89c8-5670-8cecaee538c9"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6924,7 +6924,7 @@
 			"uuid": "17c10310-4957-14fa-9ed5-23622be8495a"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6971,7 +6971,7 @@
 			"uuid": "1d1a74fc-9ff3-4d7e-3038-9535ebdd80ac"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7018,7 +7018,7 @@
 			"uuid": "cacf922a-6a8e-9338-25ef-cb89dea04c8a"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7065,7 +7065,7 @@
 			"uuid": "3a2c2208-1b95-622d-a98f-4b7e3a21add0"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7112,7 +7112,7 @@
 			"uuid": "3f0f4d7e-b1c4-c563-8786-1b61c35e35ef"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7159,7 +7159,7 @@
 			"uuid": "64b071bd-3800-7404-98f3-bb48d22cf911"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7206,7 +7206,7 @@
 			"uuid": "c255f28d-c9dc-4898-313d-7cbbc6a2dbc3"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7253,7 +7253,7 @@
 			"uuid": "801e42ea-ad96-3172-8198-7d54a5d28568"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7300,7 +7300,7 @@
 			"uuid": "2650c0c1-3909-8522-6da7-152380253dd4"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7345,7 +7345,7 @@
 			"uuid": "3410514d-d562-91c1-b8ae-427e670ee58a"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7390,7 +7390,7 @@
 			"uuid": "c01226ee-e97a-1c1d-1973-5efcc71b9b46"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7435,7 +7435,7 @@
 			"uuid": "2de02935-4219-5039-d0e7-be279c31e6b9"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7480,7 +7480,7 @@
 			"uuid": "3aca61b3-8149-412f-f12f-f41987a54b56"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7525,7 +7525,7 @@
 			"uuid": "dc79ac0a-14db-eec2-2146-09e4fc71d9de"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7570,7 +7570,7 @@
 			"uuid": "7dbbb7fb-6b20-083c-7940-d3c8ea8746b6"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7615,7 +7615,7 @@
 			"uuid": "a2443f29-7d45-4d00-8603-3c75aff95688"
 		},
 		{
-			"name": "Belt",
+			"name": "Chestplate",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7660,7 +7660,7 @@
 			"uuid": "343a0c40-d942-949d-b2f2-7b097d657313"
 		},
 		{
-			"name": "BeltLeather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -7705,7 +7705,7 @@
 			"uuid": "707fdcae-e753-f2cb-5db0-854f48ffe3ee"
 		},
 		{
-			"name": "BeltTrim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -17189,6 +17189,65 @@
 				"2f22381f-51ee-c206-092c-d434004950b9",
 				"f721de54-535a-961a-2650-32e1bdd4c589"
 			],
+			"visibility": false
+		},
+		{
+			"uuid": "190eb26d-c6fa-2182-4616-086a0c385079",
+			"name": "ArmorHelmet",
+			"export_codec": "",
+			"export_path": "",
+			"children": ["f134cc11-037a-32d1-a930-75c893e86f0e", "2b680b85-7375-5cb3-c175-59fb606fb519"],
+			"visibility": false
+		},
+		{
+			"uuid": "597ba9a1-d32e-e410-abeb-206377515b5d",
+			"name": "ArmorChestplate",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"60efe8e5-468d-dc09-07f5-7464d4f41659",
+				"da0e8319-ab48-9ce3-ba42-cb4e74822534",
+				"43014aa7-3f74-72b6-444a-c71d9a92ac22",
+				"fea9a592-e392-ee63-f5f7-f1c8d63129f6",
+				"ad435577-cfbf-3e65-91fb-79ba08117bc8",
+				"5f80aac0-1b74-f74f-7bbe-a57f3f725911",
+				"d6993979-7bb2-66f9-7318-681ac88fe162",
+				"bb485fdf-8bf3-7b47-d57e-1b818180f74e",
+				"db0dfb2d-da29-c087-8cfd-67e0ad16aa7e",
+				"82d6dd5a-e620-23af-4d6f-d7726c83e26e",
+				"3f07e3e8-a8c0-ef6f-b281-c2f5087e0dd2",
+				"26a3aa57-be08-1521-9167-1a48cc06abbb",
+				"6d2e9ebe-5312-acab-f9df-c831b5da149d",
+				"476ac6f6-deb2-a6da-3123-9d151443b313",
+				"87ce6821-246b-1cf7-441a-657cb823cbab",
+				"039a23b7-57fd-b015-ab8f-fa04206c1454",
+				"e10278a9-4f8f-3e69-8164-22409c60c096",
+				"b89961a1-96ca-6513-0811-b759b3b17edb"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "b1753c90-850f-c3e1-8c75-3b216f9616b6",
+			"name": "ArmorLeggings",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"d2f63fd4-ad69-7cb7-7d35-5435abbe065c",
+				"0ce026d1-1743-ca0e-d760-2e16b78d1ae3",
+				"9ebf288b-c242-3aae-cd38-b234e4115ce0",
+				"e49ccaf3-c5a0-c081-3535-e4b2f8fdd617",
+				"091e315f-47db-03f6-aff4-867930d299b1",
+				"eaacd6eb-4ab7-a7b2-1da5-d89a933a4162",
+				"de57b8c1-4e82-4ca9-08a0-8a9f4ea70c47"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "0ebcccbb-37fc-e84b-a900-52c535089f22",
+			"name": "ArmorBoots",
+			"export_codec": "",
+			"export_path": "",
+			"children": ["456df40c-0887-665d-dc35-60aa4eba7bc6", "6f92bca5-d821-fa4e-b328-8d2044e741b2"],
 			"visibility": false
 		},
 		{

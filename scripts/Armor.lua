@@ -1,128 +1,31 @@
 -- Required scripts
-local pokemonParts   = require("lib.GroupIndex")(models.models.CharizardTaur)
+local parts          = require("lib.PartsAPI")
 local charizardArmor = require("lib.KattArmor")()
-local itemCheck      = require("lib.ItemCheck")
-local color          = require("scripts.ColorProperties")
 
 -- Setting the leggings to layer 1
 charizardArmor.Armor.Leggings:setLayer(1)
 
 -- Armor parts
 charizardArmor.Armor.Helmet
-	:addParts(pokemonParts.headArmorHelmet.Helmet)
-	:addTrimParts(pokemonParts.headArmorHelmet.Trim)
+	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Helmet" end)))
+	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "HelmetTrim" end)))
 charizardArmor.Armor.Chestplate
-	:addParts(
-		pokemonParts.bodyArmorChestplate.Chestplate,
-		pokemonParts.bodyArmorChestplate.Belt,
-		pokemonParts.leftArmArmorChestplate.Chestplate,
-		pokemonParts.rightArmArmorChestplate.Chestplate,
-		pokemonParts.MergeArmorChestplate.Chestplate,
-		pokemonParts.TorsoArmorChestplate.Chestplate,
-		pokemonParts.HipsArmorChestplate.Chestplate,
-		pokemonParts.LowerLeftArmArmorChestplate.Chestplate,
-		pokemonParts.LeftForearmArmorChestplate.Chestplate,
-		pokemonParts.LeftFingerFArmorChestplate.Chestplate,
-		pokemonParts.LeftFingerMArmorChestplate.Chestplate,
-		pokemonParts.LeftFingerBArmorChestplate.Chestplate,
-		pokemonParts.LowerRightArmArmorChestplate.Chestplate,
-		pokemonParts.RightForearmArmorChestplate.Chestplate,
-		pokemonParts.RightFingerFArmorChestplate.Chestplate,
-		pokemonParts.RightFingerMArmorChestplate.Chestplate,
-		pokemonParts.RightFingerBArmorChestplate.Chestplate,
-		pokemonParts.leftArmArmorChestplateFP.Chestplate,
-		pokemonParts.rightArmArmorChestplateFP.Chestplate
-	)
-	:addTrimParts(
-		pokemonParts.bodyArmorChestplate.Trim,
-		pokemonParts.bodyArmorChestplate.BeltTrim,
-		pokemonParts.leftArmArmorChestplate.Trim,
-		pokemonParts.rightArmArmorChestplate.Trim,
-		pokemonParts.MergeArmorChestplate.Trim,
-		pokemonParts.TorsoArmorChestplate.Trim,
-		pokemonParts.HipsArmorChestplate.Trim,
-		pokemonParts.LowerLeftArmArmorChestplate.Trim,
-		pokemonParts.LeftForearmArmorChestplate.Trim,
-		pokemonParts.LeftFingerFArmorChestplate.Trim,
-		pokemonParts.LeftFingerMArmorChestplate.Trim,
-		pokemonParts.LeftFingerBArmorChestplate.Trim,
-		pokemonParts.LowerRightArmArmorChestplate.Trim,
-		pokemonParts.RightForearmArmorChestplate.Trim,
-		pokemonParts.RightFingerFArmorChestplate.Trim,
-		pokemonParts.RightFingerMArmorChestplate.Trim,
-		pokemonParts.RightFingerBArmorChestplate.Trim,
-		pokemonParts.leftArmArmorChestplateFP.Trim,
-		pokemonParts.rightArmArmorChestplateFP.Trim
-	)
+	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Chestplate" end)))
+	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "ChestplateTrim" end)))
 charizardArmor.Armor.Leggings
-	:addParts(
-		pokemonParts.TorsoArmorLeggings.Leggings,
-		pokemonParts.HipsArmorLeggings.Leggings,
-		pokemonParts.Tail1ArmorLeggings.Leggings,
-		pokemonParts.Tail2ArmorLeggings.Leggings,
-		pokemonParts.Tail3ArmorLeggings.Leggings,
-		pokemonParts.leftLegArmorLeggings.Leggings,
-		pokemonParts.rightLegArmorLeggings.Leggings
-	)
-	:addTrimParts(
-		pokemonParts.TorsoArmorLeggings.Trim,
-		pokemonParts.HipsArmorLeggings.Trim,
-		pokemonParts.Tail1ArmorLeggings.Trim,
-		pokemonParts.Tail2ArmorLeggings.Trim,
-		pokemonParts.Tail3ArmorLeggings.Trim,
-		pokemonParts.leftLegArmorLeggings.Trim,
-		pokemonParts.rightLegArmorLeggings.Trim
-	)
+	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Leggings" end)))
+	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "LeggingsTrim" end)))
 charizardArmor.Armor.Boots
-	:addParts(
-		pokemonParts.LeftFootArmorBoot.Boot,
-		pokemonParts.RightFootArmorBoot.Boot
-	)
-	:addTrimParts(
-		pokemonParts.LeftFootArmorBoot.Trim,
-		pokemonParts.RightFootArmorBoot.Trim
-	)
+	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Boot" end)))
+	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "BootTrim" end)))
 
 -- Leather armor
 charizardArmor.Materials.leather
 	:setTexture(textures["textures.armor.leatherArmor"] or textures["models.CharizardTaur.leatherArmor"])
-	:addParts(charizardArmor.Armor.Helmet,
-		pokemonParts.headArmorHelmet.Leather
-	)
-	:addParts(charizardArmor.Armor.Chestplate,
-		pokemonParts.bodyArmorChestplate.Leather,
-		pokemonParts.bodyArmorChestplate.BeltLeather,
-		pokemonParts.leftArmArmorChestplate.Leather,
-		pokemonParts.rightArmArmorChestplate.Leather,
-		pokemonParts.MergeArmorChestplate.Leather,
-		pokemonParts.TorsoArmorChestplate.Leather,
-		pokemonParts.HipsArmorChestplate.Leather,
-		pokemonParts.LowerLeftArmArmorChestplate.Leather,
-		pokemonParts.LeftForearmArmorChestplate.Leather,
-		pokemonParts.LeftFingerFArmorChestplate.Leather,
-		pokemonParts.LeftFingerMArmorChestplate.Leather,
-		pokemonParts.LeftFingerBArmorChestplate.Leather,
-		pokemonParts.LowerRightArmArmorChestplate.Leather,
-		pokemonParts.RightForearmArmorChestplate.Leather,
-		pokemonParts.RightFingerFArmorChestplate.Leather,
-		pokemonParts.RightFingerMArmorChestplate.Leather,
-		pokemonParts.RightFingerBArmorChestplate.Leather,
-		pokemonParts.leftArmArmorChestplateFP.Leather,
-		pokemonParts.rightArmArmorChestplateFP.Leather
-	)
-	:addParts(charizardArmor.Armor.Leggings,
-		pokemonParts.TorsoArmorLeggings.Leather,
-		pokemonParts.HipsArmorLeggings.Leather,
-		pokemonParts.Tail1ArmorLeggings.Leather,
-		pokemonParts.Tail2ArmorLeggings.Leather,
-		pokemonParts.Tail3ArmorLeggings.Leather,
-		pokemonParts.leftLegArmorLeggings.Leather,
-		pokemonParts.rightLegArmorLeggings.Leather
-	)
-	:addParts(charizardArmor.Armor.Boots,
-		pokemonParts.LeftFootArmorBoot.Leather,
-		pokemonParts.RightFootArmorBoot.Leather
-	)
+	:addParts(charizardArmor.Armor.Helmet,     table.unpack(parts:createTable(function(part) return part:getName() == "HelmetLeather" end)))
+	:addParts(charizardArmor.Armor.Chestplate, table.unpack(parts:createTable(function(part) return part:getName() == "ChestplateLeather" end)))
+	:addParts(charizardArmor.Armor.Leggings,   table.unpack(parts:createTable(function(part) return part:getName() == "LeggingsLeather" end)))
+	:addParts(charizardArmor.Armor.Boots,      table.unpack(parts:createTable(function(part) return part:getName() == "BootLeather" end)))
 
 -- Chainmail armor
 charizardArmor.Materials.chainmail
@@ -233,68 +136,21 @@ if chestplate == nil then chestplate = true end
 if leggings   == nil then leggings   = true end
 if boots      == nil then boots      = true end
 
--- All helmet parts
-local helmetGroups = {
-	
-	pokemonParts.headArmorHelmet,
-	pokemonParts.HelmetItemPivot
-	
-}
+-- Helmet parts
+local helmetGroups = parts:createTable(function(part) return part:getName():find("ArmorHelmet") end)
 
--- All chestplate parts
-local chestplateGroups = {
-	
-	pokemonParts.bodyArmorChestplate,
-	pokemonParts.leftArmArmorChestplate,
-	pokemonParts.rightArmArmorChestplate,
-	
-	pokemonParts.MergeArmorChestplate,
-	pokemonParts.TorsoArmorChestplate,
-	
-	pokemonParts.LowerLeftArmArmorChestplate,
-	pokemonParts.LeftForearmArmorChestplate,
-	pokemonParts.LeftFingerFArmorChestplate,
-	pokemonParts.LeftFingerMArmorChestplate,
-	pokemonParts.LeftFingerBArmorChestplate,
-	
-	pokemonParts.LowerRightArmArmorChestplate,
-	pokemonParts.RightForearmArmorChestplate,
-	pokemonParts.RightFingerFArmorChestplate,
-	pokemonParts.RightFingerMArmorChestplate,
-	pokemonParts.RightFingerBArmorChestplate,
-	
-	pokemonParts.HipsArmorChestplate,
-	
-	pokemonParts.leftArmArmorChestplateFP,
-	pokemonParts.rightArmArmorChestplateFP
-	
-}
+-- Chestplate parts
+local chestplateGroups = parts:createTable(function(part) return part:getName():find("ArmorChestplate") end)
 
--- All leggings parts
-local leggingsGroups = {
-	
-	pokemonParts.TorsoArmorLeggings,
-	pokemonParts.HipsArmorLeggings,
-	
-	pokemonParts.leftLegArmorLeggings,
-	pokemonParts.rightLegArmorLeggings,
-	
-	pokemonParts.Tail1ArmorLeggings,
-	pokemonParts.Tail2ArmorLeggings,
-	pokemonParts.Tail3ArmorLeggings
-	
-}
+-- Leggings parts
+local leggingsGroups = parts:createTable(function(part) return part:getName():find("ArmorLeggings") end)
 
--- All boots parts
-local bootsGroups = {
-	
-	pokemonParts.LeftFootArmorBoot,
-	pokemonParts.RightFootArmorBoot
-	
-}
+-- Boots parts
+local bootsGroups = parts:createTable(function(part) return part:getName():find("ArmorBoot") end)
 
-function events.TICK()
+function events.RENDER(delta, context)
 	
+	-- Apply
 	for _, part in ipairs(helmetGroups) do
 		part:visible(helmet)
 	end
@@ -313,8 +169,8 @@ function events.TICK()
 	
 end
 
--- Armor all toggle
-local function setAll(boolean)
+-- All toggle
+function pings.setArmorAll(boolean)
 	
 	helmet     = boolean
 	chestplate = boolean
@@ -330,8 +186,8 @@ local function setAll(boolean)
 	
 end
 
--- Armor helmet toggle
-local function setHelmet(boolean)
+-- Helmet toggle
+function pings.setArmorHelmet(boolean)
 	
 	helmet = boolean
 	config:save("ArmorHelmet", helmet)
@@ -341,8 +197,8 @@ local function setHelmet(boolean)
 	
 end
 
--- Armor chestplate toggle
-local function setChestplate(boolean)
+-- Chestplate toggle
+function pings.setArmorChestplate(boolean)
 	
 	chestplate = boolean
 	config:save("ArmorChestplate", chestplate)
@@ -352,8 +208,8 @@ local function setChestplate(boolean)
 	
 end
 
--- Armor leggings toggle
-local function setLeggings(boolean)
+-- Leggings toggle
+function pings.setArmorLeggings(boolean)
 	
 	leggings = boolean
 	config:save("ArmorLeggings", leggings)
@@ -363,8 +219,8 @@ local function setLeggings(boolean)
 	
 end
 
--- Armor boots toggle
-local function setBoots(boolean)
+-- Boots toggle
+function pings.setArmorBoots(boolean)
 	
 	boots = boolean
 	config:save("ArmorBoots", boots)
@@ -375,7 +231,7 @@ local function setBoots(boolean)
 end
 
 -- Sync variables
-local function syncArmor(a, b, c, d)
+function pings.syncArmor(a, b, c, d)
 	
 	helmet     = a
 	chestplate = b
@@ -384,124 +240,113 @@ local function syncArmor(a, b, c, d)
 	
 end
 
--- Pings setup
-pings.setArmorAll        = setAll
-pings.setArmorHelmet     = setHelmet
-pings.setArmorChestplate = setChestplate
-pings.setArmorLeggings   = setLeggings
-pings.setArmorBoots      = setBoots
-pings.syncArmor          = syncArmor
+-- Host only instructions
+if not host:isHost() then return end
+
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local s, c = pcall(require, "scripts.ColorProperties")
+if not s then c = {} end
 
 -- Sync on tick
-if host:isHost() then
-	function events.TICK()
-		
-		if world.getTime() % 200 == 0 then
-			pings.syncArmor(helmet, chestplate, leggings, boots)
-		end
-		
+function events.TICK()
+	
+	if world.getTime() % 200 == 0 then
+		pings.syncArmor(helmet, chestplate, leggings, boots)
 	end
+	
 end
 
--- Activate actions
-setHelmet(helmet)
-setChestplate(chestplate)
-setLeggings(leggings)
-setBoots(boots)
-
--- Setup table
+-- Table setup
 local t = {}
 
--- Action wheel pages
-t.allPage = action_wheel:newAction()
+-- Actions
+t.allAct = action_wheel:newAction()
 	:item(itemCheck("armor_stand"))
 	:toggleItem(itemCheck("netherite_chestplate"))
 	:onToggle(pings.setArmorAll)
 
-t.helmetPage = action_wheel:newAction()
+t.helmetAct = action_wheel:newAction()
 	:item(itemCheck("iron_helmet"))
 	:toggleItem(itemCheck("diamond_helmet"))
 	:onToggle(pings.setArmorHelmet)
 
-t.chestplatePage = action_wheel:newAction()
+t.chestplateAct = action_wheel:newAction()
 	:item(itemCheck("iron_chestplate"))
 	:toggleItem(itemCheck("diamond_chestplate"))
 	:onToggle(pings.setArmorChestplate)
 
-t.leggingsPage = action_wheel:newAction()
+t.leggingsAct = action_wheel:newAction()
 	:item(itemCheck("iron_leggings"))
 	:toggleItem(itemCheck("diamond_leggings"))
 	:onToggle(pings.setArmorLeggings)
 
-t.bootsPage = action_wheel:newAction()
+t.bootsAct = action_wheel:newAction()
 	:item(itemCheck("iron_boots"))
 	:toggleItem(itemCheck("diamond_boots"))
 	:onToggle(pings.setArmorBoots)
 
--- Update action page info
-function events.TICK()
+-- Update actions
+function events.RENDER(delta, context)
 	
-	t.allPage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle All Armor\n\n", bold = true, color = color.primary},
-				{text = "Toggles visibility of all armor parts.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-		:toggled(helmet and chestplate and leggings and boots)
-	
-	t.helmetPage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Helmet\n\n", bold = true, color = color.primary},
-				{text = "Toggles visibility of helmet parts.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-		:toggled(helmet)
-	
-	t.chestplatePage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Chestplate\n\n", bold = true, color = color.primary},
-				{text = "Toggles visibility of chestplate parts.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-		:toggled(chestplate)
-	
-	t.leggingsPage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Leggings\n\n", bold = true, color = color.primary},
-				{text = "Toggles visibility of leggings parts.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-		:toggled(leggings)
-	
-	t.bootsPage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Boots\n\n", bold = true, color = color.primary},
-				{text = "Toggles visibility of boots.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-		:toggled(boots)
+	if action_wheel:isEnabled() then
+		t.allAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle All Armor\n\n", bold = true, color = c.primary},
+					{text = "Toggles visibility of all armor parts.", color = c.secondary}
+				}
+			))
+			:toggled(helmet and chestplate and leggings and boots)
+		
+		t.helmetAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Helmet\n\n", bold = true, color = c.primary},
+					{text = "Toggles visibility of helmet parts.", color = c.secondary}
+				}
+			))
+			:toggled(helmet)
+		
+		t.chestplateAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Chestplate\n\n", bold = true, color = c.primary},
+					{text = "Toggles visibility of chestplate parts.", color = c.secondary}
+				}
+			))
+			:toggled(chestplate)
+		
+		t.leggingsAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Leggings\n\n", bold = true, color = c.primary},
+					{text = "Toggles visibility of leggings parts.", color = c.secondary}
+				}
+			))
+			:toggled(leggings)
+		
+		t.bootsAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Boots\n\n", bold = true, color = c.primary},
+					{text = "Toggles visibility of boots.", color = c.secondary}
+				}
+			))
+			:toggled(boots)
+		
+		for _, act in pairs(t) do
+			act:hoverColor(c.hover):toggleColor(c.active)
+		end
+		
+	end
 	
 end
 
--- Return action wheel pages
+-- Return actions
 return t

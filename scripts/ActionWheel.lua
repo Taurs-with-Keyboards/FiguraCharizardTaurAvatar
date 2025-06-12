@@ -4,7 +4,9 @@ local itemCheck = require("lib.ItemCheck")
 local s, avatar = pcall(require, "scripts.Player")
 if not s then avatar = {} end
 
-local armor     = require("scripts.Armor")
+local s, armor = pcall(require, "scripts.Armor")
+if not s then armor = {} end
+
 local camera    = require("scripts.CameraControl")
 local arms      = require("scripts.Arms")
 local fall      = require("scripts.FallSound")
@@ -148,11 +150,11 @@ pages.avatar
 
 -- Armor actions
 pages.armor
-	:action( -1, armor.allPage)
-	:action( -1, armor.bootsPage)
-	:action( -1, armor.leggingsPage)
-	:action( -1, armor.chestplatePage)
-	:action( -1, armor.helmetPage)
+	:action( -1, armor.allAct)
+	:action( -1, armor.bootsAct)
+	:action( -1, armor.leggingsAct)
+	:action( -1, armor.chestplateAct)
+	:action( -1, armor.helmetAct)
 	:action( -1, backAction)
 
 -- Camera actions
