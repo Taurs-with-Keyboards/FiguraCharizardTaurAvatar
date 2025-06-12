@@ -2378,6 +2378,7 @@
 			"to": [-2.5, 8, 11.5],
 			"autouv": 0,
 			"color": 0,
+			"visibility": false,
 			"shade": false,
 			"mirror_uv": true,
 			"origin": [0, 0, 0],
@@ -2423,6 +2424,7 @@
 			"to": [4, 8, 11.5],
 			"autouv": 0,
 			"color": 0,
+			"visibility": false,
 			"origin": [0, 0, 0],
 			"uv_offset": [81, 49],
 			"faces": {
