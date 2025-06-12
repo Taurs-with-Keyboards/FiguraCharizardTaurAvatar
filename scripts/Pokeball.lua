@@ -1,7 +1,7 @@
 -- Required scripts
 local pokemonParts  = require("lib.GroupIndex")(models.models.CharizardTaur)
 local pokeballParts = require("lib.GroupIndex")(models.models.Pokeball)
-local squapi        = require("lib.SquAPI")
+local squapi        = require("lib.SquAPIOld")
 local itemCheck     = require("lib.ItemCheck")
 local color         = require("scripts.ColorProperties")
 

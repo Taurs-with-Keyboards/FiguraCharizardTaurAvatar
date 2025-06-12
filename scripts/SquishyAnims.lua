@@ -1,7 +1,12 @@
+-- Kills script if squAPI or squAssets cannot be found
+local s, squapi = pcall(require, "lib.SquAPI")
+if not s then return {} end
+local s, squassets = pcall(require, "lib.SquAssets")
+if not s then return {} end
+
 -- Required scripts
-local pokemonParts = require("lib.GroupIndex")(models.models.CharizardTaur)
-local squapi       = require("lib.SquAPI")
-local pose         = require("scripts.Posing")
+local parts = require("lib.PartsAPI")
+local pose  = require("scripts.Posing")
 
 -- Animation setup
 local anims = animations["models.CharizardTaur"]
@@ -17,90 +22,94 @@ local function calculateParentRot(m)
 	
 end
 
--- Squishy smooth torso
-squapi.smoothTorso(pokemonParts.UpperBody, 0.3)
+-- Tails table
+local tailParts = parts:createChain("Tail")
 
--- All tail segments
-local tail = {
+-- Squishy tail
+local tail = squapi.tail:new(
+	tailParts,
+	20,    -- Intensity X (20)
+	10,    -- Intensity Y (10)
+	0.75,  -- Speed X (0.75)
+	0.25,  -- Speed Y (0.25)
+	3,     -- Bend (3)
+	0,     -- Velocity Push (0)
+	0,     -- Initial Offset (0)
+	1,     -- Seg Offset (1)
+	0.005, -- Stiffness (0.005)
+	0.925, -- Bounce (0.935)
+	25,    -- Fly Offset (25)
+	-45,   -- Down Limit (-45)
+	45     -- Up Limit (45)
+)
+
+-- Head table
+local headParts = {
 	
-	pokemonParts.Tail1,
-	pokemonParts.Tail2,
-	pokemonParts.Tail3
+	parts.group.UpperBody
 	
 }
 
--- Squishy tail
-squapi.tails(tail,
-	3,      --intensity
-	10,     --tailintensityY
-	20,     --tailintensityX
-	0.75,   --tailYSpeed
-	0.25,   --tailXSpeed
-	0,      --tailVelBend
-	0,      --initialTailOffset
-	1,      --segOffsetMultiplier
-	0.0005, --tailStiff
-	0.05,   --tailBounce
-	25,     --tailFlyOffset
-	nil,    --downlimit
-	nil     --uplimit
+-- Squishy smooth torso
+local head = squapi.smoothHead:new(
+	headParts,
+	0.3,  -- Strength (0.3)
+	0.4,  -- Tilt (0.4)
+	1,    -- Speed (1)
+	false -- Keep Original Head Pos (false)
 )
 
 -- Squishy animated texture
-squapi.animateTexture(pokemonParts.Fire, 4, 0.25, 2, false)
+local fire = squapi.animateTexture(
+	parts.group.Fire,
+	4,    -- Frames
+	0.25, -- Frame percentage
+	2     -- Speed
+)
 
 -- Wings bounce
-squapi.wings = squapi.bounceObject:new()
+local wingsy = squassets.BERP:new(0.01, 0.9)
+local wingsz = squassets.BERP:new(0.01, 0.9)
+local wingsTargets = vec(0, 0, 0)
+local oldPose = "STANDING"
 
-function events.render(delta, context)
+function events.TICK()
 	
-	-- Player variables
-	local vel = player:getVelocity()
-	local dir = player:getLookDir()
+	-- Vel
+	local vel  = math.clamp(squassets.forwardVel(),  -0.5, 0.5)
+	local yvel = math.clamp(squassets.verticalVel(), -0.5, 0.5)
 	
-	-- Directional velocity
-	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
-	local udVel = player:getVelocity().y
-	
-	pokemonParts.LeftWing1:offsetRot(squapi.wings.pos)
-	pokemonParts.RightWing1:offsetRot(-squapi.wings.pos)
-	
-	local target = vec(0, 0, 0)
-	if not (pose.stand or pose.crouch) or player:isInWater() or anims.airIdle:isPlaying() then
-		
-		target = 0
-		
-	else
-		
-		target.x = 0
-		target.y = math.clamp(fbVel * 25, -15, 15)
-		target.z = math.clamp(udVel * 25, -15, 15)
-		
+	-- Crouch boost
+	if pose.crouch and oldPose == "STANDING" then
+		wingsz.vel = wingsz.vel + 2.5
+	elseif pose.stand and oldPose == "CROUCHING" then
+		wingsz.vel = wingsz.vel - 2.5
 	end
+	oldPose = player:getPose()
 	
-	squapi.wings:doBounce(target, 0.01, 0.05)
+	wingsTargets.y = vel * 100
+	wingsTargets.z = -yvel * 50
+	
+end
+
+function events.RENDER(delta, context)
+	
+	wingsy:berp(wingsTargets.y, delta)
+	wingsz:berp(wingsTargets.z, delta)
+	
+	parts.group.LeftWing1:setOffsetRot(0,   wingsy.pos, -wingsz.pos)
+	parts.group.RightWing1:setOffsetRot(0, -wingsy.pos,  wingsz.pos)
 	
 end
 
 function events.RENDER(delta, context)
 	
 	-- Offset smooth torso in various parts
-	-- Note: acts strangely with `pokemonParts.body` and when sleeping
-	for _, group in ipairs(pokemonParts.UpperBody:getChildren()) do
-		if group ~= pokemonParts.Body and not pose.sleep then
+	-- Note: acts strangely with `parts.group.body`
+	for _, group in ipairs(parts.group.UpperBody:getChildren()) do
+		if group ~= parts.group.Body then
 			group:rot(-calculateParentRot(group:getParent()))
 		end
 	end
-	
-	-- This code exists temporarily while I try to add swaying to the fire. Please ignore
-	-- Or dont, im not your dad.
-	--[[
-		
-		-- Creates flowed movement for fire on tail
-		-- Note: Acts strangely when sleeping
-		local fireRot = pokemonParts.Tail3:getOffsetRot()
-		pokemonParts.Fire:offsetRot(vec(-fireRot.x, fireRot.z, -fireRot.y * 2))
-		
-	--]]
 	
 end
