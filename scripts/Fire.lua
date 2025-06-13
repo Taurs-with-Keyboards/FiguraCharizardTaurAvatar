@@ -66,6 +66,9 @@ local fireBlocks = {
 -- Check if a splash potion is broken near the fire
 function events.ON_PLAY_SOUND(id, pos, vol, pitch, loop, category, path)
 	
+	-- Kill event if player is in pokeball
+	if parts.group.Player:getAnimScale():lengthSquared() / 3 < 0.5 then return end
+	
 	if player:isLoaded() then
 		local firePos  = fireGroup:partToWorldMatrix():apply()
 		local atPos    = pos < firePos + 2 and pos > firePos - 2
@@ -94,6 +97,9 @@ local function smokeAngle()
 end
 
 function events.TICK()
+	
+	-- Kill event if player is in pokeball
+	if parts.group.Player:getAnimScale():lengthSquared() / 3 < 0.5 then return end
 	
 	-- Variables
 	local firePos = fireGroup:partToWorldMatrix():apply()
@@ -240,6 +246,9 @@ function events.TICK()
 end
 
 function events.RENDER(delta, context)
+	
+	-- Kill event if player is in pokeball
+	if parts.group.Player:getAnimScale():lengthSquared() / 3 < 0.5 then return end
 	
 	-- Change fire color
 	local mat = math.lerp(matrices.mat4(), grayMat, color.currPos)
