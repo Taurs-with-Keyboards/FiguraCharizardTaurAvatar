@@ -14396,6 +14396,7 @@
 			"to": [2, 4, 2],
 			"autouv": 0,
 			"color": 0,
+			"visibility": false,
 			"origin": [0, 0, 0],
 			"faces": {
 				"north": {
@@ -14438,6 +14439,7 @@
 			"to": [2, 4, 2],
 			"autouv": 0,
 			"color": 0,
+			"visibility": false,
 			"inflate": 0.1,
 			"origin": [0, 0, 0],
 			"uv_offset": [0, 20],
@@ -14482,6 +14484,7 @@
 			"to": [0.5, 2.5, -2.2],
 			"autouv": 0,
 			"color": 0,
+			"visibility": false,
 			"origin": [0, 0, 0],
 			"faces": {
 				"north": {
@@ -14524,6 +14527,7 @@
 			"to": [2, 2, 2],
 			"autouv": 0,
 			"color": 0,
+			"visibility": false,
 			"origin": [0, 0, 0],
 			"uv_offset": [32, 0],
 			"faces": {
@@ -14567,6 +14571,7 @@
 			"to": [2, 2, 2],
 			"autouv": 0,
 			"color": 0,
+			"visibility": false,
 			"inflate": 0.1,
 			"origin": [0, 0, 0],
 			"uv_offset": [32, 20],
@@ -16023,7 +16028,7 @@
 			"mirror_uv": false,
 			"isOpen": true,
 			"locked": false,
-			"visibility": true,
+			"visibility": false,
 			"autouv": 0,
 			"selected": false,
 			"children": [
@@ -16036,7 +16041,7 @@
 					"mirror_uv": false,
 					"isOpen": false,
 					"locked": false,
-					"visibility": true,
+					"visibility": false,
 					"autouv": 0,
 					"selected": false,
 					"children": ["cbc559c3-1fea-7731-39a8-a8d0e64bb738", "e4ef85cb-a292-03e4-ab0c-8742b93581a9", "be4da946-32a1-268d-0257-9f0e26908e7d"]
@@ -16050,7 +16055,7 @@
 					"mirror_uv": false,
 					"isOpen": false,
 					"locked": false,
-					"visibility": true,
+					"visibility": false,
 					"autouv": 0,
 					"selected": false,
 					"children": ["b2129091-dfa4-6c51-77ef-821fdbee02b0", "9067f31a-b154-81ed-439a-afc873c28d45"]
