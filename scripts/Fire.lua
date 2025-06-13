@@ -1,282 +1,261 @@
 -- Required scripts
-local pokemonParts = require("lib.GroupIndex")(models.CharizardTaur)
-local average      = require("lib.Average")
-local itemCheck    = require("lib.ItemCheck")
-local color        = require("scripts.ColorProperties")
+local parts = require("lib.PartsAPI")
+local lerp  = require("lib.LerpAPI")
+
+-- Fire group
+local fireGroup = parts.group.Fire
+
+-- Kill script early if fire cannot be found
+if not fireGroup then return {} end
 
 -- Config setup
 config:name("CharizardTaur")
-local damage   = config:load("FireDamage")
-local reignite = config:load("FireReignite")
-local maxTimer = config:load("FireMaxTimer") or 200
-local effects  = config:load("FireEffects")
-if damage   == nil then damage   = true end
-if reignite == nil then reignite = true end
-if effects  == nil then effects  = true end
+local effects     = config:load("FireEffects")
+local experience  = config:load("FireExperience")
+local reignite    = config:load("FireReignite")
+local maxTimer    = config:load("FireTimer") or 200
+local damageColor = config:load("FireDamageColor") or vectors.hexToRGB("00FFFF")
+local damage      = config:load("FireDamage")
+if effects    == nil then effects    = true end
+if damage     == nil then damage     = true end
+if experience == nil then experience = true end
+if reignite   == nil then reignite   = true end
 
--- Variable setup
+-- Variables
 local timer = maxTimer
+local selectedRGB = 0
+local tex = textures["textures.misc.flame"] or textures["CharizardTaur.flame"]
+local grayMat = matrices.mat4(
+	vec(0.25, 0.25, 0.25, 0),
+	vec(0.25, 0.25, 0.25, 0),
+	vec(0.25, 0.25, 0.25, 0),
+	vec(0, 0, 0, 1)
+)
 
--- Fire tail triggers
-local trigger = {
-	water  = false,
-	rain   = false,
-	splash = false,
-	fire   = false,
-	lava   = false,
-	lit    = false
+-- Lerps
+local scale = lerp:new(0.05, 1)
+local color = lerp:new(0.2)
+
+-- Set fire parent type
+fireGroup.Fire
+	:parentType("CAMERA")
+	:secondaryTexture("CUSTOM", tex)
+
+-- Fire triggers
+local triggers = {
+	on = {
+		fire = false,
+		lava = false,
+		lit  = false
+	},
+	off = {
+		water  = false,
+		rain   = false,
+		splash = false
+	}
 }
 
+-- Blocks that count as fire
 local fireBlocks = {
-	"minecraft:fire",
-	"minecraft:soul_fire",
-	"minecraft:torch",
-	"minecraft:soul_torch"
+	["minecraft:fire"]       = true,
+	["minecraft:soul_fire"]  = true,
+	["minecraft:torch"]      = true,
+	["minecraft:soul_torch"] = true
 }
 
--- Texture variables setup
-local normalText = textures["textures.normalFlame"] or textures["CharizardTaur.normalFlame"]
-local midwayText = textures:copy("midwayFlame", textures["textures.normalFlame"] or textures["CharizardTaur.normalFlame"])
-local damageText = textures["textures.damageFlame"] or textures["CharizardTaur.damageFlame"]
-local dim = normalText:getDimensions()-1
-
--- Set Fire Parent Type
-pokemonParts.Fire.Fire:parentType("CAMERA")
-
--- Find midway hue between two pixels based on lerp
-local function comparePixel(x, y, d)
-	
-	-- Find pixels at given cords
-	local normalText = normalText:getPixel(x, y)
-	local damageText = damageText:getPixel(x, y)
-	
-	-- If the pixels are the exact same, stop function
-	if normalText == damageText then return end
-	
-	-- Find desired midpoint
-	local midway = math.lerp(normalText, damageText, d)
-	
-	-- Apply to midpoint texture
-	midwayText:setPixel(x, y, midway)
-	
-end
-
--- Lerp scale table
-local scale = {
-	current    = 1,
-	nextTick   = 1,
-	target     = 1,
-	currentPos = 1
-}
-
--- Lerp hue table
-local hue = {
-	prev = 0,
-	curr = 0,
-	next = 0
-}
-
--- Check if a splash potion is broken near the player
+-- Check if a splash potion is broken near the fire
 function events.ON_PLAY_SOUND(id, pos, vol, pitch, loop, category, path)
 	
 	if player:isLoaded() then
-		local firePos  = pokemonParts.Fire:partToWorldMatrix():apply()
+		local firePos  = fireGroup:partToWorldMatrix():apply()
 		local atPos    = pos < firePos + 2 and pos > firePos - 2
 		local splashID = id == "minecraft:entity.splash_potion.break" or id == "minecraft:entity.lingering_potion.break"
-		trigger.splash = atPos and splashID and path
+		triggers.off.splash = atPos and splashID and path
 	end
+	
+end
+
+-- Attempts to play an effect based on a given chance
+local function doChance(chance)
+	
+	return math.random() < chance * scale.currPos
+	
+end
+
+-- Find angle with variation
+local function smokeAngle()
+	
+	return vec(
+		math.random() * 0.025 - 0.0125,
+		math.random() * 0.05 + 0.025,
+		math.random() * 0.025 - 0.0125
+	)
 	
 end
 
 function events.TICK()
 	
-	if average(pokemonParts.PokeBall:getAnimScale():unpack()) < 0.25 then
-		-- Variables
-		local firePos = pokemonParts.Fire:partToWorldMatrix():apply()
-		local block   = world.getBlockState(firePos)
-		local exp     = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.5, 1.5)
-		local health  = math.clamp(math.map((player:getHealth() / player:getMaxHealth()) * 1, 0.25, 1, 1, 0), 0, 1)
-		
-		-- Check fluid tags
-		for _, tag in ipairs(block:getFluidTags()) do
-			trigger.water = tag == "minecraft:water" or tag == "c:water"
-			trigger.lava  = tag == "minecraft:lava"  or tag == "c:lava"
+	-- Variables
+	local firePos = fireGroup:partToWorldMatrix():apply()
+	local block   = world.getBlockState(firePos)
+	local extinguish = false
+	
+	-- Increment timer
+	timer = reignite and math.min(timer + 1, maxTimer) or timer
+	
+	-- Check for water fluid tag
+	for _, v in ipairs(block:getFluidTags()) do
+		if v:find("water") then
+			triggers.off.water = true
+			break
 		end
-		-- If no fluid tags, reset
-		if next(block:getFluidTags()) == nil then
-			trigger.water = false
-			trigger.lava  = false
+	end
+	
+	-- Check for rain
+	triggers.off.rain = world.getRainGradient() > 0.2 and world.isOpenSky(firePos) and world.getBiome(firePos):getPrecipitation() == "RAIN"
+	
+	-- Check off triggers
+	for k, v in pairs(triggers.off) do
+		if v then
+			extinguish = true
+			triggers.off[k] = false
+			break
 		end
+	end
+	
+	-- Extinguishes flame and plays sound when conditions met
+	if extinguish then
 		
-		-- Check rain
-		trigger.rain = world.getRainGradient() > 0.2 and world.isOpenSky(firePos) and world.getBiome(firePos):getPrecipitation() == "RAIN"
+		-- Reset timer
+		timer = 0
 		
-		-- Check fire
-		if block.id ~= "minecraft:air" then
-			for _, type in ipairs(fireBlocks) do
-				if block.id == type then
-					trigger.fire = true
-					break
-				end
-			end
-		else
-			trigger.fire = false
-		end
+		-- Prevent event from continuing if already extinguished
+		if scale.target == 0 then return end
 		
-		-- Check campfire lit tags
-		if next(block.properties) ~= nil then
-			trigger.lit = block.properties["lit"] == "true"
-		else
-			trigger.lit = false
-		end
-		
-		-- Timer manipulation
-		if trigger.water or trigger.rain or trigger.splash then
-			timer = 0
-			trigger.splash = false
-		elseif trigger.lava or trigger.fire or trigger.lit or timer >= maxTimer then
-			timer = maxTimer
-		elseif reignite and timer < maxTimer then
-			timer = timer + 1
-		end
-		
-		-- Extinguish fire
-		if timer == 0 and scale.currentPos ~= 0 then
+		-- Sounds and particles
+		if effects then
 			
-			-- Effects
-			if effects then
+			-- Play sound
+			sounds:playSound("entity.generic.extinguish_fire", firePos, 0.75)
+			
+			-- Spawn particles
+			for i = 1, math.ceil(math.map(scale.currPos, 0, 2, 0, 30)) do
 				
-				-- Play sound
-				sounds:playSound("entity.generic.extinguish_fire", firePos, 0.75)
-			
-				-- Spawn particles
-				for i = 1, math.floor(math.map(scale.currentPos, 0, 1.5, 0, 20)) do
-					particles["campfire_cosy_smoke"]
-						:pos(firePos + vec(math.random(-8, 8)/16, math.random(-8, 8)/16, math.random(-8, 8)/16))
-						:velocity(0, 0.1, 0)
-						:spawn()
-				end
-				
-			end
-			
-			-- Set scale
-			for enrty, value in pairs(scale) do
-				scale[enrty] = 0
-			end
-			
-		end
-		
-		-- Effects
-		if effects and scale.currentPos > 0.25 then
-			
-			-- Chance
-			local weight = math.map(scale.currentPos, 0, 2, 4000, 0)
-			local chance = math.random(1, math.max(weight, 1))
-			
-			if chance <= 5 then -- Campfire sound
-				sounds:playSound("block.campfire.crackle", firePos, 0.75)
-			elseif chance <= 20 then -- Lava bubble chance
-				particles["lava"]
-					:pos(firePos)
-					:spawn()
-			elseif chance <= 125 then -- Smoke chance
+				-- Particle attributes
 				particles["campfire_cosy_smoke"]
-					:pos(firePos + vec(math.random(-2, 2)/16, math.random(0, 8)/16, math.random(-2, 2)/16))
-					:velocity(0, 0.1, 0)
+					:pos(firePos)
+					:velocity(smokeAngle())
+					:physics(true)
 					:spawn()
+				
 			end
 			
 		end
 		
-		-- Store previous value
-		hue.prev = hue.curr
-		
-		-- Targets
-		scale.target = math.max((timer / maxTimer) * 2 - 1, 0) * exp
-		hue.next     = damage and math.round(health * 1000) / 1000 or 0
-		
-		-- Tick lerps
-		scale.current  = scale.nextTick
-		scale.nextTick = math.lerp(scale.nextTick, scale.target, 0.05)
-		hue.curr       = math.round(math.lerp(hue.prev, hue.next, avatar:getPermissionLevel() == "MAX" and 0.05 or 1) * 1000) / 1000
-		
-		-- Force hue values to match if close
-		-- Reduces instruction count
-		if hue.prev == hue.curr and hue.curr ~= hue.next then
-			for k, v in pairs(hue) do
-				hue[k] = hue.next
+		-- Reset scale
+		for k, v in pairs(scale) do
+			if k ~= "speed" then
+				scale[k] = 0
 			end
 		end
 		
-		-- Texture
-		if avatar:getPermissionLevel() == "MAX" then
-			if hue.prev ~= hue.curr then
-				
-				-- Compare and change pixels
-				for x = 0, dim.x do
-					for y = 0, dim.y do
-						comparePixel(x, y, hue.curr)
-					end
-				end
-				
-				-- Update texture
-				midwayText:update()
-				
-			end
+	end
+	
+	-- Check for lava fluid tag
+	for _, v in ipairs(block:getFluidTags()) do
+		if v:find("lava") then
+			triggers.on.lava = true
+			break
 		end
+	end
+	
+	-- Check for fire blocks
+	if fireBlocks[block.id] then
+		triggers.on.fire = true
+	end
+	
+	-- Check block lit tag
+	triggers.on.lit = block.properties.lit == "true"
+	
+	-- Check on triggers
+	for k, v in pairs(triggers.on) do
+		if v then
+			timer = maxTimer
+			triggers.on[k] = false
+			break
+		end
+	end
+	
+	-- Kill script if timer hasnt reached max
+	if timer ~= maxTimer then return end
+	
+	-- Spawn particles and play sounds if conditions are met
+	if effects then
+		
+		-- Chance
+		local weight = math.map(scale.currPos, 0, 2, 4000, 0)
+		local chance = math.random(1, math.max(weight, 1))
+		
+		-- Campfire sound (0.25%) 
+		if doChance(0.0025) then
+			sounds:playSound("block.campfire.crackle", firePos, 0.75)
+		end
+		
+		-- Lava bubble (0.5%)
+		if doChance(0.005) then
+			particles["lava"]
+				:pos(firePos)
+				:spawn()
+		end
+		
+		-- Smoke chance (5%)
+		if doChance(0.05) then
+			particles["campfire_cosy_smoke"]
+				:pos(firePos)
+				:velocity(smokeAngle())
+				:spawn()
+		end
+		
+	end
+	
+	-- Init apply
+	scale.target = 1
+	color.target = 0
+	
+	-- Apply experience modifier
+	if experience then
+		
+		local exp = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.25, 2)
+		scale.target = scale.target * exp
+		
+	end
+	
+	-- Apply damage color
+	if damage then
+		
+		color.target = math.map(math.clamp(player:getHealth() / player:getMaxHealth(), 0.25, 1), 0.25, 1, 1, 0)
+		
 	end
 	
 end
 
 function events.RENDER(delta, context)
 	
-	-- Render lerps
-	scale.currentPos = math.lerp(scale.current, scale.nextTick, delta)
+	-- Change fire color
+	local mat = math.lerp(matrices.mat4(), grayMat, color.currPos)
+	local col = math.lerp(vec(1, 1, 1), damageColor, color.currPos)
+	local dim = tex:getDimensions()
+	tex:restore():applyMatrix(0, 0, dim.x, dim.y, mat:scale(col), true):update()
 	
-	-- Apply
-	local texture = damage and (avatar:getPermissionLevel() == "MAX" and midwayText or hue.curr == 1 and damageText or normalText) or normalText
-	pokemonParts.Fire
-		:scale(scale.currentPos)
-		:primaryTexture("CUSTOM",   texture)
-		:secondaryTexture("CUSTOM", texture)
+	-- Adjust fire attributes
+	fireGroup
+		:scale(scale.currPos)
 		:secondaryRenderType(context == "RENDER" and "EMISSIVE" or "EYES")
 	
 end
 
--- Fire damage toggle
-local function setDamage(boolean)
-	
-	damage = boolean
-	config:save("FireDamage", damage)
-	if host:isHost() and player:isLoaded() and damage then
-		sounds:playSound("entity.player.hurt", player:getPos(), 0.75)
-	end
-	
-end
-
--- Reignite toggle
-local function setReignite(boolean)
-	
-	reignite = boolean
-	config:save("FireReignite", reignite)
-	if host:isHost() and player:isLoaded() then
-		sounds:playSound(reignite and "item.flintandsteel.use" or "entity.generic.extinguish_fire", player:getPos(), 0.75)
-	end
-	
-end
-
--- Set max timer
-local function setMaxTimer(x)
-	
-	if reignite then
-		maxTimer = math.clamp(maxTimer + (x * 20), 100, 6000)
-		config:save("FireMaxTimer", maxTimer)
-	end
-	
-end
-
--- Fire effects toggle
-local function setEffects(boolean)
+-- Effects toggle
+function pings.setFireEffects(boolean)
 	
 	effects = boolean
 	config:save("FireEffects", effects)
@@ -286,104 +265,182 @@ local function setEffects(boolean)
 	
 end
 
--- Sync variables
-local function syncFire(a, b, x, c)
+-- Experience toggle
+function pings.setFireExperience(boolean)
 	
-	damage   = a
-	reignite = b
-	maxTimer = x
-	effects  = c
+	experience = boolean
+	config:save("FireExperience", experience)
+	if host:isHost() and player:isLoaded() and experience then
+		sounds:playSound("entity.experience_orb.pickup", player:getPos(), 0.75, math.random()*0.7+0.55)
+	end
 	
 end
 
--- Pings setup
-pings.setFireDamage   = setDamage
-pings.setFireReignite = setReignite
-pings.setFireEffects  = setEffects
-pings.syncFire        = syncFire
+-- Reignite toggle
+function pings.setFireReignite(boolean)
+	
+	reignite = boolean
+	config:save("FireReignite", reignite)
+	if host:isHost() and player:isLoaded() then
+		sounds:playSound(reignite and "item.flintandsteel.use" or "entity.generic.extinguish_fire", player:getPos(), 0.75)
+	end
+	
+end
+
+-- Set timer
+local function setTimer(x)
+	
+	maxTimer = math.clamp(maxTimer + (x * 20), 0, 72000)
+	config:save("FireTimer", maxTimer)
+	
+end
+
+-- Set color
+local function setColor(x)
+	
+	x = x/255
+	damageColor[selectedRGB+1] = math.clamp(damageColor[selectedRGB+1] + x, 0, 1)
+	
+	config:save("FireDamageColor", damageColor) 
+	
+end
+
+-- Swaps selected rgb value
+local function selectRGB()
+	
+	selectedRGB = (selectedRGB + 1) % 3
+	
+end
+
+-- Damage toggle
+function pings.setFireDamage(boolean)
+	
+	damage = boolean
+	config:save("FireDamage", damage)
+	if host:isHost() and player:isLoaded() then
+		sounds:playSound(damage and "entity.player.attack.sweep" or "item.shield.block", player:getPos(), 0.75)
+	end
+	
+end
+
+-- Sync variables
+function pings.syncFire(a, b, c, d, e, f)
+	
+	effects     = a
+	experience  = b
+	reignite    = c
+	maxTimer    = d
+	damageColor = e
+	damage      = f
+	
+end
+
+-- Host only instructions
+if not host:isHost() then return end
+
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local s, c = pcall(require, "scripts.ColorProperties")
+if not s then c = {} end
 
 -- Sync on tick
-if host:isHost() then
-	function events.TICK()
-		
-		if world.getTime() % 200 == 0 then
-			pings.syncFire(damage, reignite, maxTimer, effects)
-		end
-		
+function events.TICK()
+	
+	if world.getTime() % 200 == 0 then
+		pings.syncFire(effects, experience, reignite, maxTimer, damageColor, damage)
 	end
+	
 end
 
--- Activate actions
-setDamage(damage)
-setReignite(reignite)
-setEffects(effects)
-
--- Setup table
+-- Table setup
 local t = {}
 
-t.damagePage = action_wheel:newAction()
-	:item(itemCheck("lantern"))
-	:toggleItem(itemCheck("soul_lantern"))
-	:onToggle(pings.setFireDamage)
-	:toggled(damage)
-
-t.fuelPage = action_wheel:newAction()
-	:item(itemCheck("flint"))
-	:toggleItem(itemCheck("flint_and_steel"))
-	:onScroll(setMaxTimer)
-	:onToggle(pings.setFireReignite)
-	:onRightClick(function() maxTimer = 200 config:save("FireMaxTimer", maxTimer) end)
-	:toggled(reignite)
-
-t.effectsPage = action_wheel:newAction()
+-- Actions
+t.effectsAct = action_wheel:newAction()
 	:item(itemCheck("white_wool"))
 	:toggleItem(itemCheck("note_block"))
 	:onToggle(pings.setFireEffects)
 	:toggled(effects)
 
--- Update action page info
-function events.TICK()
+t.experienceAct = action_wheel:newAction()
+	:item(itemCheck("glass_bottle"))
+	:toggleItem(itemCheck("experience_bottle"))
+	:onToggle(pings.setFireExperience)
+	:toggled(experience)
+
+t.reigniteAct = action_wheel:newAction()
+	:item(itemCheck("flint"))
+	:toggleItem(itemCheck("flint_and_steel"))
+	:onToggle(pings.setFireReignite)
+	:onRightClick(function() maxTimer = 200 config:save("FireTimer", maxTimer) end)
+	:onScroll(setTimer)
+	:toggled(reignite)
+
+t.colorAct = action_wheel:newAction()
+	:item(itemCheck("shield"))
+	:toggleItem(itemCheck("iron_sword"))
+	:onToggle(pings.setFireDamage)
+	:onRightClick(selectRGB)
+	:onScroll(function(x) setColor(x) end)
+	:toggled(damage)
+
+-- Update actions
+function events.RENDER(delta, context)
 	
-	t.damagePage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Fire Damage Indicator\n\n", bold = true, color = color.primary},
-				{text = "Allow the tail fire to indicate overall health.\n\n", color = color.secondary},
-				{text = "This feature can be intensive, and will require\n\"", color = "red"},
-				{text = "Max", color = "dark_purple"},
-				{text = "\" permission level to see gradual change.", color = "red"}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-	
-	t.fuelPage
-		:title(toJson(
-			{
-				"",
-				{text = "Set Fire Reignition/Timer\n\n", bold = true, color = color.primary},
-				{text = "Sets the ability for your tail fire to auto-reignite, and how long until full power.\n\n", color = color.secondary},
-				{text = "Current ingition timer: ", bold = true, color = color.secondary},
-				{text = (reignite and ((maxTimer / 20).." Seconds") or "Cannot auto-reignite").."\n\n", color = not reignite and "red"},
-				{text = "Scroll to adjust the timer.\nRight click resets timer to 10 seconds.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-	
-	t.effectsPage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Fire Effects\n\n", bold = true, color = color.primary},
-				{text = "Allow the tail fire to create particles and sounds.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
+	if action_wheel:isEnabled() then
+		t.effectsAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Fire Effects\n\n", bold = true, color = c.primary},
+					{text = "Toggles the fire's ability to create particles and sounds.", color = c.secondary}
+				}
+			))
+		
+		t.experienceAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Fire Experience Guage\n\n", bold = true, color = c.primary},
+					{text = "Allow the tail fire to change size based on experience level.", color = c.secondary}
+				}
+			))
+		
+		t.reigniteAct
+			:title(toJson(
+				{
+					"",
+					{text = "Set Fire Reignition & Timer\n\n", bold = true, color = c.primary},
+					{text = "Control the ability for your tail fire to auto-reignite, as well as how long until it does so.\n\n", color = c.secondary},
+					{text = "Current timer: ", bold = true, color = c.secondary},
+					{text = (reignite and (maxTimer / 20).." Seconds" or "Cannot auto-reignite").."\n\n", color = not reignite and "red"},
+					{text = "Scroll to adjust the timer.\nRight click resets timer to 10 seconds.", color = c.secondary}
+				}
+			))
+		
+		t.colorAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Fire Damage Indicator/Set Fire Color\n\n", bold = true, color = c.primary},
+					{text = "Allow the tail fire to indicate overall health.\nAdditionally, sets the color of the fire while damaged.\nLeft click to toggle damage coloring.\nScroll to adjust an RGB Value.\nRight click to change color channel.\n\n", color = c.secondary},
+					{text = "Selected RGB: ", bold = true, color = c.secondary},
+					{text = (selectedRGB == 0 and "[%d] "  or "%d " ):format(damageColor[1] * 255), color = "red"},
+					{text = (selectedRGB == 1 and "[%d] "  or "%d " ):format(damageColor[2] * 255), color = "green"},
+					{text = (selectedRGB == 2 and "[%d]\n" or "%d\n"):format(damageColor[3] * 255), color = "blue"},
+					{text = "Selected Hex: ", bold = true, color = c.secondary},
+					{text = vectors.rgbToHex(damageColor), color = "#"..vectors.rgbToHex(damageColor)},
+
+				}
+			))
+		
+		for _, act in pairs(t) do
+			act:hoverColor(c.hover):toggleColor(c.active)
+		end
+		
+	end
 	
 end
 
--- Return action wheel pages
+-- Return actions
 return t

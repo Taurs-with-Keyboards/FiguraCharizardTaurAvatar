@@ -9,7 +9,10 @@ if not s then armor = {} end
 
 local camera    = require("scripts.CameraControl")
 local arms      = require("scripts.Arms")
-local fire      = require("scripts.Fire")
+
+local s, fire = pcall(require, "scripts.Fire")
+if not s then fire = {} end
+
 local anims     = require("scripts.Anims")
 
 local s, pokeball = pcall(require, "scripts.Pokeball")
@@ -173,9 +176,11 @@ pages.pokemon
 
 -- Fire actions
 pages.fire
-	:action( -1, fire.damagePage)
-	:action( -1, fire.fuelPage)
-	:action( -1, fire.effectsPage)
+	:action( -1, fire.effectsAct)
+	:action( -1, fire.experienceAct)
+	:action( -1, fire.reigniteAct)
+	:action( -1, fire.colorAct)
+	:action( -1, fire.damageAct)
 	:action( -1, backAction)
 
 -- Animation actions
