@@ -5,8 +5,9 @@ local s, squassets = pcall(require, "lib.SquAssets")
 if not s then return {} end
 
 -- Required scripts
-local parts = require("lib.PartsAPI")
-local pose  = require("scripts.Posing")
+local parts   = require("lib.PartsAPI")
+local pose    = require("scripts.Posing")
+local effects = require("scripts.SyncedVariables")
 
 -- Calculate parent's rotations
 local function calculateParentRot(m)
@@ -84,8 +85,14 @@ function events.TICK()
 	end
 	oldPose = player:getPose()
 	
-	wingsTargets.y = vel * 100
-	wingsTargets.z = -yvel * 50
+	-- Set targets
+	if pose.elytra or pose.swim or pose.crawl or effects.cF then
+		wingsTargets.y = 0
+		wingsTargets.z = 0
+	else
+		wingsTargets.y = vel * 100
+		wingsTargets.z = -yvel * 50
+	end
 	
 end
 
