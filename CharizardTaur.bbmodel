@@ -14694,7 +14694,7 @@
 								},
 								{
 									"name": "headArmorHelmet",
-									"origin": [0, 43, 0],
+									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "f134cc11-037a-32d1-a930-75c893e86f0e",
 									"export": true,
@@ -14753,7 +14753,7 @@
 								},
 								{
 									"name": "bodyArmorChestplate",
-									"origin": [0, 43, 0],
+									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "60efe8e5-468d-dc09-07f5-7464d4f41659",
 									"export": true,
@@ -14789,7 +14789,7 @@
 							"children": [
 								{
 									"name": "leftArmDefault",
-									"origin": [-5, 41, 0],
+									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "ca74d4b7-8752-2aa8-5620-09b6970e88ee",
 									"export": true,
@@ -14803,7 +14803,7 @@
 								},
 								{
 									"name": "leftArmSlim",
-									"origin": [-5, 41, 0],
+									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "2100642a-e74f-07f2-c61b-23a243607bfc",
 									"export": true,
@@ -14817,7 +14817,7 @@
 								},
 								{
 									"name": "leftArmArmorChestplate",
-									"origin": [-5, 41, 0],
+									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "da0e8319-ab48-9ce3-ba42-cb4e74822534",
 									"export": true,
@@ -14860,7 +14860,7 @@
 							"children": [
 								{
 									"name": "rightArmDefault",
-									"origin": [5, 41, 0],
+									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "1f8f7c26-2637-7099-c53d-724ae04940df",
 									"export": true,
@@ -14874,7 +14874,7 @@
 								},
 								{
 									"name": "rightArmSlim",
-									"origin": [5, 41, 0],
+									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "eb0a073b-e889-8acf-949d-4980965f28cb",
 									"export": true,
@@ -14888,7 +14888,7 @@
 								},
 								{
 									"name": "rightArmArmorChestplate",
-									"origin": [5, 41, 0],
+									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "43014aa7-3f74-72b6-444a-c71d9a92ac22",
 									"export": true,
@@ -14991,7 +14991,7 @@
 								"8f7d0f66-766b-5be9-f373-64017131598d",
 								{
 									"name": "MergeArmorChestplate",
-									"origin": [0, 32, 0],
+									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "fea9a592-e392-ee63-f5f7-f1c8d63129f6",
 									"export": true,
@@ -15022,7 +15022,7 @@
 								"2c5fadc3-dc68-935b-4b51-9aeb128d1879",
 								{
 									"name": "TorsoArmorChestplate",
-									"origin": [0, 30, 0],
+									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "ad435577-cfbf-3e65-91fb-79ba08117bc8",
 									"export": true,
@@ -15036,7 +15036,7 @@
 								},
 								{
 									"name": "TorsoArmorLeggings",
-									"origin": [0, 30, 0],
+									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "d2f63fd4-ad69-7cb7-7d35-5435abbe065c",
 									"export": true,
@@ -15065,7 +15065,7 @@
 										"3019426a-29e4-104e-ddeb-0d358ed90e89",
 										{
 											"name": "LowerLeftArmArmorChestplate",
-											"origin": [-8, 30, -1.5],
+											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "5f80aac0-1b74-f74f-7bbe-a57f3f725911",
 											"export": true,
@@ -15094,7 +15094,7 @@
 												"db495dfe-baba-ca81-fd9e-f83926db52c5",
 												{
 													"name": "LeftForearmArmorChestplate",
-													"origin": [-17, 29.5, 1.5],
+													"origin": [0, 0, 0],
 													"color": 0,
 													"uuid": "d6993979-7bb2-66f9-7318-681ac88fe162",
 													"export": true,
@@ -15136,7 +15136,7 @@
 																"16d7b2dd-1295-d516-becf-d68a0ff20588",
 																{
 																	"name": "LeftFingerFArmorChestplate",
-																	"origin": [-25, 31.5, -1.67],
+																	"origin": [0, 0, 0],
 																	"color": 0,
 																	"uuid": "bb485fdf-8bf3-7b47-d57e-1b818180f74e",
 																	"export": true,
@@ -15182,7 +15182,7 @@
 																"bc4c19e7-04f1-c6ab-be90-3540992fcd0d",
 																{
 																	"name": "LeftFingerMArmorChestplate",
-																	"origin": [-25, 31.5, 0],
+																	"origin": [0, 0, 0],
 																	"color": 0,
 																	"uuid": "db0dfb2d-da29-c087-8cfd-67e0ad16aa7e",
 																	"export": true,
@@ -15228,7 +15228,7 @@
 																"439df4c7-0c60-94b0-7b54-efeedf9ffe9f",
 																{
 																	"name": "LeftFingerBArmorChestplate",
-																	"origin": [-25, 31.5, 1.67],
+																	"origin": [0, 0, 0],
 																	"color": 0,
 																	"uuid": "82d6dd5a-e620-23af-4d6f-d7726c83e26e",
 																	"export": true,
@@ -15280,7 +15280,7 @@
 										"b5ddb912-7552-c87d-fb88-2253cd651886",
 										{
 											"name": "LowerRightArmArmorChestplate",
-											"origin": [8, 30, -1.5],
+											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "3f07e3e8-a8c0-ef6f-b281-c2f5087e0dd2",
 											"export": true,
@@ -15309,7 +15309,7 @@
 												"ca6e2cb5-0188-032a-421a-8f378a5a0ab4",
 												{
 													"name": "RightForearmArmorChestplate",
-													"origin": [17, 29.5, 1.5],
+													"origin": [0, 0, 0],
 													"color": 0,
 													"uuid": "26a3aa57-be08-1521-9167-1a48cc06abbb",
 													"export": true,
@@ -15351,7 +15351,7 @@
 																"92f8ab26-e720-2e83-e3b0-e144bbefb328",
 																{
 																	"name": "RightFingerFArmorChestplate",
-																	"origin": [25, 31.5, -1.67],
+																	"origin": [0, 0, 0],
 																	"color": 0,
 																	"uuid": "6d2e9ebe-5312-acab-f9df-c831b5da149d",
 																	"export": true,
@@ -15397,7 +15397,7 @@
 																"f402a987-f379-7251-4b5e-8c6acfe26857",
 																{
 																	"name": "RightFingerMArmorChestplate",
-																	"origin": [25, 31.5, 0],
+																	"origin": [0, 0, 0],
 																	"color": 0,
 																	"uuid": "476ac6f6-deb2-a6da-3123-9d151443b313",
 																	"export": true,
@@ -15443,7 +15443,7 @@
 																"0dfc3dd0-f453-9765-6566-e64c1bef1a11",
 																{
 																	"name": "RightFingerBArmorChestplate",
-																	"origin": [25, 31.5, 1.67],
+																	"origin": [0, 0, 0],
 																	"color": 0,
 																	"uuid": "87ce6821-246b-1cf7-441a-657cb823cbab",
 																	"export": true,
@@ -15635,7 +15635,7 @@
 								"caae1590-4319-cf51-e646-cc196d7ae62c",
 								{
 									"name": "HipsArmorChestplate",
-									"origin": [0, 20, 0],
+									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "039a23b7-57fd-b015-ab8f-fa04206c1454",
 									"export": true,
@@ -15649,7 +15649,7 @@
 								},
 								{
 									"name": "HipsArmorLeggings",
-									"origin": [0, 20, 0],
+									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "0ce026d1-1743-ca0e-d760-2e16b78d1ae3",
 									"export": true,
@@ -15679,7 +15679,7 @@
 										"f82fddf9-59d5-09d7-7470-b11cf2578b3f",
 										{
 											"name": "leftLegArmorLeggings",
-											"origin": [-9, 14, 0.5],
+											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "9ebf288b-c242-3aae-cd38-b234e4115ce0",
 											"export": true,
@@ -15708,7 +15708,7 @@
 												"bf78fd81-1195-8e8b-274f-954fb9535f90",
 												{
 													"name": "LeftFootArmorBoot",
-													"origin": [-9, 3, 0.5],
+													"origin": [0, 0, 0],
 													"color": 0,
 													"uuid": "456df40c-0887-665d-dc35-60aa4eba7bc6",
 													"export": true,
@@ -15786,7 +15786,7 @@
 										"17876d18-d112-8fd7-c8d3-299ec069ef01",
 										{
 											"name": "rightLegArmorLeggings",
-											"origin": [9, 14, 0.5],
+											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "e49ccaf3-c5a0-c081-3535-e4b2f8fdd617",
 											"export": true,
@@ -15815,7 +15815,7 @@
 												"fb237647-3326-ee1a-4063-ba37fc7117fe",
 												{
 													"name": "RightFootArmorBoot",
-													"origin": [9, 3, 0.5],
+													"origin": [0, 0, 0],
 													"color": 0,
 													"uuid": "6f92bca5-d821-fa4e-b328-8d2044e741b2",
 													"export": true,
@@ -15892,7 +15892,7 @@
 										"c5a6f969-31a1-abac-c492-8f526f8561f6",
 										{
 											"name": "Tail1ArmorLeggings",
-											"origin": [0, 11, 6.5],
+											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "091e315f-47db-03f6-aff4-867930d299b1",
 											"export": true,
@@ -15921,7 +15921,7 @@
 												"7dff24b4-ad61-9249-6c38-b37a0acd45c0",
 												{
 													"name": "Tail2ArmorLeggings",
-													"origin": [0, 10, 23.5],
+													"origin": [0, 0, 0],
 													"color": 0,
 													"uuid": "eaacd6eb-4ab7-a7b2-1da5-d89a933a4162",
 													"export": true,
@@ -15950,7 +15950,7 @@
 														"794097b9-2020-287d-f43a-628473284f4b",
 														{
 															"name": "Tail3ArmorLeggings",
-															"origin": [0, 9, 41.5],
+															"origin": [0, 0, 0],
 															"color": 0,
 															"uuid": "de57b8c1-4e82-4ca9-08a0-8a9f4ea70c47",
 															"export": true,
@@ -16047,7 +16047,7 @@
 			"children": [
 				{
 					"name": "leftArmDefaultFP",
-					"origin": [-5, 22, 0],
+					"origin": [0, 0, 0],
 					"color": 0,
 					"uuid": "02f938ef-6e98-a65a-eba8-98da80e879b5",
 					"export": true,
@@ -16061,7 +16061,7 @@
 				},
 				{
 					"name": "leftArmSlimFP",
-					"origin": [-5, 22, 0],
+					"origin": [0, 0, 0],
 					"color": 0,
 					"uuid": "c83d9b10-6249-79d6-7409-57d120bf0c8a",
 					"export": true,
@@ -16075,7 +16075,7 @@
 				},
 				{
 					"name": "leftArmArmorChestplateFP",
-					"origin": [-5, 22, 0],
+					"origin": [0, 0, 0],
 					"color": 0,
 					"uuid": "e10278a9-4f8f-3e69-8164-22409c60c096",
 					"export": true,
@@ -16118,7 +16118,7 @@
 			"children": [
 				{
 					"name": "rightArmDefaultFP",
-					"origin": [5, 30, 0],
+					"origin": [0, 0, 0],
 					"color": 0,
 					"uuid": "49302000-905b-19a6-2c4c-a2e79d0a5321",
 					"export": true,
@@ -16132,7 +16132,7 @@
 				},
 				{
 					"name": "rightArmSlimFP",
-					"origin": [5, 30, 0],
+					"origin": [0, 0, 0],
 					"color": 0,
 					"uuid": "5a71ff03-550d-134e-6d03-963934b717a2",
 					"export": true,
@@ -16146,7 +16146,7 @@
 				},
 				{
 					"name": "rightArmArmorChestplateFP",
-					"origin": [5, 22, 0],
+					"origin": [0, 0, 0],
 					"color": 0,
 					"uuid": "b89961a1-96ca-6513-0811-b759b3b17edb",
 					"export": true,
@@ -16191,7 +16191,7 @@
 				"6156964d-269d-91dc-4e74-e78969c4e8dc",
 				{
 					"name": "HornsSkull",
-					"origin": [-3, 5, 3.5],
+					"origin": [0, 0, 0],
 					"color": 0,
 					"uuid": "82263f92-3125-306a-e8a6-79758cf2f0d4",
 					"export": true,
