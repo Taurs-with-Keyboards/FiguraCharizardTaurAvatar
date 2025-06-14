@@ -1,4 +1,4 @@
--- Required scripts
+-- Required script
 local origins = require("lib.OriginsAPI")
 
 function events.TICK()
