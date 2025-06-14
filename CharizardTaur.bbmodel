@@ -4,7 +4,7 @@
 		"model_format": "figura",
 		"box_uv": false
 	},
-	"visible_box": [7, 4, 1],
+	"visible_box": [1, 1, 0],
 	"variable_placeholders": "",
 	"variable_placeholder_buttons": [],
 	"timeline_setups": [],
