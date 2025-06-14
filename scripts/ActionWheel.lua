@@ -13,8 +13,8 @@ if not s then armor = {} end
 local s, camera = pcall(require, "scripts.CameraControl")
 if not s then camera = {} end
 
-local s, arms = pcall(require, "scripts.Arms")
-if not s then arms = {} end
+local s, squapi = pcall(require, "scripts.SquishyAnims")
+if not s then squapi = {} end
 
 local s, pokeball = pcall(require, "scripts.Pokeball")
 if not s then pokeball = {} end
@@ -178,7 +178,6 @@ pages.camera
 pages.charizard
 	:action( -1, pokeball.toggleAct)
 	:action( -1, shiny.shinyAct)
-	:action( -1, arms.holdPage)
 	:action( -1, pageActs.fire)
 	:action( -1, backAct)
 
@@ -193,5 +192,5 @@ pages.fire
 
 -- Animation actions
 pages.anims
-	:action( -1, arms.movePage)
+	:action( -1, squapi.armsAct)
 	:action( -1, backAct)

@@ -14830,7 +14830,7 @@
 									"children": ["6230fbe2-c9ef-1fed-88bb-bc373efaa3b8", "dc79ac0a-14db-eec2-2146-09e4fc71d9de", "5dbfa0ab-742b-feab-c799-4ce0b110cd91"]
 								},
 								{
-									"name": "UpperLeftArmItem",
+									"name": "LeftItemPivot",
 									"origin": [-6, 31, -2],
 									"color": 0,
 									"uuid": "240248d1-c0a0-d0df-6849-292d78515952",
@@ -14901,7 +14901,7 @@
 									"children": ["b03db648-8aa8-6f6f-c3cd-a932724634fd", "7dbbb7fb-6b20-083c-7940-d3c8ea8746b6", "b53bb2aa-f2ad-b99c-b67f-80488c5bc3be"]
 								},
 								{
-									"name": "UpperRightArmItem",
+									"name": "RightItemPivot",
 									"origin": [6, 31, -2],
 									"color": 0,
 									"uuid": "03eaf147-520f-1984-14cb-aafcc14d8baf",
@@ -15208,21 +15208,6 @@
 																	"autouv": 0,
 																	"selected": false,
 																	"children": ["5cf4821d-a0a7-8725-71ee-44d92accb537"]
-																},
-																{
-																	"name": "LowerLeftArmItem",
-																	"origin": [-29, 29, -2],
-																	"rotation": [0, 0, -90],
-																	"color": 0,
-																	"uuid": "c7000cd5-ce0c-364a-2d4b-7abc47307fc3",
-																	"export": true,
-																	"mirror_uv": false,
-																	"isOpen": false,
-																	"locked": false,
-																	"visibility": true,
-																	"autouv": 0,
-																	"selected": false,
-																	"children": []
 																}
 															]
 														},
@@ -15438,21 +15423,6 @@
 																	"autouv": 0,
 																	"selected": false,
 																	"children": ["3b4b2ee4-d90f-899b-08bf-b5ab7989b9e8"]
-																},
-																{
-																	"name": "LowerRightArmItem",
-																	"origin": [29, 29, -2],
-																	"rotation": [0, 0, 90],
-																	"color": 0,
-																	"uuid": "1befcc5a-d27f-fe16-7598-2a96166f12b7",
-																	"export": true,
-																	"mirror_uv": false,
-																	"isOpen": false,
-																	"locked": false,
-																	"visibility": true,
-																	"autouv": 0,
-																	"selected": false,
-																	"children": []
 																}
 															]
 														},
@@ -20017,156 +19987,6 @@
 								}
 							],
 							"uuid": "d93bc1f7-43ee-24eb-c668-39af7b1feb47",
-							"time": 0,
-							"color": -1,
-							"interpolation": "linear"
-						}
-					]
-				}
-			}
-		},
-		{
-			"uuid": "5e06026c-d7f3-b2b5-f0d5-68b43a29b6e5",
-			"name": "holdLeft",
-			"loop": "loop",
-			"override": false,
-			"length": 0,
-			"snapping": 24,
-			"selected": false,
-			"anim_time_update": "",
-			"blend_weight": "",
-			"start_delay": "",
-			"loop_delay": "",
-			"animators": {
-				"ffcdeaed-6ce1-deab-c54b-6c8c5fba8940": {
-					"name": "LeftFingerF",
-					"type": "bone",
-					"keyframes": [
-						{
-							"channel": "rotation",
-							"data_points": [
-								{
-									"x": "-10",
-									"y": "10",
-									"z": "50"
-								}
-							],
-							"uuid": "dda75c58-e024-2316-b575-01def28fdb25",
-							"time": 0,
-							"color": -1,
-							"interpolation": "linear"
-						}
-					]
-				},
-				"e5940082-e6a2-68ff-2072-7f69348d98e8": {
-					"name": "LeftFingerM",
-					"type": "bone",
-					"keyframes": [
-						{
-							"channel": "rotation",
-							"data_points": [
-								{
-									"x": "0",
-									"y": "0",
-									"z": "45"
-								}
-							],
-							"uuid": "924142de-b82f-c36b-7dd5-9b813db3d0b2",
-							"time": 0,
-							"color": -1,
-							"interpolation": "linear"
-						}
-					]
-				},
-				"8a27c0df-3f61-6808-80ff-6b34078c822a": {
-					"name": "LeftFingerB",
-					"type": "bone",
-					"keyframes": [
-						{
-							"channel": "rotation",
-							"data_points": [
-								{
-									"x": "10",
-									"y": "-10",
-									"z": "50"
-								}
-							],
-							"uuid": "99a29b7d-8447-5579-d484-9d01b16a88f9",
-							"time": 0,
-							"color": -1,
-							"interpolation": "linear"
-						}
-					]
-				}
-			}
-		},
-		{
-			"uuid": "79160468-9987-28fc-f4ac-50a5f864e90d",
-			"name": "holdRight",
-			"loop": "loop",
-			"override": false,
-			"length": 0,
-			"snapping": 24,
-			"selected": false,
-			"anim_time_update": "",
-			"blend_weight": "",
-			"start_delay": "",
-			"loop_delay": "",
-			"animators": {
-				"ff08cefc-44df-c65f-c6a8-f23dabedf3e4": {
-					"name": "RightFingerF",
-					"type": "bone",
-					"keyframes": [
-						{
-							"channel": "rotation",
-							"data_points": [
-								{
-									"x": "10",
-									"y": "-10",
-									"z": "-50"
-								}
-							],
-							"uuid": "17cf0720-c2ba-0b77-2bd4-fa2ad131a917",
-							"time": 0,
-							"color": -1,
-							"interpolation": "linear"
-						}
-					]
-				},
-				"119b09b5-dda3-9143-2481-80ef22872c9d": {
-					"name": "RightFingerM",
-					"type": "bone",
-					"keyframes": [
-						{
-							"channel": "rotation",
-							"data_points": [
-								{
-									"x": "0",
-									"y": "0",
-									"z": "-45"
-								}
-							],
-							"uuid": "b5b14b39-662c-9025-1aaf-fa3ed26ba5c4",
-							"time": 0,
-							"color": -1,
-							"interpolation": "linear"
-						}
-					]
-				},
-				"674bf1a9-db6a-1ae4-15d1-ca91f49baa3e": {
-					"name": "RightFingerB",
-					"type": "bone",
-					"keyframes": [
-						{
-							"channel": "rotation",
-							"data_points": [
-								{
-									"x": "-10",
-									"y": "10",
-									"z": "-50"
-								}
-							],
-							"uuid": "4281ee2c-dc35-c184-2bb3-cef2ec5ef791",
 							"time": 0,
 							"color": -1,
 							"interpolation": "linear"
