@@ -1,21 +1,26 @@
 # [Charizard Taur](https://github.com/Taurs-with-Keyboards/FiguraCharizardTaurAvatar)
 ### Version: v1.1.10
-This Figura avatar is a template designed around turning the user into a Charizard-Taur.
+A Figura Avatar template designed to give the user a customizable taur body based on Charizard. 
 
 ### Authors:
-- Dragonearuss (Co-Maker, Original Idea)
-- Psycho Breadstick (QA, Origin)
-- Katt (Updated scripts, APIs)
-- Grandpa Scout\n(APIs)
-- Jimmy (Animation code)
-- Squishy (APIs)
-- MitchOfTarcoola (APIs)
-- 4P5 (APIs, Better Action Wheel)
-- PoolloverNathan (JSONs)
-- The_Beyond (Animated Fire Texture Support)
-- The Cobblemon Team (Original models, animations, textures, icons, and sounds)
-- The Pokemon Company (Charizard design)
-- Total (Avatar Maker)
+- Dragonearuss
+- The_Beyond
+- Total
+
+### Credits:
+- Psycho Breadstick
+- Jimmy
+- PoolloverNathan
+- The Cobblemon Team
+- The Pokemon Company
+
+### Libraries:
+- Grandpa Scout (GSAnimBlend, GSCarrier)
+- Squishy (SquAPI)
+- Katt (OriginsAPI, KattArmor, DynamicCrosshair)
+- 4P5 (GroundCheck)
+- Manuel (Molang Conversions)
+- Auria (Molang Conversions)
 
 ### Origin Datapack:
 - [Charizardtaur Origin](https://github.com/PsychoBreadstick/Charizardtaur-Origin) (Created by Psycho Breadstick)
