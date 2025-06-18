@@ -192,8 +192,8 @@ function events.RENDER(delta, context)
 	wingsz:berp(wingsTargets.z, delta)
 	
 	-- Apply wing bounce
-	parts.group.LeftWing1:setOffsetRot(0,   wingsy.pos, -wingsz.pos)
-	parts.group.RightWing1:setOffsetRot(0, -wingsy.pos,  wingsz.pos)
+	parts.group.LeftWing1:offsetRot(0,   wingsy.pos, -wingsz.pos)
+	parts.group.RightWing1:offsetRot(0, -wingsy.pos,  wingsz.pos)
 	
 end
 
