@@ -51,7 +51,7 @@ end
 
 -- Page setups
 local pages = {
-
+	
 	main      = action_wheel:newPage("Main"),
 	avatar    = action_wheel:newPage("Avatar"),
 	armor     = action_wheel:newPage("Armor"),
