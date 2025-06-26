@@ -347,11 +347,6 @@ end
 -- Host only instructions
 if not host:isHost() then return end
 
--- Required scripts
-local itemCheck = require("lib.ItemCheck")
-local s, c = pcall(require, "scripts.ColorProperties")
-if not s then c = {} end
-
 -- Sync on tick
 function events.TICK()
 	
@@ -361,23 +356,36 @@ function events.TICK()
 	
 end
 
--- Table setup
-local t = {}
+-- Required script
+local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+if not s then return end -- Kills script early if ActionWheel.lua isnt found
+pcall(require, "scripts.Shiny") -- Tries to find script, not required
+
+-- Pages
+local parentPage = action_wheel:getPage("Charizard") or action_wheel:getPage("Main")
+local firePage   = action_wheel:newPage("Fire")
+
+-- Actions table setup
+local a = {}
 
 -- Actions
-t.effectsAct = action_wheel:newAction()
+a.pageAct = parentPage:newAction()
+	:item(itemCheck("campfire"))
+	:onLeftClick(function() wheel:descend(firePage) end)
+
+a.effectsAct = firePage:newAction()
 	:item(itemCheck("white_wool"))
 	:toggleItem(itemCheck("note_block"))
 	:onToggle(pings.setFireEffects)
 	:toggled(effects)
 
-t.experienceAct = action_wheel:newAction()
+a.experienceAct = firePage:newAction()
 	:item(itemCheck("glass_bottle"))
 	:toggleItem(itemCheck("experience_bottle"))
 	:onToggle(pings.setFireExperience)
 	:toggled(experience)
 
-t.reigniteAct = action_wheel:newAction()
+a.reigniteAct = firePage:newAction()
 	:item(itemCheck("flint"))
 	:toggleItem(itemCheck("flint_and_steel"))
 	:onToggle(pings.setFireReignite)
@@ -385,7 +393,7 @@ t.reigniteAct = action_wheel:newAction()
 	:onScroll(setTimer)
 	:toggled(reignite)
 
-t.colorAct = action_wheel:newAction()
+a.colorAct = firePage:newAction()
 	:item(itemCheck("shield"))
 	:toggleItem(itemCheck("iron_sword"))
 	:onToggle(pings.setFireDamage)
@@ -397,7 +405,12 @@ t.colorAct = action_wheel:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		t.effectsAct
+		a.pageAct
+			:title(toJson(
+				{text = "Tail Fire Settings", bold = true, color = c.primary}
+			))
+		
+		a.effectsAct
 			:title(toJson(
 				{
 					"",
@@ -406,7 +419,7 @@ function events.RENDER(delta, context)
 				}
 			))
 		
-		t.experienceAct
+		a.experienceAct
 			:title(toJson(
 				{
 					"",
@@ -415,7 +428,7 @@ function events.RENDER(delta, context)
 				}
 			))
 		
-		t.reigniteAct
+		a.reigniteAct
 			:title(toJson(
 				{
 					"",
@@ -427,7 +440,7 @@ function events.RENDER(delta, context)
 				}
 			))
 		
-		t.colorAct
+		a.colorAct
 			:title(toJson(
 				{
 					"",
@@ -443,13 +456,10 @@ function events.RENDER(delta, context)
 				}
 			))
 		
-		for _, act in pairs(t) do
+		for _, act in pairs(a) do
 			act:hoverColor(c.hover):toggleColor(c.active)
 		end
 		
 	end
 	
 end
-
--- Return actions
-return t
