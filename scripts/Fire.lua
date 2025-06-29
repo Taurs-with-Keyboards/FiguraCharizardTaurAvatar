@@ -159,11 +159,7 @@ function events.TICK()
 		end
 		
 		-- Reset scale
-		for k, v in pairs(scale) do
-			if k ~= "speed" then
-				scale[k] = 0
-			end
-		end
+		scale:reset(0)
 		
 	end
 	

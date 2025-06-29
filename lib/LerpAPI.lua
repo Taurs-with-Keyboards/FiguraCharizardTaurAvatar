@@ -1,69 +1,80 @@
 -- LerpAPI
 -- By:
---		 _________  ________  _________  ________  ___          
---		|\___   ___\\   __  \|\___   ___\\   __  \|\  \         
---		\|___ \  \_\ \  \|\  \|___ \  \_\ \  \|\  \ \  \        
---			 \ \  \ \ \  \\\  \   \ \  \ \ \   __  \ \  \       
---			  \ \  \ \ \  \\\  \   \ \  \ \ \  \ \  \ \  \____  
---			   \ \__\ \ \_______\   \ \__\ \ \__\ \__\ \_______\
---				\|__|  \|_______|    \|__|  \|__|\|__|\|_______|
+--   _________  ________  _________  ________  ___
+--  |\___   ___\\   __  \|\___   ___\\   __  \|\  \
+--  \|___ \  \_\ \  \|\  \|___ \  \_\ \  \|\  \ \  \
+--       \ \  \ \ \  \\\  \   \ \  \ \ \   __  \ \  \
+--        \ \  \ \ \  \\\  \   \ \  \ \ \  \ \  \ \  \____
+--         \ \__\ \ \_______\   \ \__\ \ \__\ \__\ \_______\
+--          \|__|  \|_______|    \|__|  \|__|\|__|\|_______|
 --
--- Version: 1.0.2
+-- Version: 1.1.0
 
 -- Create API
 local lerpAPI = {}
 
--- List of every lerp instance
-local list = {}
+-- Interal lerp data
+local lerpInternal = {}
 
--- Create a table of variables that can be lerped
-function lerpAPI:new(speed, initPos)
+-- Lerps table
+local lerps = {}
+
+-- Removes lerp
+function lerpInternal:remove()
 	
-	-- Create instance
-	local inst = {}
+	lerps[self] = nil
+	
+end
+
+-- Resets lerp, with optional target
+function lerpInternal:reset(pos)
+	
+	pos = pos or 0
+	self.prevTick = pos
+	self.currTick = pos
+	self.target   = pos
+	self.currPos  = pos
+	
+end
+
+-- Create a lerp object
+function lerpAPI:new(speed, pos)
+	
+	-- Create object
+	local obj = setmetatable({}, { __index = lerpInternal })
 	
 	-- Speed
-	inst.speed = speed
+	obj.speed = speed
 	
 	-- Lerp variables
-	local apply = initPos or 0
-	inst.prevTick = apply
-	inst.currTick = apply
-	inst.target   = apply
-	inst.currPos  = apply
+	obj:reset(pos)
 	
 	-- Lerp enabled
-	inst.enabled = true
+	obj.enabled = true
 	
-	-- Add instance to list
-	list[inst] = inst
+	-- Add objact to list
+	lerps[obj] = obj
 	
-	-- Return instance variables
-	return inst
-	
-end
-
-function lerpAPI:remove(inst)
-	
-	list[inst] = nil
+	-- Return object
+	return obj
 	
 end
 
--- Iterate through the list to set the next tick of each lerp
+-- Iterate through the lerps to set the next tick of each lerp
 events.TICK:register(function()
-	for _, inst in pairs(list) do
-		if inst.enabled then
-			inst.prevTick = inst.currTick
-			inst.currTick = math.lerp(inst.currTick, inst.target, inst.speed)
+	for _, obj in pairs(lerps) do
+		if obj.enabled then
+			obj.prevTick = obj.currTick
+			obj.currTick = math.lerp(obj.currTick, obj.target, obj.speed)
 		end
 	end
 end, "tickLerp")
 
--- Iterate through the list to smooth the lerp each frame
+-- Iterate through the lerps to smooth the lerp each frame
 events.RENDER:register(function(delta, context)
-	for _, inst in pairs(list) do
-		if inst.enabled then
-			inst.currPos = math.lerp(inst.prevTick, inst.currTick, delta)
+	for _, obj in pairs(lerps) do
+		if obj.enabled then
+			obj.currPos = math.lerp(obj.prevTick, obj.currTick, delta)
 		end
 	end
 end, "renderLerp")
