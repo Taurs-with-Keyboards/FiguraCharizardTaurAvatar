@@ -33,8 +33,8 @@ local grayMat = matrices.mat4(
 )
 
 -- Lerps
-local scale = lerp:new(0.05, 1)
-local color = lerp:new(0.2)
+local scale = lerp:new(1, 0.05, 0.15)
+local color = lerp:new()
 
 -- Set fire parent type
 fireGroup.Fire
