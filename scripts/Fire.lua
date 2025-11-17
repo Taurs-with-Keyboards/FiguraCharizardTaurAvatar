@@ -239,6 +239,11 @@ function events.TICK()
 		
 	end
 	
+	-- Bounce flame back if below 0
+	if scale.currTick < 0 then
+		scale:bounce(0)
+	end
+	
 end
 
 function events.RENDER(delta, context)
