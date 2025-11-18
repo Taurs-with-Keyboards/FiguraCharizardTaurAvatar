@@ -1,14 +1,11 @@
 -- Kills script if squAPI or squAssets cannot be found
 local s, squapi = pcall(require, "lib.SquAPI")
 if not s then return {} end
-local s, squassets = pcall(require, "lib.SquAssets")
-if not s then return {} end
 
 -- Required scripts
-local parts   = require("lib.PartsAPI")
-local lerp    = require("lib.LerpAPI")
-local pose    = require("scripts.Posing")
-local effects = require("scripts.SyncedVariables")
+local parts = require("lib.PartsAPI")
+local lerp  = require("lib.LerpAPI")
+local pose  = require("scripts.Posing")
 
 -- Config setup
 config:name("CharizardTaur")
@@ -93,12 +90,6 @@ local fire = squapi.animateTexture(
 	2     -- Speed
 )
 
--- Wings bounce
-local wingsy = squassets.BERP:new(0.01, 0.9)
-local wingsz = squassets.BERP:new(0.01, 0.9)
-local wingsTargets = vec(0, 0, 0)
-local oldPose = "STANDING"
-
 function events.TICK()
 	
 	-- Arm variables
@@ -123,27 +114,6 @@ function events.TICK()
 	-- Control targets based on variables
 	leftArmLerp.target  = (armsMove or armShouldMove or leftSwing  or bow or ((crossL or crossR) or (using and usingL ~= "NONE"))) and 1 or 0
 	rightArmLerp.target = (armsMove or armShouldMove or rightSwing or bow or ((crossL or crossR) or (using and usingR ~= "NONE"))) and 1 or 0
-	
-	-- Vel
-	local vel  = math.clamp(squassets.forwardVel(),  -0.5, 0.5)
-	local yvel = math.clamp(squassets.verticalVel(), -0.5, 0.5)
-	
-	-- Crouch boost
-	if pose.crouch and oldPose == "STANDING" then
-		wingsz.vel = wingsz.vel + 2.5
-	elseif pose.stand and oldPose == "CROUCHING" then
-		wingsz.vel = wingsz.vel - 2.5
-	end
-	oldPose = player:getPose()
-	
-	-- Set targets
-	if pose.elytra or pose.swim or pose.crawl or effects.cF then
-		wingsTargets.y = 0
-		wingsTargets.z = 0
-	else
-		wingsTargets.y = vel * 100
-		wingsTargets.z = -yvel * 50
-	end
 	
 end
 
@@ -186,14 +156,6 @@ function events.RENDER(delta, context)
 			group:rot(-calculateParentRot(group:getParent()))
 		end
 	end
-	
-	-- Calc wing bounce
-	wingsy:berp(wingsTargets.y, delta)
-	wingsz:berp(wingsTargets.z, delta)
-	
-	-- Apply wing bounce
-	parts.group.LeftWing1:offsetRot(0,   wingsy.pos, -wingsz.pos)
-	parts.group.RightWing1:offsetRot(0, -wingsy.pos,  wingsz.pos)
 	
 end
 

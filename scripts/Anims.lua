@@ -2,7 +2,7 @@
 require("lib.GSAnimBlend")
 require("lib.Molang")
 local parts   = require("lib.PartsAPI")
-local ground  = require("lib.GroundCheck")
+local lerp    = require("lib.LerpAPI")
 local pose    = require("scripts.Posing")
 local effects = require("scripts.SyncedVariables")
 
@@ -31,12 +31,15 @@ local function calculateParentRot(m)
 	
 end
 
+-- Wings bounce
+local wings = lerp:new(vec(0, 0, 0), 0.4, 0.35, 2)
+local oldPose = "STANDING"
+
 function events.TICK()
 	
 	-- Variables
-	local vel      = player:getVelocity()
-	local dir      = player:getLookDir()
-	local onGround = ground()
+	local vel = player:getVelocity()
+	local dir = player:getLookDir()
 	
 	-- Directional velocity
 	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
@@ -73,6 +76,21 @@ function events.TICK()
 	anims.sleep:playing(sleep)
 	anims.shiver:playing(shiverStr ~= 0)
 	
+	-- Crouch boost
+	if pose.crouch and oldPose == "STANDING" then
+		wings.vel.z = wings.vel.z + 10
+	elseif pose.stand and oldPose == "CROUCHING" then
+		wings.vel.z = wings.vel.z - 10
+	end
+	oldPose = player:getPose()
+	
+	-- Set targets
+	if pose.elytra or pose.swim or pose.crawl or effects.cF then
+		wings.target.yz = vec(0, 0)
+	else
+		wings.target.yz = vec(math.clamp(fbVel, -0.4, 0.4) * 100, math.clamp(-udVel, -0.4, 0.4) * 50)
+	end
+	
 end
 
 -- Sleep rotations
@@ -107,6 +125,10 @@ function events.RENDER(delta, context)
 		models:rot(0)
 		
 	end
+	
+	-- Apply wing bounce
+	parts.group.LeftWing1:offsetRot(wings.currPos.x, wings.currPos.y, -wings.currPos.z)
+	parts.group.RightWing1:offsetRot(wings.currPos.x, -wings.currPos.y, wings.currPos.z)
 	
 	-- Parrot rot offset
 	for _, parrot in pairs(parrots) do
