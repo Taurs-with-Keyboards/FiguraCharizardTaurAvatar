@@ -3,6 +3,7 @@ require("lib.GSAnimBlend")
 require("lib.Molang")
 local parts   = require("lib.PartsAPI")
 local lerp    = require("lib.LerpAPI")
+local ground  = require("lib.GroundCheck")
 local pose    = require("scripts.Posing")
 local effects = require("scripts.SyncedVariables")
 
@@ -31,15 +32,27 @@ local function calculateParentRot(m)
 	
 end
 
+-- Set staticYaw to Yaw on init
+local _yaw = 0
+function events.ENTITY_INIT()
+	
+	_yaw = player:getBodyYaw()
+	
+end
+
 -- Wings bounce
-local wings = lerp:new(vec(0, 0, 0), 0.4, 0.35, 2)
-local oldPose = "STANDING"
+local lWing = lerp:new(vec(0, 0, 0), 0.4, 0.35, 2)
+local rWing = lerp:new(vec(0, 0, 0), 0.4, 0.35, 2)
+local _pose = "STANDING"
+local _onGround = true
 
 function events.TICK()
 	
 	-- Variables
 	local vel = player:getVelocity()
 	local dir = player:getLookDir()
+	local yaw = player:getBodyYaw()
+	local onGround = ground()
 	
 	-- Directional velocity
 	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
@@ -76,20 +89,36 @@ function events.TICK()
 	anims.sleep:playing(sleep)
 	anims.shiver:playing(shiverStr ~= 0)
 	
-	-- Crouch boost
-	if pose.crouch and oldPose == "STANDING" then
-		wings.vel.z = wings.vel.z + 10
-	elseif pose.stand and oldPose == "CROUCHING" then
-		wings.vel.z = wings.vel.z - 10
-	end
-	oldPose = player:getPose()
-	
 	-- Set targets
 	if pose.elytra or pose.swim or pose.crawl or effects.cF then
-		wings.target.yz = vec(0, 0)
+		lWing.target.yz = vec(0, 0)
+		rWing.target.yz = vec(0, 0)
+	elseif onGround and not _onGround then
+		lWing.target.z = -lWing.target.z
+		rWing.target.z = -rWing.target.z 
 	else
-		wings.target.yz = vec(math.clamp(fbVel, -0.4, 0.4) * 100, math.clamp(-udVel, -0.4, 0.4) * 50)
+		lWing.target.yz = vec(math.clamp(fbVel, -0.4, 0.4) * 100, math.clamp(udVel, -0.4, 0.4) * 50)
+		rWing.target.yz = vec(math.clamp(-fbVel, -0.4, 0.4) * 100, math.clamp(-udVel, -0.4, 0.4) * 50)
 	end
+	
+	-- Body velocity
+	local yawOffset = math.clamp((_yaw - yaw) / 3, -7.5, 7.5)
+	lWing.vel.y = lWing.vel.y - yawOffset
+	rWing.vel.y = rWing.vel.y - yawOffset
+	
+	-- Crouch boost
+	if pose.crouch and _pose == "STANDING" then
+		lWing.vel.z = lWing.vel.z - 10
+		rWing.vel.z = rWing.vel.z + 10
+	elseif pose.stand and _pose == "CROUCHING" then
+		lWing.vel.z = lWing.vel.z + 10
+		rWing.vel.z = rWing.vel.z - 10
+	end
+	
+	-- Store data
+	_yaw = yaw
+	_onGround = onGround
+	_pose = player:getPose()
 	
 end
 
@@ -127,8 +156,8 @@ function events.RENDER(delta, context)
 	end
 	
 	-- Apply wing bounce
-	parts.group.LeftWing1:offsetRot(wings.currPos.x, wings.currPos.y, -wings.currPos.z)
-	parts.group.RightWing1:offsetRot(wings.currPos.x, -wings.currPos.y, wings.currPos.z)
+	parts.group.LeftWing1:offsetRot(lWing.currPos)
+	parts.group.RightWing1:offsetRot(rWing.currPos)
 	
 	-- Parrot rot offset
 	for _, parrot in pairs(parrots) do
