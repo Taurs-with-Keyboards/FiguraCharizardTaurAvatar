@@ -53,77 +53,34 @@ charizardArmor.Materials.turtle
 	:setEmissiveTexture(textures["textures.armor.turtleHelmet_e"] or textures["CharizardTaur.turtleHelmet_e"])
 
 -- Trims
--- Bolt
-charizardArmor.TrimPatterns.bolt
-	:setTexture(textures["textures.armor.trims.boltTrim"] or textures["CharizardTaur.boltTrim"])
+local trims = {
+	"bolt",
+	"coast",
+	"dune",
+	"eye",
+	"flow",
+	"host",
+	"raiser",
+	"rib",
+	"sentry",
+	"shaper",
+	"silence",
+	"snout",
+	"spire",
+	"tide",
+	"vex",
+	"ward",
+	"wayfinder",
+	"wild"
+}
 
--- Coast
-charizardArmor.TrimPatterns.coast
-	:setTexture(textures["textures.armor.trims.coastTrim"] or textures["CharizardTaur.coastTrim"])
-
--- Dune
-charizardArmor.TrimPatterns.dune
-	:setTexture(textures["textures.armor.trims.duneTrim"] or textures["CharizardTaur.duneTrim"])
-
--- Eye
-charizardArmor.TrimPatterns.eye
-	:setTexture(textures["textures.armor.trims.eyeTrim"] or textures["CharizardTaur.eyeTrim"])
-
--- Flow
-charizardArmor.TrimPatterns.flow
-	:setTexture(textures["textures.armor.trims.flowTrim"] or textures["CharizardTaur.flowTrim"])
-
--- Host
-charizardArmor.TrimPatterns.host
-	:setTexture(textures["textures.armor.trims.hostTrim"] or textures["CharizardTaur.hostTrim"])
-
--- Raiser
-charizardArmor.TrimPatterns.raiser
-	:setTexture(textures["textures.armor.trims.raiserTrim"] or textures["CharizardTaur.raiserTrim"])
-
--- Rib
-charizardArmor.TrimPatterns.rib
-	:setTexture(textures["textures.armor.trims.ribTrim"] or textures["CharizardTaur.ribTrim"])
-
--- Sentry
-charizardArmor.TrimPatterns.sentry
-	:setTexture(textures["textures.armor.trims.sentryTrim"] or textures["CharizardTaur.sentryTrim"])
-
--- Shaper
-charizardArmor.TrimPatterns.shaper
-	:setTexture(textures["textures.armor.trims.shaperTrim"] or textures["CharizardTaur.shaperTrim"])
-
--- Silence
-charizardArmor.TrimPatterns.silence
-	:setTexture(textures["textures.armor.trims.silenceTrim"] or textures["CharizardTaur.silenceTrim"])
-
--- Snout
-charizardArmor.TrimPatterns.snout
-	:setTexture(textures["textures.armor.trims.snoutTrim"] or textures["CharizardTaur.snoutTrim"])
-
--- Spire
-charizardArmor.TrimPatterns.spire
-	:setTexture(textures["textures.armor.trims.spireTrim"] or textures["CharizardTaur.spireTrim"])
-
--- Tide
-charizardArmor.TrimPatterns.tide
-	:setTexture(textures["textures.armor.trims.tideTrim"] or textures["CharizardTaur.tideTrim"])
-
--- Vex
-charizardArmor.TrimPatterns.vex
-	:setTexture(textures["textures.armor.trims.vexTrim"] or textures["CharizardTaur.vexTrim"])
-
--- Ward
-charizardArmor.TrimPatterns.ward
-	:setTexture(textures["textures.armor.trims.wardTrim"] or textures["CharizardTaur.wardTrim"])
-
--- Wayfinder
-charizardArmor.TrimPatterns.wayfinder
-	:setTexture(textures["textures.armor.trims.wayfinderTrim"] or textures["CharizardTaur.wayfinderTrim"])
-
--- Wild
-charizardArmor.TrimPatterns.wild
-	:setTexture(textures["textures.armor.trims.wildTrim"] or textures["CharizardTaur.wildTrim"])
+-- Apply trims
+for _, trim in ipairs(trims) do
+	local tex = textures["textures.armor.trims."..trim.."Trim"] or textures["CharizardTaur."..trim.."Trim"] or false
+	if tex then
+		charizardArmor.TrimPatterns[trim]:setTexture(tex)
+	end
+end
 
 -- Config setup
 config:name("CharizardTaur")
