@@ -50,17 +50,17 @@ function events.TICK()
 	
 	-- Variables
 	local vel = player:getVelocity()
-	local dir = player:getLookDir()
 	local yaw = player:getBodyYaw()
+	local dir = vec(math.sin(math.rad(-yaw)), 0, math.cos(math.rad(-yaw)))
 	local onGround = ground()
 	
 	-- Directional velocity
-	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
-	local lrVel = player:getVelocity():cross(dir.x_z:normalize()).y
-	local udVel = player:getVelocity().y
+	local fbVel = vel:dot((dir.x_z):normalized())
+	local lrVel = vel:crossed(dir.x_z:normalized()).y
+	local udVel = vel.y
 	
 	-- Speed control
-	local walkSpeed   = math.clamp((pose.climb and udVel or fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 6.5, -2, 2)
+	local walkSpeed   = math.clamp((pose.climb and udVel or fbVel) * 6.5, -2, 2)
 	local flightSpeed = math.min(vel:length(), 2)
 	
 	-- Animation speeds
