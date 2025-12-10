@@ -334,14 +334,9 @@ function pings.setFireDamage(boolean)
 end
 
 -- Sync variables
-function pings.syncFire(a, b, c, d, e, f)
+function pings.syncFire(...)
 	
-	effects     = a
-	experience  = b
-	reignite    = c
-	maxTimer    = d
-	damageColor = e
-	damage      = f
+	effects, experience, reignite, maxTimer, damageColor, damage = ...
 	
 end
 
