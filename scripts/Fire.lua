@@ -353,7 +353,7 @@ function events.TICK()
 end
 
 -- Required script
-local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+local s, wheel, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Shiny") -- Tries to find script, not required
 
@@ -366,32 +366,32 @@ local a = {}
 
 -- Actions
 a.pageAct = parentPage:newAction()
-	:item(itemCheck("campfire"))
+	:item("campfire")
 	:onLeftClick(function() wheel:descend(firePage) end)
 
 a.effectsAct = firePage:newAction()
-	:item(itemCheck("white_wool"))
-	:toggleItem(itemCheck("note_block"))
+	:item("white_wool")
+	:toggleItem("note_block")
 	:onToggle(pings.setFireEffects)
 	:toggled(effects)
 
 a.experienceAct = firePage:newAction()
-	:item(itemCheck("glass_bottle"))
-	:toggleItem(itemCheck("experience_bottle"))
+	:item("glass_bottle")
+	:toggleItem("experience_bottle")
 	:onToggle(pings.setFireExperience)
 	:toggled(experience)
 
 a.reigniteAct = firePage:newAction()
-	:item(itemCheck("flint"))
-	:toggleItem(itemCheck("flint_and_steel"))
+	:item("flint")
+	:toggleItem("flint_and_steel")
 	:onToggle(pings.setFireReignite)
 	:onRightClick(function() maxTimer = 200 config:save("FireTimer", maxTimer) end)
 	:onScroll(setTimer)
 	:toggled(reignite)
 
 a.colorAct = firePage:newAction()
-	:item(itemCheck("shield"))
-	:toggleItem(itemCheck("iron_sword"))
+	:item("shield")
+	:toggleItem("iron_sword")
 	:onToggle(pings.setFireDamage)
 	:onRightClick(selectRGB)
 	:onScroll(function(x) setColor(x) end)
