@@ -187,7 +187,7 @@ function events.TICK()
 	if timer ~= maxTimer.curr then return end
 	
 	-- Spawn particles and play sounds if conditions are met
-	if effects.curr then
+	if effects.curr and not client:isPaused() then
 		
 		-- Chance
 		local weight = math.map(scale.currPos, 0, 2, 4000, 0)
