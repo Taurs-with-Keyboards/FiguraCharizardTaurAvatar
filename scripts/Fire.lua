@@ -10,16 +10,15 @@ local fireGroup = parts.group.Fire
 if not fireGroup then return {} end
 
 -- Synced variables setup
-local effects     = sync.add(config:load("FireEffects"), true)
-local experience  = sync.add(config:load("FireExperience"), true)
-local reignite    = sync.add(config:load("FireReignite"), true)
-local maxTimer    = sync.add(config:load("FireTimer"), 200)
-local damage      = sync.add(config:load("FireDamage"), true)
-local damageColor = sync.add(config:load("FireDamageColor"), vectors.hexToRGB("00FFFF"))
+local effects     = sync.new("FireEffects", true):config()
+local experience  = sync.new("FireExp", true):config()
+local reignite    = sync.new("FireReignite", true):config()
+local maxTimer    = sync.new("FireTimer", 200):config()
+local damage      = sync.new("FireDamage", true):config()
+local damageColor = sync.new("FireDamageColor", "00FFFF"):config()
 
 -- Variables
-local timer = sync[maxTimer]
-local selectedRGB = 0
+local timer = maxTimer.curr
 local tex = textures["textures.misc.flame"] or textures["CharizardTaur.flame"]
 local grayMat = matrices.mat4(
 	vec(0.25, 0.25, 0.25, 0),
@@ -29,8 +28,8 @@ local grayMat = matrices.mat4(
 )
 
 -- Lerps
-local scale = lerp:new(1, 0.05, 0.15)
-local color = lerp:new()
+local scale = lerp.new(1, 0.05, 0.15)
+local color = lerp.new()
 
 -- Set fire parent type
 fireGroup.Fire
@@ -103,7 +102,7 @@ function events.TICK()
 	local extinguish = false
 	
 	-- Increment timer
-	timer = sync[reignite] and math.min(timer + 1, sync[maxTimer]) or timer
+	timer = reignite.curr and math.min(timer + 1, maxTimer.curr) or timer
 	
 	-- Check for water fluid tag
 	for _, v in ipairs(block:getFluidTags()) do
@@ -135,7 +134,7 @@ function events.TICK()
 		if scale.target == 0 then return end
 		
 		-- Sounds and particles
-		if sync[effects] then
+		if effects.curr then
 			
 			-- Play sound
 			sounds:playSound("entity.generic.extinguish_fire", firePos, 0.75)
@@ -178,17 +177,17 @@ function events.TICK()
 	-- Check on triggers
 	for k, v in pairs(triggers.on) do
 		if v then
-			timer = sync[maxTimer]
+			timer = maxTimer.curr
 			triggers.on[k] = false
 			break
 		end
 	end
 	
 	-- Kill script if timer hasnt reached max
-	if timer ~= sync[maxTimer] then return end
+	if timer ~= maxTimer.curr then return end
 	
 	-- Spawn particles and play sounds if conditions are met
-	if sync[effects] then
+	if effects.curr then
 		
 		-- Chance
 		local weight = math.map(scale.currPos, 0, 2, 4000, 0)
@@ -221,7 +220,7 @@ function events.TICK()
 	color.target = 0
 	
 	-- Apply experience modifier
-	if sync[experience] then
+	if experience.curr then
 		
 		local exp = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.25, 2)
 		scale.target = scale.target * exp
@@ -229,7 +228,7 @@ function events.TICK()
 	end
 	
 	-- Apply damage color
-	if sync[damage] then
+	if damage.curr then
 		
 		color.target = math.map(math.clamp(player:getHealth() / player:getMaxHealth(), 0.25, 1), 0.25, 1, 1, 0)
 		
@@ -249,7 +248,7 @@ function events.RENDER(delta, context)
 	
 	-- Change fire color
 	local mat = math.lerp(matrices.mat4(), grayMat, color.currPos)
-	local col = math.lerp(vec(1, 1, 1), sync[damageColor], color.currPos)
+	local col = math.lerp(vec(1, 1, 1), vectors.hexToRGB(damageColor.curr), color.currPos)
 	local dim = tex:getDimensions()
 	tex:restore():applyMatrix(0, 0, dim.x, dim.y, mat:scale(col), true):update()
 	
@@ -260,82 +259,38 @@ function events.RENDER(delta, context)
 	
 end
 
--- Effects toggle
-function pings.setFireEffects(boolean)
-	
-	sync[effects] = boolean
-	config:save("FireEffects", sync[effects])
-	if host:isHost() and player:isLoaded() and sync[effects] then
-		sounds:playSound("item.firecharge.use", player:getPos(), 0.75)
-	end
-	
-end
-
--- Experience toggle
-function pings.setFireExperience(boolean)
-	
-	sync[experience] = boolean
-	config:save("FireExperience", sync[experience])
-	if host:isHost() and player:isLoaded() and sync[experience] then
-		sounds:playSound("entity.experience_orb.pickup", player:getPos(), 0.75, math.random()*0.7+0.55)
-	end
-	
-end
-
--- Reignite toggle
-function pings.setFireReignite(boolean)
-	
-	sync[reignite] = boolean
-	config:save("FireReignite", sync[reignite])
-	if host:isHost() and player:isLoaded() then
-		sounds:playSound(sync[reignite] and "item.flintandsteel.use" or "entity.generic.extinguish_fire", player:getPos(), 0.75)
-	end
-	
-end
-
--- Set timer
-local function setTimer(x)
-	
-	sync[maxTimer] = math.clamp(sync[maxTimer] + (x * 20), 0, 72000)
-	config:save("FireTimer", sync[maxTimer])
-	
-end
-
--- Set color
-local function setColor(x)
-	
-	x = x/255
-	sync[damageColor][selectedRGB+1] = math.clamp(sync[damageColor][selectedRGB+1] + x, 0, 1)
-	
-	config:save("FireDamageColor", sync[damageColor]) 
-	
-end
-
--- Swaps selected rgb value
-local function selectRGB()
-	
-	selectedRGB = (selectedRGB + 1) % 3
-	
-end
-
--- Damage toggle
-function pings.setFireDamage(boolean)
-	
-	sync[damage] = boolean
-	config:save("FireDamage", sync[damage])
-	if host:isHost() and player:isLoaded() then
-		sounds:playSound(sync[damage] and "entity.player.attack.sweep" or "item.shield.block", player:getPos(), 0.75)
-	end
-	
-end
-
 -- Host only instructions
 if not host:isHost() then return end
+
+-- Apply sound functions
+effects:applyFunc(function()
+	if player:isLoaded() and effects.curr then
+		sounds:playSound("item.firecharge.use", player:getPos(), 0.75)
+	end
+end)
+experience:applyFunc(function()
+	if player:isLoaded() and experience.curr then
+		sounds:playSound("entity.experience_orb.pickup", player:getPos(), 0.75, math.random()*0.7+0.55)
+	end
+end)
+reignite:applyFunc(function()
+	if player:isLoaded() then
+		sounds:playSound(reignite.curr and "item.flintandsteel.use" or "entity.generic.extinguish_fire", player:getPos(), 0.75)
+	end
+end)
+damage:applyFunc(function()
+	if player:isLoaded() then
+		sounds:playSound(damage.curr and "entity.player.attack.sweep" or "item.shield.block", player:getPos(), 0.75)
+	end
+end)
 
 -- Required script
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Shiny") -- Tries to find script, not required
+
+-- Variable
+local selectedRGB = 1
 
 -- Pages
 local parentPage = action_wheel:getPage("Charizard") or action_wheel:getPage("Main")
@@ -343,6 +298,11 @@ local firePage   = action_wheel:newPage("Fire")
 
 -- Actions table setup
 local a = {}
+
+-- Set color channel
+local function setColorRGB(x)
+	selectedRGB = ((selectedRGB + x - 1) % 3) + 1
+end
 
 -- Actions
 a.pageAct = parentPage:newAction()
@@ -352,30 +312,51 @@ a.pageAct = parentPage:newAction()
 a.effectsAct = firePage:newAction()
 	:item("white_wool")
 	:toggleItem("note_block")
-	:onToggle(pings.setFireEffects)
-	:toggled(sync[effects])
+	:onToggle(function(bool)
+		effects:update(bool)
+	end)
+	:toggled(effects.curr)
 
 a.experienceAct = firePage:newAction()
 	:item("glass_bottle")
 	:toggleItem("experience_bottle")
-	:onToggle(pings.setFireExperience)
-	:toggled(sync[experience])
+	:onToggle(function(bool)
+		experience:update(bool)
+	end)
+	:toggled(experience.curr)
 
 a.reigniteAct = firePage:newAction()
 	:item("flint")
 	:toggleItem("flint_and_steel")
-	:onToggle(pings.setFireReignite)
-	:onRightClick(function() sync[maxTimer] = 200 config:save("FireTimer", sync[maxTimer]) end)
-	:onScroll(setTimer)
-	:toggled(sync[reignite])
+	:onToggle(function(bool)
+		reignite:update(bool)
+	end)
+	:onRightClick(function() maxTimer:update(200) end)
+	:onScroll(function(x)
+		maxTimer:update(math.clamp(maxTimer.curr + (x * 20), 0, 72000), 20)
+	end)
+	:toggled(reignite.curr)
 
 a.colorAct = firePage:newAction()
 	:item("shield")
 	:toggleItem("iron_sword")
-	:onToggle(pings.setFireDamage)
-	:onRightClick(selectRGB)
-	:onScroll(function(x) setColor(x) end)
-	:toggled(sync[damage])
+	:onToggle(function(bool)
+		damage:update(bool)
+	end)
+	:onRightClick(function() setColorRGB(1) end)
+	:onScroll(function(x)
+		
+		-- Modify color
+		local color = vectors.hexToRGB(damageColor.curr)
+		color[selectedRGB] = math.clamp(color[selectedRGB] + x/255, 0, 1)
+		
+		-- Update color
+		damageColor:update(vectors.rgbToHex(color), 20)
+		fadeTimer = 0
+		
+	end)
+
+	:toggled(damage.curr)
 
 -- Update actions
 function events.RENDER(delta, context)
@@ -411,24 +392,25 @@ function events.RENDER(delta, context)
 					{text = "Set Fire Reignition & Timer\n\n", bold = true, color = c.primary},
 					{text = "Control the ability for your tail fire to auto-reignite, as well as how long until it does so.\n\n", color = c.secondary},
 					{text = "Current timer: ", bold = true, color = c.secondary},
-					{text = (sync[reignite] and (sync[maxTimer] / 20).." Seconds" or "Cannot auto-reignite").."\n\n", color = not sync[reignite] and "red"},
+					{text = (reignite.curr and (maxTimer.curr / 20).." Seconds" or "Cannot auto-reignite").."\n\n", color = not reignite.curr and "red"},
 					{text = "Scroll to adjust the timer.\nRight click resets timer to 10 seconds.", color = c.secondary}
 				}
 			))
 		
+		local rgbFireColor = vectors.hexToRGB(damageColor.curr) * 255
 		a.colorAct
 			:title(toJson(
 				{
 					"",
 					{text = "Toggle Fire Damage Indicator/Set Fire Color\n\n", bold = true, color = c.primary},
-					{text = "Allow the tail fire to indicate overall health.\nAdditionally, sets the color of the fire while damaged.\nLeft click to toggle damage coloring.\nScroll to adjust an RGB Value.\nRight click to change color channel.\n\n", color = c.secondary},
+					{text = "Allow the tail fire to indicate overall health.\nAdditionally, sets the color of the fire while damaged.\nLeft click to toggle damage coloring.\nScroll to adjust an RGB Value.\n\n", color = c.secondary},
 					{text = "Selected RGB: ", bold = true, color = c.secondary},
-					{text = (selectedRGB == 0 and "[%d] "  or "%d " ):format(sync[damageColor][1] * 255), color = "red"},
-					{text = (selectedRGB == 1 and "[%d] "  or "%d " ):format(sync[damageColor][2] * 255), color = "green"},
-					{text = (selectedRGB == 2 and "[%d]\n" or "%d\n"):format(sync[damageColor][3] * 255), color = "blue"},
+					{text = (selectedRGB == 1 and "[%d] "  or "%d " ):format(rgbFireColor.r), color = "red"},
+					{text = (selectedRGB == 2 and "[%d] "  or "%d " ):format(rgbFireColor.g), color = "green"},
+					{text = (selectedRGB == 3 and "[%d]\n" or "%d\n"):format(rgbFireColor.b), color = "blue"},
 					{text = "Selected Hex: ", bold = true, color = c.secondary},
-					{text = vectors.rgbToHex(sync[damageColor]), color = "#"..vectors.rgbToHex(sync[damageColor])},
-
+					{text = damageColor.curr.."\n\n", color = "#"..damageColor.curr},
+					{text = "Right click to change color channel.", color = c.secondary}
 				}
 			))
 		

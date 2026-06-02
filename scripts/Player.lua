@@ -3,8 +3,8 @@ local parts = require("lib.PartsAPI")
 local sync  = require("lib.LetThatSyncFig")
 
 -- Synced variables setup
-local skin = sync.add(config:load("AvatarVanillaSkin"), true)
-local slim = sync.add(config:load("AvatarSlim"), false)
+local skin = sync.new("AvatarVanillaSkin", true):config()
+local slim = sync.new("AvatarSlim", false):config()
 
 -- Reenabled parts
 parts.group.Skull   :visible(true)
@@ -44,7 +44,7 @@ end
 function events.RENDER(delta, context)
 	
 	-- Model shape
-	local slimShape = (sync[skin] and vanillaAvatarType == "SLIM") or (sync[slim] and not sync[skin])
+	local slimShape = (skin.curr and vanillaAvatarType == "SLIM") or (slim.curr and not skin.curr)
 	for _, part in ipairs(defaultParts) do
 		part:visible(not slimShape)
 	end
@@ -60,13 +60,13 @@ function events.RENDER(delta, context)
 	parts.group.RightArmFP:visible(firstPerson)
 	
 	-- Skin textures
-	local skinType = sync[skin] and "SKIN" or "PRIMARY"
+	local skinType = skin.curr and "SKIN" or "PRIMARY"
 	for _, part in ipairs(skinParts) do
 		part:primaryTexture(skinType)
 	end
 	
 	-- Cape textures
-	parts.group.Cape:primaryTexture(sync[skin] and "CAPE" or "PRIMARY")
+	parts.group.Cape:primaryTexture(skin.curr and "CAPE" or "PRIMARY")
 	
 	-- Elytra glint
 	local item  = player:getItem(5)
@@ -93,22 +93,6 @@ function events.RENDER(delta, context)
 	
 end
 
--- Vanilla skin toggle
-function pings.setAvatarVanillaSkin(boolean)
-	
-	sync[skin] = boolean
-	config:save("AvatarVanillaSkin", sync[skin])
-	
-end
-
--- Model type toggle
-function pings.setAvatarModelType(boolean)
-	
-	sync[slim] = boolean
-	config:save("AvatarSlim", sync[slim])
-	
-end
-
 -- Host only instructions
 if not host:isHost() then return end
 
@@ -130,14 +114,18 @@ a.pageAct = parentPage:newAction()
 
 a.vanillaSkinAct = playerPage:newAction()
 	:item("player_head{SkullOwner:"..avatar:getEntityName().."}")
-	:onToggle(pings.setAvatarVanillaSkin)
-	:toggled(sync[skin])
+	:onToggle(function(bool)
+		skin:update(bool)
+	end)
+	:toggled(skin.curr)
 
 a.modelAct = playerPage:newAction()
 	:item("player_head")
 	:toggleItem("player_head{SkullOwner:MHF_Alex}")
-	:onToggle(pings.setAvatarModelType)
-	:toggled(sync[slim])
+	:onToggle(function(bool)
+		slim:update(bool)
+	end)
+	:toggled(slim.curr)
 
 -- Update actions
 function events.RENDER(delta, context)

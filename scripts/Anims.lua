@@ -12,11 +12,11 @@ local effects = require("scripts.SyncedVariables")
 local anims = animations.CharizardTaur
 
 -- Synced variables setup
-local armsMove = sync.add(config:load("ArmsMove"), false)
+local armsMove = sync.new("AnimsArms", false):config()
 
 -- Arms setup
-local leftArmLerp  = lerp:new(sync[armsMove] and 1 or 0, 0.5)
-local rightArmLerp = lerp:new(sync[armsMove] and 1 or 0, 0.5)
+local leftArmLerp  = lerp.new(armsMove.curr and 1 or 0, 0.5)
+local rightArmLerp = lerp.new(armsMove.curr and 1 or 0, 0.5)
 
 -- Variable
 local shiverStr = 0
@@ -56,8 +56,8 @@ function events.ENTITY_INIT()
 end
 
 -- Wings bounce
-local lWing = lerp:new(vec(0, 0, 0), 0.4, 0.35, 2)
-local rWing = lerp:new(vec(0, 0, 0), 0.4, 0.35, 2)
+local lWing = lerp.new(vec(0, 0, 0), 0.4, 0.35, 2)
+local rWing = lerp.new(vec(0, 0, 0), 0.4, 0.35, 2)
 local _pose = "STANDING"
 local _onGround = true
 
@@ -122,8 +122,8 @@ function events.TICK()
 	local armShouldMove = pose.swim or pose.crawl
 	
 	-- Arms movement targets
-	leftArmLerp.target  = (sync[armsMove] or armShouldMove or swingL or usingL or bow) and 0 or -1
-	rightArmLerp.target = (sync[armsMove] or armShouldMove or swingR or usingR or bow) and 0 or -1
+	leftArmLerp.target  = (armsMove.curr or armShouldMove or swingL or usingL or bow) and 0 or -1
+	rightArmLerp.target = (armsMove.curr or armShouldMove or swingR or usingR or bow) and 0 or -1
 	
 	-- Set targets
 	if pose.elytra or pose.swim or pose.crawl or effects.cF then
@@ -237,14 +237,6 @@ for _, blend in ipairs(blendAnims) do
 	end
 end
 
--- Arm movement toggle
-function pings.setAnimsArmsMove(boolean)
-	
-	sync[armsMove] = boolean
-	config:save("ArmsMove", sync[armsMove])
-	
-end
-
 -- Host only instructions
 if not host:isHost() then return end
 
@@ -272,8 +264,10 @@ end
 a.armsAct = animsPage:newAction()
 	:item("red_dye")
 	:toggleItem("rabbit_foot")
-	:onToggle(pings.setAnimsArmsMove)
-	:toggled(sync[armsMove])
+	:onToggle(function(bool)
+		armsMove:update(bool)
+	end)
+	:toggled(armsMove.curr)
 
 -- Update actions
 function events.RENDER(delta, context)
