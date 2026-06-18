@@ -1,5 +1,5 @@
 # [Charizard Taur](https://github.com/Taurs-with-Keyboards/FiguraCharizardTaurAvatar)
-### Version: 1.3.0
+### Version: 1.4.0
 A Figura Avatar template designed to give the user a customizable taur body based on Charizard. 
 
 ### Authors:
