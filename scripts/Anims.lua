@@ -23,9 +23,7 @@ local shiverStr = 0
 
 -- Gets the origin rotation of a part, clamped
 local function getOriginRot(part, delta)
-	
 	return (vanilla_model[part]:getOriginRot(delta) + 180) % 360 - 180
-	
 end
 
 -- Parrot pivots
