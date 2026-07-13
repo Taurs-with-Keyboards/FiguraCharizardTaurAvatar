@@ -236,7 +236,7 @@ function events.TICK()
 	
 	-- Bounce flame back if below 0
 	if scale.currTick < 0 then
-		scale:bounce(0)
+		scale:bounce(0, 0.85)
 	end
 	
 end
