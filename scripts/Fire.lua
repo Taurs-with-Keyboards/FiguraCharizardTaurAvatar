@@ -285,7 +285,7 @@ damage:applyFunc(function()
 end)
 
 -- Required script
-local s, wheel, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Shiny") -- Tries to find script, not required
 
@@ -307,7 +307,7 @@ end
 -- Actions
 a.pageAct = parentPage:newAction()
 	:item("campfire")
-	:onLeftClick(function() wheel:descend(firePage) end)
+	:onLeftClick(function() pageNav.descend(firePage) end)
 
 a.effectsAct = firePage:newAction()
 	:item("white_wool")

@@ -48,7 +48,7 @@ end)
 if not host:isHost() then return end
 
 -- Required scripts
-local s, wheel, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Pokeball") -- Tries to find script, not required
 
@@ -94,7 +94,7 @@ local a = {}
 if not pageExists then
 	a.pageAct = parentPage:newAction()
 		:item("cobblemon:fire_stone", "campfire")
-		:onLeftClick(function() wheel:descend(charizardPage) end)
+		:onLeftClick(function() pageNav.descend(charizardPage) end)
 end
 
 a.shinyAct = charizardPage:newAction()
