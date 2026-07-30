@@ -285,7 +285,7 @@ damage:applyFunc(function()
 end)
 
 -- Required script
-local s, pageNav, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Shiny") -- Tries to find script, not required
 
@@ -296,20 +296,17 @@ local selectedRGB = 1
 local parentPage = action_wheel:getPage("Charizard") or action_wheel:getPage("Main")
 local firePage   = action_wheel:newPage("Fire")
 
--- Actions table setup
-local a = {}
-
 -- Set color channel
 local function setColorRGB(x)
 	selectedRGB = ((selectedRGB + x - 1) % 3) + 1
 end
 
 -- Actions
-a.pageAct = parentPage:newAction()
+acts.firePage = parentPage:newAction()
 	:item("campfire")
 	:onLeftClick(function() pageNav.descend(firePage) end)
 
-a.effectsAct = firePage:newAction()
+acts.fireEffectsToggle = firePage:newAction()
 	:item("white_wool")
 	:toggleItem("note_block")
 	:onToggle(function(bool)
@@ -317,7 +314,7 @@ a.effectsAct = firePage:newAction()
 	end)
 	:toggled(effects.curr)
 
-a.experienceAct = firePage:newAction()
+acts.fireExpToggle = firePage:newAction()
 	:item("glass_bottle")
 	:toggleItem("experience_bottle")
 	:onToggle(function(bool)
@@ -325,7 +322,7 @@ a.experienceAct = firePage:newAction()
 	end)
 	:toggled(experience.curr)
 
-a.reigniteAct = firePage:newAction()
+acts.fireReigniteSettings = firePage:newAction()
 	:item("flint")
 	:toggleItem("flint_and_steel")
 	:onToggle(function(bool)
@@ -337,7 +334,7 @@ a.reigniteAct = firePage:newAction()
 	end)
 	:toggled(reignite.curr)
 
-a.colorAct = firePage:newAction()
+acts.fireColorSettings = firePage:newAction()
 	:item("shield")
 	:toggleItem("iron_sword")
 	:onToggle(function(bool)
@@ -355,19 +352,19 @@ a.colorAct = firePage:newAction()
 		fadeTimer = 0
 		
 	end)
-
 	:toggled(damage.curr)
 
 -- Update actions
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		a.pageAct
+		acts.firePage
 			:title(toJson(
 				{text = "Tail Fire Settings", bold = true, color = c.primary}
 			))
+			:hoverColor(c.hover)
 		
-		a.effectsAct
+		acts.fireEffectsToggle
 			:title(toJson(
 				{
 					"",
@@ -375,8 +372,10 @@ function events.RENDER(delta, context)
 					{text = "Toggles the fire's ability to create particles and sounds.", color = c.secondary}
 				}
 			))
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
-		a.experienceAct
+		acts.fireExpToggle
 			:title(toJson(
 				{
 					"",
@@ -384,8 +383,10 @@ function events.RENDER(delta, context)
 					{text = "Allow the tail fire to change size based on experience level.", color = c.secondary}
 				}
 			))
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
-		a.reigniteAct
+		acts.fireReigniteSettings
 			:title(toJson(
 				{
 					"",
@@ -396,9 +397,11 @@ function events.RENDER(delta, context)
 					{text = "Scroll to adjust the timer.\nRight click resets timer to 10 seconds.", color = c.secondary}
 				}
 			))
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
 		local rgbFireColor = vectors.hexToRGB(damageColor.curr) * 255
-		a.colorAct
+		acts.fireColorSettings
 			:title(toJson(
 				{
 					"",
@@ -413,10 +416,8 @@ function events.RENDER(delta, context)
 					{text = "Right click to change color channel.", color = c.secondary}
 				}
 			))
-		
-		for _, act in pairs(a) do
-			act:hoverColor(c.hover):toggleColor(c.active)
-		end
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
 	end
 	
