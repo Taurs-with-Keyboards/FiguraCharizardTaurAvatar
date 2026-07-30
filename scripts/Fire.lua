@@ -285,7 +285,7 @@ damage:applyFunc(function()
 end)
 
 -- Required script
-local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Shiny") -- Tries to find script, not required
 
@@ -360,64 +360,64 @@ function events.RENDER(delta, context)
 	if action_wheel:isEnabled() then
 		acts.firePage
 			:title(toJson(
-				{text = "Tail Fire Settings", bold = true, color = c.primary}
+				{text = "Tail Fire Settings", bold = true, color = colors.primary}
 			))
-			:hoverColor(c.hover)
+			:hoverColor(colors.hover)
 		
 		acts.fireEffectsToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Fire Effects\n\n", bold = true, color = c.primary},
-					{text = "Toggles the fire's ability to create particles and sounds.", color = c.secondary}
+					{text = "Toggle Fire Effects\n\n", bold = true, color = colors.primary},
+					{text = "Toggles the fire's ability to create particles and sounds.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 		acts.fireExpToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Fire Experience Guage\n\n", bold = true, color = c.primary},
-					{text = "Allow the tail fire to change size based on experience level.", color = c.secondary}
+					{text = "Toggle Fire Experience Guage\n\n", bold = true, color = colors.primary},
+					{text = "Allow the tail fire to change size based on experience level.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 		acts.fireReigniteSettings
 			:title(toJson(
 				{
 					"",
-					{text = "Set Fire Reignition & Timer\n\n", bold = true, color = c.primary},
-					{text = "Control the ability for your tail fire to auto-reignite, as well as how long until it does so.\n\n", color = c.secondary},
-					{text = "Current timer: ", bold = true, color = c.secondary},
+					{text = "Set Fire Reignition & Timer\n\n", bold = true, color = colors.primary},
+					{text = "Control the ability for your tail fire to auto-reignite, as well as how long until it does so.\n\n", color = colors.secondary},
+					{text = "Current timer: ", bold = true, color = colors.secondary},
 					{text = (reignite.curr and (maxTimer.curr / 20).." Seconds" or "Cannot auto-reignite").."\n\n", color = not reignite.curr and "red"},
-					{text = "Scroll to adjust the timer.\nRight click resets timer to 10 seconds.", color = c.secondary}
+					{text = "Scroll to adjust the timer.\nRight click resets timer to 10 seconds.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 		local rgbFireColor = vectors.hexToRGB(damageColor.curr) * 255
 		acts.fireColorSettings
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Fire Damage Indicator/Set Fire Color\n\n", bold = true, color = c.primary},
-					{text = "Allow the tail fire to indicate overall health.\nAdditionally, sets the color of the fire while damaged.\nLeft click to toggle damage coloring.\nScroll to adjust an RGB Value.\n\n", color = c.secondary},
-					{text = "Selected RGB: ", bold = true, color = c.secondary},
+					{text = "Toggle Fire Damage Indicator/Set Fire Color\n\n", bold = true, color = colors.primary},
+					{text = "Allow the tail fire to indicate overall health.\nAdditionally, sets the color of the fire while damaged.\nLeft click to toggle damage coloring.\nScroll to adjust an RGB Value.\n\n", color = colors.secondary},
+					{text = "Selected RGB: ", bold = true, color = colors.secondary},
 					{text = (selectedRGB == 1 and "[%d] "  or "%d " ):format(rgbFireColor.r), color = "red"},
 					{text = (selectedRGB == 2 and "[%d] "  or "%d " ):format(rgbFireColor.g), color = "green"},
 					{text = (selectedRGB == 3 and "[%d]\n" or "%d\n"):format(rgbFireColor.b), color = "blue"},
-					{text = "Selected Hex: ", bold = true, color = c.secondary},
+					{text = "Selected Hex: ", bold = true, color = colors.secondary},
 					{text = damageColor.curr.."\n\n", color = "#"..damageColor.curr},
-					{text = "Right click to change color channel.", color = c.secondary}
+					{text = "Right click to change color channel.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 	end
 	
