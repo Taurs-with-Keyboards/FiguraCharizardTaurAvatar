@@ -263,22 +263,22 @@ end
 if not host:isHost() then return end
 
 -- Apply sound functions
-effects:applyFunc(function()
+effects:addFunc(function()
 	if player:isLoaded() and effects.curr then
 		sounds:playSound("item.firecharge.use", player:getPos(), 0.75)
 	end
 end)
-experience:applyFunc(function()
+experience:addFunc(function()
 	if player:isLoaded() and experience.curr then
 		sounds:playSound("entity.experience_orb.pickup", player:getPos(), 0.75, math.random()*0.7+0.55)
 	end
 end)
-reignite:applyFunc(function()
+reignite:addFunc(function()
 	if player:isLoaded() then
 		sounds:playSound(reignite.curr and "item.flintandsteel.use" or "entity.generic.extinguish_fire", player:getPos(), 0.75)
 	end
 end)
-damage:applyFunc(function()
+damage:addFunc(function()
 	if player:isLoaded() then
 		sounds:playSound(damage.curr and "entity.player.attack.sweep" or "item.shield.block", player:getPos(), 0.75)
 	end
