@@ -2,11 +2,14 @@
 local parts = require("lib.PartsAPI")
 local sync  = require("lib.LetThatSyncFig")
 
+-- Parts setup
+local charizard = parts.new(models.CharizardTaur)
+
 -- Synced variables setup
 local shiny = sync.new("ShinyToggle", vec(client.uuidToIntArray(avatar:getUUID())).x % 4096 == 0):config()
 
 -- All shiny parts
-local shinyParts = parts:createTable(function(part) return part:getName():find("_[sS]hiny") end)
+local shinyParts = charizard:createGroup(function(part) return part:getName():find("_[sS]hiny") end)
 
 -- Variables
 local wasShiny = not shiny.curr
@@ -21,9 +24,7 @@ function events.RENDER(delta, context)
 	
 	-- Shiny textures
 	if shiny.curr ~= wasShiny then
-		for _, part in ipairs(shinyParts) do
-			part:primaryTexture("CUSTOM", shiny.curr and shinyTex or normalTex)
-		end
+		shinyParts:primaryTexture("CUSTOM", shiny.curr and shinyTex or normalTex)
 	end
 	
 	-- Store data
@@ -38,8 +39,8 @@ function events.RENDER(delta, context)
 end
 
 -- Apply sound function
-shiny:applyFunc(function()
-	if player:isLoaded() and shiny.curr then
+shiny:addFuncs(function(self)
+	if player:isLoaded() and self.curr then
 		sounds:playSound("block.amethyst_block.chime", player:getPos())
 	end
 end)

@@ -11,7 +11,8 @@ end
 if not host:isHost() then return end
 
 -- Required script
-local keybound = require("lib.Keybound")
+local keyboundSuccess = pcall(require, "lib.Keybound")
+if not keyboundSuccess then return end
 
 -- Variable
 local cooldown = 0
@@ -38,20 +39,17 @@ local function createCooldown()
 end
 
 -- Setup keybind
-local cryKeybind = keybound.new(
-	keybinds
-		:newKeybind("Pokemon Cry", "key.keyboard.keypad.2")
-		:onPress(function()
-			
-			-- If player is dead, return early
-			if player:getDeathTime() ~= 0 then return end
-			
-			-- If no cooldown, preform functions
-			if cooldown == 0 then
-				pings.playPokemonCry()
-				createCooldown()
-			end
-			
-		end),
-	"CryKeybind"
-)
+local cryKeybind = keybinds:newKeybind("Pokemon Cry", "key.keyboard.keypad.2")
+	:config("CryKeybind")
+	:onPress(function()
+		
+		-- If player is dead, return early
+		if player:getDeathTime() ~= 0 then return end
+		
+		-- If no cooldown, preform functions
+		if cooldown == 0 then
+			pings.playPokemonCry()
+			createCooldown()
+		end
+		
+	end)

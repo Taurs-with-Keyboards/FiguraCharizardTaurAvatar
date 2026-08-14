@@ -2,36 +2,52 @@
 local parts = require("lib.PartsAPI")
 local sync  = require("lib.LetThatSyncFig")
 
+-- Parts setup
+local charizard = parts.new(models.CharizardTaur)
+
 -- Synced variables setup
 local skin = sync.new("AvatarVanillaSkin", true):config()
 local slim = sync.new("AvatarSlim", false):config()
 
--- Reenabled parts
-parts.group.Skull   :visible(true)
-parts.group.Portrait:visible(true)
+-- Skull setup
+charizard:deepCopy(charizard.outliner.Head)
+	:moveTo(charizard.root)
+	:parentType("SKULL")
+	:pos(-charizard.outliner.Head:getPivot())
+
+-- Portrait setup
+charizard:deepCopy(charizard.outliner.Head)
+	:moveTo(charizard.root)
+	:parentType("PORTRAIT")
+	:pos(-charizard.outliner.Head:getPivot())
+
+-- Remove helmet from skulls
+for i = 1, #charizard.parts do
+	local part = charizard.parts[i]
+	if part:getName():find("ArmorHelmet_Copy") then
+		part:remove()
+	end
+end
 
 -- Arm parts
-local defaultParts = parts:createTable(function(part) return part:getName():find("ArmDefault") end)
-local slimParts    = parts:createTable(function(part) return part:getName():find("ArmSlim")    end)
+local defaultParts = charizard:createGroup(function(part) return part:getName():find("ArmDefault") end)
+local slimParts    = charizard:createGroup(function(part) return part:getName():find("ArmSlim")    end)
 
 -- Vanilla skin parts
-local skinParts = parts:createTable(function(part) return part:getName():find("_[sS]kin") end)
+local skinParts = charizard:createGroup(function(part) return part:getName():find("_[sS]kin") end)
 
 -- Layer parts
 local layerTypes = {"HAT", "JACKET", "LEFT_SLEEVE", "RIGHT_SLEEVE", "LEFT_PANTS_LEG", "RIGHT_PANTS_LEG", "CAPE", "LOWER_LAYER"}
 local layerParts = {}
 for _, type in pairs(layerTypes) do
-	layerParts[type] = parts:createTable(function(part) return part:getName():find(type) end)
+	layerParts[type] = charizard:createGroup(function(part) return part:getName():find(type) end)
 end
 
 -- Apply translucent cull
-local flatParts = parts:createTable(function(part) return part:getName():find("_[fF]lat") end)
-for _, part in ipairs(flatParts) do
-	part:primaryRenderType("TRANSLUCENT_CULL")
-end
+charizard:createGroup(function(part) return part:getName():find("_[fF]lat") end):primaryRenderType("TRANSLUCENT_CULL")
 
 -- Wing parts
-local wingParts = parts:createTable(function(part) return part:getName():find("[wW]ing") and part:getType() ~= "GROUP" end)
+local wingParts = charizard:createGroup(function(part) return part:getName():find("[wW]ing") and part:getType() ~= "GROUP" end)
 
 -- Determine vanilla player type on init
 local vanillaAvatarType
@@ -45,35 +61,27 @@ function events.RENDER(delta, context)
 	
 	-- Model shape
 	local slimShape = (skin.curr and vanillaAvatarType == "SLIM") or (slim.curr and not skin.curr)
-	for _, part in ipairs(defaultParts) do
-		part:visible(not slimShape)
-	end
-	for _, part in ipairs(slimParts) do
-		part:visible(slimShape)
-	end
+	defaultParts:visible(not slimShape)
+	slimParts:visible(slimShape)
 	
 	-- First person arms toggle
 	local firstPerson = context == "FIRST_PERSON"
-	parts.group.LeftArm:visible(not firstPerson)
-	parts.group.RightArm:visible(not firstPerson)
-	parts.group.LeftArmFP:visible(firstPerson)
-	parts.group.RightArmFP:visible(firstPerson)
+	charizard.outliner.LeftArm:visible(not firstPerson)
+	charizard.outliner.RightArm:visible(not firstPerson)
+	charizard.outliner.LeftArmFP:visible(firstPerson)
+	charizard.outliner.RightArmFP:visible(firstPerson)
 	
 	-- Skin textures
 	local skinType = skin.curr and "SKIN" or "PRIMARY"
-	for _, part in ipairs(skinParts) do
-		part:primaryTexture(skinType)
-	end
+	skinParts:primaryTexture(skinType)
 	
 	-- Cape textures
-	parts.group.Cape:primaryTexture(skin.curr and "CAPE" or "PRIMARY")
+	charizard.outliner.Cape:primaryTexture(skin.curr and "CAPE" or "PRIMARY")
 	
 	-- Elytra glint
 	local item  = player:getItem(5)
 	local glint = item.id == "minecraft:elytra" and item:hasGlint() and "GLINT" or "NONE"
-	for _, part in ipairs(wingParts) do
-		part:secondaryRenderType(glint)
-	end
+	wingParts:secondaryRenderType(glint)
 	
 	-- Layer toggling
 	for layerType, parts in pairs(layerParts) do
@@ -83,13 +91,11 @@ function events.RENDER(delta, context)
 		else
 			enabled = player:isSkinLayerVisible(layerType)
 		end
-		for _, part in ipairs(parts) do
-			part:visible(enabled)
-		end
+		parts:visible(enabled)
 	end
 	
 	-- Shadow size
-	renderer:shadowRadius(math.map(parts.group.Player:getAnimScale():lengthSquared() / 3, 0, 1, 0.25, 1))
+	renderer:shadowRadius(math.map(charizard.outliner.Player:getAnimScale():lengthSquared() / 3, 0, 1, 0.25, 1))
 	
 end
 

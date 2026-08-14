@@ -3,6 +3,9 @@ local parts          = require("lib.PartsAPI")
 local charizardArmor = require("lib.KattArmor")()
 local sync           = require("lib.LetThatSyncFig")
 
+-- Parts setup
+local charizard = parts.new(models.CharizardTaur)
+
 -- Synced variables setup
 local helmet     = sync.new("ArmorHelmet", true):config()
 local chestplate = sync.new("ArmorChestplate", true):config()
@@ -14,25 +17,25 @@ charizardArmor.Armor.Leggings:setLayer(1)
 
 -- Armor parts
 charizardArmor.Armor.Helmet
-	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Helmet" end)))
-	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "HelmetTrim" end)))
+	:addParts(charizard:createGroup(function(part) return part:getName() == "Helmet" end))
+	:addTrimParts(charizard:createGroup(function(part) return part:getName() == "HelmetTrim" end))
 charizardArmor.Armor.Chestplate
-	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Chestplate" end)))
-	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "ChestplateTrim" end)))
+	:addParts(charizard:createGroup(function(part) return part:getName() == "Chestplate" end))
+	:addTrimParts(charizard:createGroup(function(part) return part:getName() == "ChestplateTrim" end))
 charizardArmor.Armor.Leggings
-	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Leggings" end)))
-	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "LeggingsTrim" end)))
+	:addParts(charizard:createGroup(function(part) return part:getName() == "Leggings" end))
+	:addTrimParts(charizard:createGroup(function(part) return part:getName() == "LeggingsTrim" end))
 charizardArmor.Armor.Boots
-	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Boot" end)))
-	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "BootTrim" end)))
+	:addParts(charizard:createGroup(function(part) return part:getName() == "Boot" end))
+	:addTrimParts(charizard:createGroup(function(part) return part:getName() == "BootTrim" end))
 
 -- Leather armor
 charizardArmor.Materials.leather
 	:setTexture(textures["textures.armor.leatherArmor"] or textures["CharizardTaur.leatherArmor"])
-	:addParts(charizardArmor.Armor.Helmet,     table.unpack(parts:createTable(function(part) return part:getName() == "HelmetLeather" end)))
-	:addParts(charizardArmor.Armor.Chestplate, table.unpack(parts:createTable(function(part) return part:getName() == "ChestplateLeather" end)))
-	:addParts(charizardArmor.Armor.Leggings,   table.unpack(parts:createTable(function(part) return part:getName() == "LeggingsLeather" end)))
-	:addParts(charizardArmor.Armor.Boots,      table.unpack(parts:createTable(function(part) return part:getName() == "BootLeather" end)))
+	:addParts(charizardArmor.Armor.Helmet,     charizard:createGroup(function(part) return part:getName() == "HelmetLeather" end))
+	:addParts(charizardArmor.Armor.Chestplate, charizard:createGroup(function(part) return part:getName() == "ChestplateLeather" end))
+	:addParts(charizardArmor.Armor.Leggings,   charizard:createGroup(function(part) return part:getName() == "LeggingsLeather" end))
+	:addParts(charizardArmor.Armor.Boots,      charizard:createGroup(function(part) return part:getName() == "BootLeather" end))
 
 -- Chainmail armor
 charizardArmor.Materials.chainmail
@@ -89,35 +92,57 @@ for _, trim in ipairs(trims) do
 	end
 end
 
--- Helmet parts
-local helmetGroups = parts:createTable(function(part) return part:getName():find("ArmorHelmet") end)
-
--- Chestplate parts
-local chestplateGroups = parts:createTable(function(part) return part:getName():find("ArmorChestplate") end)
-
--- Leggings parts
-local leggingsGroups = parts:createTable(function(part) return part:getName():find("ArmorLeggings") end)
-
--- Boots parts
-local bootsGroups = parts:createTable(function(part) return part:getName():find("ArmorBoot") end)
+-- Armor parts
+---@type table<SyncObject, {
+--- slot: integer | nil,
+--- show: (ModelPart | VanillaModelGroup)[],
+--- hide: (ModelPart | VanillaModelGroup)[],
+--- }>
+local armorGroups = {
+	[helmet] = {
+		slot = 6,
+		show = {charizard:createGroup(function(part) return part:getName():find("ArmorHelmet") end)},
+		hide = {}
+	},
+	[chestplate] = {
+		slot = 5,
+		show = {charizard:createGroup(function(part) return part:getName():find("ArmorChestplate") end)},
+		hide = {}
+	},
+	[leggings] = {
+		slot = 4,
+		show = {charizard:createGroup(function(part) return part:getName():find("ArmorLeggings") end)},
+		hide = {}
+	},
+	[boots] = {
+		slot = 3,
+		show = {charizard:createGroup(function(part) return part:getName():find("ArmorBoot") end)},
+		hide = {}
+	}
+}
 
 function events.RENDER(delta, context)
 	
-	-- Apply
-	for _, part in ipairs(helmetGroups) do
-		part:visible(helmet.curr)
-	end
-	
-	for _, part in ipairs(chestplateGroups) do
-		part:visible(chestplate.curr)
-	end
-	
-	for _, part in ipairs(leggingsGroups) do
-		part:visible(leggings.curr)
-	end
-	
-	for _, part in ipairs(bootsGroups) do
-		part:visible(boots.curr)
+	-- Toggle armor
+	for obj, armorParts in pairs(armorGroups) do
+		
+		-- State of toggle
+		local state = obj.curr
+		
+		-- Show parts when armor equipped
+		local show = armorParts.show
+		local showState = state
+		for i = 1, #show do
+			show[i]:visible(showState)
+		end
+		
+		-- Hide parts when armor equipped
+		local hide = armorParts.hide
+		local hideState = not (state and (armorParts.slot == nil or player:getItem(armorParts.slot).id ~= "minecraft:air"))
+		for i = 1, #hide do
+			hide[i]:visible(hideState)
+		end
+		
 	end
 	
 end
@@ -130,10 +155,10 @@ local function equipSound()
 end
 
 -- Apply sound to sync updates
-helmet:applyFunc(equipSound)
-chestplate:applyFunc(equipSound)
-leggings:applyFunc(equipSound)
-boots:applyFunc(equipSound)
+helmet:addFuncs(equipSound)
+chestplate:addFuncs(equipSound)
+leggings:addFuncs(equipSound)
+boots:addFuncs(equipSound)
 
 -- Host only instructions
 if not host:isHost() then return end

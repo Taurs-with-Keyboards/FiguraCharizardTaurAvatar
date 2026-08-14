@@ -26,8 +26,11 @@ local parts = require("lib.PartsAPI")
 local sync  = require("lib.LetThatSyncFig")
 local lerp  = require("lib.LerpAPI")
 
+-- Parts setup
+local charizard = parts.new(models.CharizardTaur)
+
 -- Variable setup
-local camera = parts.group.Camera
+local camera = charizard.outliner.Camera
 if not camera then return end
 
 -- Get server data
@@ -62,7 +65,7 @@ local function cameraReset()
 		:crosshairOffset(nil)
 	
 	-- Show head
-	parts.group.Head
+	charizard.outliner.Head
 		:visible(true)
 		:opacity(1)
 	
@@ -75,7 +78,7 @@ function events.RENDER(delta, context)
 	if allowCam.curr then
 		
 		-- Get camera position
-		local camPos = camera:partToWorldMatrix():apply() + (player:getPose() == "SLEEPING" and vec(0, 0.2, 0) or 0) + vec(0, (1 - parts.group.Player:getAnimScale():lengthSquared() / 3) * 0.1, 0)
+		local camPos = camera:partToWorldMatrix():apply() + (player:getPose() == "SLEEPING" and vec(0, 0.2, 0) or 0) + vec(0, (1 - charizard.outliner.Player:getAnimScale():lengthSquared() / 3) * 0.1, 0)
 		
 		-- Check for block obstruction
 		local obstructed = false
@@ -121,7 +124,7 @@ function events.RENDER(delta, context)
 			-- Hide head
 			local headVisible = not (renderer:isFirstPerson() and (context == "OTHER" or context == "RENDER"))
 			local shader = client:hasShaderPack()
-			parts.group.Head
+			charizard.outliner.Head
 				:visible(shader or headVisible)
 				:opacity(shader and (headVisible and 1 or 0) or 1)
 			
@@ -145,8 +148,8 @@ end
 if not host:isHost() then return end
 
 -- Save server to config
-allowEye:applyFunc(function()
-	savedServers[serverId] = allowEye.curr
+allowEye:addFuncs(function(self)
+	savedServers[serverId] = self.curr
 	config:save("CameraServers", savedServers)
 end)
 

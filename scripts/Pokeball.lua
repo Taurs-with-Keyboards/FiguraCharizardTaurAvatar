@@ -2,8 +2,11 @@
 local parts = require("lib.PartsAPI")
 local sync  = require("lib.LetThatSyncFig")
 
+-- Parts setup
+local charizard = parts.new(models.CharizardTaur)
+
 -- Pokeball part
-local pokeBall = parts.group.PokeBall
+local pokeBall = charizard.outliner.PokeBall
 
 -- Kills script if it cannot find pokeBall
 if not pokeBall then return end
@@ -28,15 +31,6 @@ local function pokeballSound(state)
 		sounds:playSound("cobblemon:poke_ball."..(state and "recall" or "send_out"), player:getPos(), 0.25)
 	end
 	
-end
-
--- Deep copy
-local function deepCopy(model)
-	local copy = model:copy(model:getName().."Copy")
-	for _, child in pairs(copy:getChildren()) do
-		copy:removeChild(child):addChild(deepCopy(child))
-	end
-	return copy
 end
 
 -- Deep copy animations
@@ -65,7 +59,7 @@ end
 
 -- Model variables
 local worldPart = models:newPart("world", "WORLD")
-local worldBall = deepCopy(parts.group.PokeBall)
+local worldBall = charizard:deepCopy(charizard.outliner.PokeBall)
 
 -- Set pokeball copy to world
 worldPart:addChild(worldBall)
@@ -101,10 +95,10 @@ function events.RENDER(delta, context)
 	end
 	
 	-- Copy animations from original
-	deepAnim(worldBall, parts.group.PokeBall)
+	deepAnim(worldBall, charizard.outliner.PokeBall)
 	
 	-- Apply
-	parts.group.PokeBall
+	charizard.outliner.PokeBall
 		:visible(menu)
 		:offsetRot(0, 0, 0)
 	worldBall
@@ -114,10 +108,10 @@ function events.RENDER(delta, context)
 		:light(world.getLightLevel(player:getPos(delta) + vec(0, 0.5, 0)))
 	
 	-- Determine color based on player scale
-	local pokeColor = parts.group.Player:getAnimScale():lengthSquared() / 3
+	local pokeColor = charizard.outliner.Player:getAnimScale():lengthSquared() / 3
 	
 	-- Apply Color
-	parts.group.Player:color(1, pokeColor, pokeColor)
+	charizard.outliner.Player:color(1, pokeColor, pokeColor)
 	
 	-- Store last state
 	wasInBall = isInBall
@@ -191,16 +185,15 @@ local function checkToggle()
 	return openAnim:getTime() == openAnim:getLength() and closeAnim:getTime() == closeAnim:getLength()
 end
 
--- Required script
-local keybound = require("lib.Keybound")
-
 -- Setup keybind
-local toggleKeybind = keybound.new(
-	keybinds
-		:newKeybind("Pokeball Toggle", "key.keyboard.keypad.1")
-		:onPress(function() if checkToggle() then toggle:update(not toggle.curr) end end),
-	"PokeballToggleKeybind"
-)
+local keyboundSuccess = pcall(require, "lib.Keybound")
+if keyboundSuccess then
+	local toggleKeybind = keybinds:newKeybind("Pokeball Toggle", "key.keyboard.keypad.1")
+		:config("PokeballToggleKeybind")
+		:onPress(function()
+			if checkToggle() then toggle:update(not toggle.curr) end
+		end)
+end
 
 -- Movement/Action keybinds
 --[[

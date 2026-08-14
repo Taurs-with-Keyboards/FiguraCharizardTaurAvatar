@@ -1,6 +1,9 @@
 -- Required script
 local parts = require("lib.PartsAPI")
 
+-- Parts setup
+local charizard = parts.new(models.CharizardTaur)
+
 function events.ON_PLAY_SOUND(id, pos, vol, pitch, loop, cat, path)
 	
 	-- Don't trigger if the sound was played by Figura (prevent potential infinite loop)
@@ -14,7 +17,7 @@ function events.ON_PLAY_SOUND(id, pos, vol, pitch, loop, cat, path)
 	
 	-- If sound contains ".hurt", play an additional hurt sound along side it
 	if id:find(".hurt") then
-		local scale = parts.group.Player:getAnimScale():lengthSquared() / 3
+		local scale = charizard.outliner.Player:getAnimScale():lengthSquared() / 3
 		sounds:playSound("cobblemon:"..(scale > 0.5 and "pokemon.charizard.cry" or "poke_ball.open"), pos, 0.6)
 	end
 	

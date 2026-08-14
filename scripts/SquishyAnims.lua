@@ -1,9 +1,12 @@
 -- Kills script if squAPI or squAssets cannot be found
 local s, squapi = pcall(require, "lib.SquAPI")
-if not s then return {} end
+if not s then return end
 
 -- Required script
 local parts = require("lib.PartsAPI")
+
+-- Parts setup
+local charizard = parts.new(models.CharizardTaur)
 
 -- Calculate parent's rotations
 local function calculateParentRot(m)
@@ -17,11 +20,11 @@ local function calculateParentRot(m)
 end
 
 -- Tails table
-local tailParts = parts:createChain("Tail")
+local tailParts = charizard:createChain(charizard.outliner.Tail1)
 
 -- Squishy tail
 local tail = squapi.tail:new(
-	tailParts,
+	setmetatable(tailParts, nil),
 	20,    -- Intensity X (20)
 	10,    -- Intensity Y (10)
 	0.75,  -- Speed X (0.75)
@@ -40,7 +43,7 @@ local tail = squapi.tail:new(
 -- Head table
 local headParts = {
 	
-	parts.group.UpperBody
+	charizard.outliner.UpperBody
 	
 }
 
@@ -55,7 +58,7 @@ local head = squapi.smoothHead:new(
 
 -- Squishy animated texture
 local fire = squapi.animateTexture(
-	parts.group.Fire,
+	charizard.outliner.Fire,
 	4,    -- Frames
 	0.25, -- Frame percentage
 	2     -- Speed
@@ -65,8 +68,8 @@ function events.RENDER(delta, context)
 	
 	-- Offset smooth torso in various parts
 	-- Note: acts strangely with `parts.group.body`
-	for _, group in ipairs(parts.group.UpperBody:getChildren()) do
-		if group ~= parts.group.Body then
+	for _, group in ipairs(charizard.outliner.UpperBody:getChildren()) do
+		if group ~= charizard.outliner.Body then
 			group:rot(-calculateParentRot(group:getParent()))
 		end
 	end

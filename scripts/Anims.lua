@@ -8,6 +8,9 @@ local ground  = require("lib.GroundCheck")
 local pose    = require("scripts.Posing")
 local effects = require("scripts.SyncedVariables")
 
+-- Parts setup
+local charizard = parts.new(models.CharizardTaur)
+
 -- Animations setup
 local anims = animations.CharizardTaur
 
@@ -29,8 +32,8 @@ end
 -- Parrot pivots
 local parrots = {
 	
-	parts.group.LeftParrotPivot,
-	parts.group.RightParrotPivot
+	charizard.outliner.LeftParrotPivot,
+	charizard.outliner.RightParrotPivot
 	
 }
 
@@ -86,7 +89,7 @@ function events.TICK()
 	local airIdle    = effects.cF
 	local airFlying  = (pose.elytra or pose.swim) and not pose.crawl
 	local sleep      = pose.sleep
-	local shiver     = parts.group.Fire and parts.group.Fire:getScale():lengthSquared() / 3 == 0
+	local shiver     = charizard.outliner.Fire and charizard.outliner.Fire:getScale():lengthSquared() / 3 == 0
 	
 	-- Increase shiver strength
 	shiverStr = math.clamp(shiverStr + (shiver and 1 or -1), 0, 200)
@@ -194,12 +197,12 @@ function events.RENDER(delta, context)
 	local idleRot   = vec(math.deg(math.sin(idleTimer * 0.067) * 0.05), 0, math.deg(math.cos(idleTimer * 0.09) * 0.05 + 0.05))
 	
 	-- Apply arm rotations
-	parts.group.LeftArm:offsetRot((getOriginRot("LEFT_ARM", delta) + idleRot) * leftArmLerp.currPos)
-	parts.group.RightArm:offsetRot((getOriginRot("RIGHT_ARM", delta) - idleRot) * rightArmLerp.currPos)
+	charizard.outliner.LeftArm:offsetRot((getOriginRot("LEFT_ARM", delta) + idleRot) * leftArmLerp.currPos)
+	charizard.outliner.RightArm:offsetRot((getOriginRot("RIGHT_ARM", delta) - idleRot) * rightArmLerp.currPos)
 	
 	-- Apply wing bounce
-	parts.group.LeftWing1:offsetRot(lWing.currPos)
-	parts.group.RightWing1:offsetRot(rWing.currPos)
+	charizard.outliner.LeftWing1:offsetRot(lWing.currPos)
+	charizard.outliner.RightWing1:offsetRot(rWing.currPos)
 	
 	-- Parrot rot offset
 	for _, parrot in pairs(parrots) do
@@ -209,13 +212,13 @@ function events.RENDER(delta, context)
 	-- Crouch offset
 	local bodyRot = getOriginRot("BODY", delta)
 	local crouchPos = vec(0, -math.sin(math.rad(bodyRot.x)) * 2, -math.sin(math.rad(bodyRot.x)) * 12)
-	parts.group.UpperBody:offsetPivot(crouchPos):pos(crouchPos.xy_ * 2)
-	parts.group.LowerBody:pos(crouchPos)
+	charizard.outliner.UpperBody:offsetPivot(crouchPos):pos(crouchPos.xy_ * 2 --[[@as Vector3]])
+	charizard.outliner.LowerBody:pos(crouchPos)
 	
 	-- Spyglass rotations
 	local headRot = getOriginRot("HEAD", delta)
 	headRot.x = math.clamp(headRot.x, -90, 30)
-	parts.group.Spyglass:offsetRot(headRot)
+	charizard.outliner.Spyglass:offsetRot(headRot)
 		:pos(pose.crouch and vec(0, -4, 0) or nil)
 	
 end

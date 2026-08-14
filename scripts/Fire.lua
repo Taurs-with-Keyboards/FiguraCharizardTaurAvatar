@@ -3,11 +3,14 @@ local parts = require("lib.PartsAPI")
 local sync  = require("lib.LetThatSyncFig")
 local lerp  = require("lib.LerpAPI")
 
+-- Parts setup
+local charizard = parts.new(models.CharizardTaur)
+
 -- Fire group
-local fireGroup = parts.group.Fire
+local fireGroup = charizard.outliner.Fire
 
 -- Kill script early if fire cannot be found
-if not fireGroup then return {} end
+if not fireGroup then return end
 
 -- Synced variables setup
 local effects     = sync.new("FireEffects", true):config()
@@ -62,7 +65,7 @@ local fireBlocks = {
 function events.ON_PLAY_SOUND(id, pos, vol, pitch, loop, category, path)
 	
 	-- Kill event if player is in pokeball
-	if parts.group.Player:getAnimScale():lengthSquared() / 3 < 0.5 then return end
+	if charizard.outliner.Player:getAnimScale():lengthSquared() / 3 < 0.5 then return end
 	
 	if player:isLoaded() then
 		local firePos  = fireGroup:partToWorldMatrix():apply()
@@ -94,7 +97,7 @@ end
 function events.TICK()
 	
 	-- Kill event if player is in pokeball
-	if parts.group.Player:getAnimScale():lengthSquared() / 3 < 0.5 then return end
+	if charizard.outliner.Player:getAnimScale():lengthSquared() / 3 < 0.5 then return end
 	
 	-- Variables
 	local firePos = fireGroup:partToWorldMatrix():apply()
@@ -244,11 +247,11 @@ end
 function events.RENDER(delta, context)
 	
 	-- Kill event if player is in pokeball
-	if parts.group.Player:getAnimScale():lengthSquared() / 3 < 0.5 then return end
+	if charizard.outliner.Player:getAnimScale():lengthSquared() / 3 < 0.5 then return end
 	
 	-- Change fire color
-	local mat = math.lerp(matrices.mat4(), grayMat, color.currPos)
-	local col = math.lerp(vec(1, 1, 1), vectors.hexToRGB(damageColor.curr), color.currPos)
+	local mat = math.lerp(matrices.mat4(), grayMat, color.currPos) --[[@as Matrix4]]
+	local col = math.lerp(vec(1, 1, 1), vectors.hexToRGB(damageColor.curr), color.currPos) --[[@as Vector3]]
 	local dim = tex:getDimensions()
 	tex:restore():applyMatrix(0, 0, dim.x, dim.y, mat:scale(col), true):update()
 	
@@ -263,24 +266,24 @@ end
 if not host:isHost() then return end
 
 -- Apply sound functions
-effects:applyFunc(function()
-	if player:isLoaded() and effects.curr then
+effects:addFuncs(function(self)
+	if player:isLoaded() and self.curr then
 		sounds:playSound("item.firecharge.use", player:getPos(), 0.75)
 	end
 end)
-experience:applyFunc(function()
-	if player:isLoaded() and experience.curr then
+experience:addFuncs(function(self)
+	if player:isLoaded() and self.curr then
 		sounds:playSound("entity.experience_orb.pickup", player:getPos(), 0.75, math.random()*0.7+0.55)
 	end
 end)
-reignite:applyFunc(function()
+reignite:addFuncs(function(self)
 	if player:isLoaded() then
-		sounds:playSound(reignite.curr and "item.flintandsteel.use" or "entity.generic.extinguish_fire", player:getPos(), 0.75)
+		sounds:playSound(self.curr and "item.flintandsteel.use" or "entity.generic.extinguish_fire", player:getPos(), 0.75)
 	end
 end)
-damage:applyFunc(function()
+damage:addFuncs(function(self)
 	if player:isLoaded() then
-		sounds:playSound(damage.curr and "entity.player.attack.sweep" or "item.shield.block", player:getPos(), 0.75)
+		sounds:playSound(self.curr and "entity.player.attack.sweep" or "item.shield.block", player:getPos(), 0.75)
 	end
 end)
 
@@ -295,11 +298,6 @@ local selectedRGB = 1
 -- Pages
 local parentPage = action_wheel:getPage("Charizard") or action_wheel:getPage("Main")
 local firePage   = action_wheel:newPage("Fire")
-
--- Set color channel
-local function setColorRGB(x)
-	selectedRGB = ((selectedRGB + x - 1) % 3) + 1
-end
 
 -- Actions
 acts.firePage = parentPage:newAction()
@@ -340,7 +338,9 @@ acts.fireColorSettings = firePage:newAction()
 	:onToggle(function(bool)
 		damage:update(bool)
 	end)
-	:onRightClick(function() setColorRGB(1) end)
+	:onRightClick(function()
+		selectedRGB = (selectedRGB % 3) + 1
+	end)
 	:onScroll(function(x)
 		
 		-- Modify color
