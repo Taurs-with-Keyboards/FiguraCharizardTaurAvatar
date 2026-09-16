@@ -15,7 +15,7 @@ local experience  = sync.new("FireExp", true):config()
 local reignite    = sync.new("FireReignite", true):config()
 local maxTimer    = sync.new("FireTimer", 200):config()
 local damage      = sync.new("FireDamage", true):config()
-local damageColor = sync.new("FireDamageColor", "00FFFF"):config()
+local damageColor = sync.new("FireDamageColor", "#00FFFF"):config()
 
 -- Variables
 local timer = maxTimer.curr
@@ -344,12 +344,11 @@ acts.fireColorSettings = firePage:newAction()
 	:onScroll(function(x)
 		
 		-- Modify color
-		local color = vectors.hexToRGB(damageColor.curr)
-		color[selectedRGB] = math.clamp(color[selectedRGB] + x/255, 0, 1)
+		local damageRGB = vectors.hexToRGB(damageColor.curr)
+		damageRGB[selectedRGB] = math.clamp(damageRGB[selectedRGB] + x/255, 0, 1)
 		
 		-- Update color
-		damageColor:update(vectors.rgbToHex(color), 20)
-		fadeTimer = 0
+		damageColor:update("#"..vectors.rgbToHex(damageRGB):upper(), 20)
 		
 	end)
 	:toggled(damage.curr)
