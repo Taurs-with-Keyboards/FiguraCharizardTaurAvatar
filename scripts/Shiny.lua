@@ -64,8 +64,8 @@ if next(colors) ~= nil then
 	
 	-- Create shiny colors
 	local shinyColors = {
-		hover     = vectors.hexToRGB("46454F"),
-		active    = vectors.hexToRGB("791E36"),
+		hover     = vectors.hexToRGB("#46454F"),
+		active    = vectors.hexToRGB("#791E36"),
 		primary   = "#791E36",
 		secondary = "#46454F"
 	}
@@ -73,8 +73,12 @@ if next(colors) ~= nil then
 	-- Update action wheel colors
 	function events.RENDER(delta, context)
 		
-		for k in pairs(colors) do
-			colors[k] = shiny.curr and shinyColors[k] or initColors[k]
+		if action_wheel:isEnabled() then
+			
+			for k in pairs(colors) do
+				colors[k] = shiny.curr and shinyColors[k] or initColors[k]
+			end
+			
 		end
 		
 	end
