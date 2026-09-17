@@ -102,7 +102,7 @@ local leggingsGroups = parts:createTable(function(part) return part:getName():fi
 -- Boots parts
 local bootsGroups = parts:createTable(function(part) return part:getName():find("ArmorBoot") end)
 
-function events.RENDER(delta, context)
+function events.RENDER()
 	
 	-- Apply
 	for i = 1, #helmetGroups do
@@ -192,7 +192,7 @@ acts.armorBootsToggle = armorPage:newAction()
 	end)
 
 -- Update actions
-function events.RENDER(delta, context)
+function events.RENDER()
 	
 	if action_wheel:isEnabled() then
 		acts.armorPage

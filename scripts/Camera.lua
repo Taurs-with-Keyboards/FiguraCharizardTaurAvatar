@@ -181,7 +181,7 @@ acts.cameraEyeToggle = cameraPage:newAction()
 	:toggled(allowEye.curr)
 
 -- Update actions
-function events.RENDER(delta, context)
+function events.RENDER()
 	
 	if action_wheel:isEnabled() then
 		acts.cameraPage

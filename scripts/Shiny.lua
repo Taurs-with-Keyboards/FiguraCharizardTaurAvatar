@@ -17,7 +17,7 @@ local initGlowColor = renderer:getOutlineColor() or vec(1, 1, 1)
 local normalTex = textures["textures.charizard"]       or textures["CharizardTaur.charizard"]
 local shinyTex  = textures["textures.charizard_shiny"] or textures["CharizardTaur.charizard_shiny"]
 
-function events.RENDER(delta, context)
+function events.RENDER()
 	
 	-- Shiny textures
 	if shiny.curr ~= wasShiny then
@@ -70,7 +70,7 @@ if next(colors) ~= nil then
 	}
 	
 	-- Update action wheel colors
-	function events.RENDER(delta, context)
+	function events.RENDER()
 		
 		if action_wheel:isEnabled() then
 			
@@ -107,7 +107,7 @@ acts.shinyToggle = charizardPage:newAction()
 	:toggled(shiny.curr)
 
 -- Update actions
-function events.RENDER(delta, context)
+function events.RENDER()
 	
 	if action_wheel:isEnabled() then
 		if acts.charizardPage then

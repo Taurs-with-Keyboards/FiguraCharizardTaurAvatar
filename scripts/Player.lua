@@ -42,7 +42,7 @@ function events.ENTITY_INIT()
 	
 end
 
-function events.RENDER(delta, context)
+function events.RENDER(_, context)
 	
 	-- Model shape
 	local slimShape = (skin.curr and vanillaAvatarType == "SLIM") or (slim.curr and not skin.curr)
@@ -126,7 +126,7 @@ acts.playerModelToggle = playerPage:newAction()
 	:toggled(slim.curr)
 
 -- Update actions
-function events.RENDER(delta, context)
+function events.RENDER()
 	
 	if action_wheel:isEnabled() then
 		acts.playerPage

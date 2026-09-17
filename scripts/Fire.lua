@@ -59,7 +59,7 @@ local fireBlocks = {
 }
 
 -- Check if a splash potion is broken near the fire
-function events.ON_PLAY_SOUND(id, pos, vol, pitch, loop, category, path)
+function events.ON_PLAY_SOUND(id, pos, _, _, _, _, path)
 	
 	-- Kill event if player is in pokeball
 	if parts.group.Player:getAnimScale():lengthSquared() / 3 < 0.5 then return end
@@ -75,9 +75,7 @@ end
 
 -- Attempts to play an effect based on a given chance
 local function doChance(chance)
-	
-	return math.random() < chance * scale.currPos
-	
+	return math.random() < chance
 end
 
 -- Find angle with variation
@@ -141,7 +139,7 @@ function events.TICK()
 			sounds:playSound("entity.generic.extinguish_fire", firePos, 0.75)
 			
 			-- Spawn particles
-			for i = 1, math.ceil(math.map(scale.currPos, 0, 2, 0, 30)) do
+			for _ = 1, math.ceil(math.map(scale.currPos, 0, 2, 0, 30)) do
 				
 				-- Particle attributes
 				particles["campfire_cosy_smoke"]
@@ -190,24 +188,23 @@ function events.TICK()
 	-- Spawn particles and play sounds if conditions are met
 	if effects.curr and not client:isPaused() then
 		
-		-- Chance
-		local weight = math.map(scale.currPos, 0, 2, 4000, 0)
-		local chance = math.random(1, math.max(weight, 1))
+		-- Chance modifier
+		local weight = scale.currPos
 		
 		-- Campfire sound (0.25%) 
-		if doChance(0.0025) then
+		if doChance(0.0025 * weight) then
 			sounds:playSound("block.campfire.crackle", firePos, 0.75)
 		end
 		
 		-- Lava bubble (0.5%)
-		if doChance(0.005) then
+		if doChance(0.005 * weight) then
 			particles["lava"]
 				:pos(firePos)
 				:spawn()
 		end
 		
 		-- Smoke chance (5%)
-		if doChance(0.05) then
+		if doChance(0.05 * weight) then
 			particles["campfire_cosy_smoke"]
 				:pos(firePos)
 				:velocity(smokeAngle())
@@ -242,7 +239,7 @@ function events.TICK()
 	
 end
 
-function events.RENDER(delta, context)
+function events.RENDER(_, context)
 	
 	-- Kill event if player is in pokeball
 	if parts.group.Player:getAnimScale():lengthSquared() / 3 < 0.5 then return end
@@ -355,7 +352,7 @@ acts.fireColorSettings = firePage:newAction()
 	:toggled(damage.curr)
 
 -- Update actions
-function events.RENDER(delta, context)
+function events.RENDER()
 	
 	if action_wheel:isEnabled() then
 		acts.firePage

@@ -199,7 +199,7 @@ end
 local keybound = require("lib.Keybound")
 
 -- Setup keybind
-local toggleKeybind = keybound.new(
+keybound.new(
 	keybinds
 		:newKeybind("Pokeball Toggle", "key.keyboard.keypad.1")
 		:onPress(function() if checkToggle() then toggle:update(not toggle.curr) end end),
@@ -260,7 +260,7 @@ acts.pokeballToggle = charizardPage:newAction()
 	end)
 
 -- Update actions
-function events.RENDER(delta, context)
+function events.RENDER()
 	
 	if action_wheel:isEnabled() then
 		if acts.charizardPage then

@@ -69,7 +69,6 @@ function events.TICK()
 	
 	-- Directional velocity
 	local fbVel = vel:dot((dir.x_z):normalized())
-	local lrVel = vel:crossed(dir.x_z:normalized()).y
 	local udVel = vel.y
 	
 	-- Speed control
@@ -164,7 +163,7 @@ local dirRot = {
 	west  = 90
 }
 
-function events.RENDER(delta, context)
+function events.RENDER(delta)
 	
 	-- Sleep rotations
 	if pose.sleep then
@@ -267,7 +266,7 @@ acts.animsArmsToggle = animsPage:newAction()
 	:toggled(armsMove.curr)
 
 -- Update actions
-function events.RENDER(delta, context)
+function events.RENDER()
 	
 	if action_wheel:isEnabled() then
 		if acts.animsPage then

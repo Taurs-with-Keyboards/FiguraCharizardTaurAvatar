@@ -20,7 +20,7 @@ end
 local tailParts = parts:createChain("Tail")
 
 -- Squishy tail
-local tail = squapi.tail:new(
+squapi.tail:new(
 	tailParts,
 	20,    -- Intensity X (20)
 	10,    -- Intensity Y (10)
@@ -45,7 +45,7 @@ local headParts = {
 }
 
 -- Squishy smooth torso
-local head = squapi.smoothHead:new(
+squapi.smoothHead:new(
 	headParts,
 	0.3,  -- Strength (0.3)
 	0.4,  -- Tilt (0.4)
@@ -54,14 +54,14 @@ local head = squapi.smoothHead:new(
 )
 
 -- Squishy animated texture
-local fire = squapi.animateTexture(
+squapi.animateTexture(
 	parts.group.Fire,
 	4,    -- Frames
 	0.25, -- Frame percentage
 	2     -- Speed
 )
 
-function events.RENDER(delta, context)
+function events.RENDER()
 	
 	-- Offset smooth torso in various parts
 	-- Note: acts strangely with `parts.group.body`
