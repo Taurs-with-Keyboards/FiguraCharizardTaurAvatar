@@ -184,7 +184,7 @@ function events.TICK()
 		end
 	end
 	
-	-- Kill script if timer hasnt reached max
+	-- Kill script if timer hasn't reached max
 	if timer ~= maxTimer.curr then return end
 	
 	-- Spawn particles and play sounds if conditions are met
@@ -287,7 +287,7 @@ end)
 
 -- Required script
 local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
-if not s then return end -- Kills script early if ActionWheel.lua isnt found
+if not s then return end -- Kills script early if ActionWheel.lua isn't found
 pcall(require, "scripts.Shiny") -- Tries to find script, not required
 
 -- Variable
@@ -379,7 +379,7 @@ function events.RENDER(delta, context)
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Fire Experience Guage\n\n", bold = true, color = colors.primary},
+					{text = "Toggle Fire Experience Gauge\n\n", bold = true, color = colors.primary},
 					{text = "Allow the tail fire to change size based on experience level.", color = colors.secondary}
 				}
 			))
