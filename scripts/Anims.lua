@@ -205,7 +205,8 @@ function events.RENDER(delta, context)
 	charizard.outliner.RightWing1:offsetRot(rWing.currPos)
 	
 	-- Parrot rot offset
-	for _, parrot in pairs(parrots) do
+	for i = 1, #parrots do
+		local parrot = parrots[i]
 		parrot:rot(-calculateParentRot(parrot:getParent()) - getOriginRot("BODY", delta))
 	end
 	
@@ -232,7 +233,8 @@ local blendAnims = {
 }
 
 -- Apply GS Blending
-for _, blend in ipairs(blendAnims) do
+for i = 1, #blendAnims do
+	local blend = blendAnims[i]
 	if blend.anim ~= nil then
 		blend.anim:blendTime(table.unpack(blend.ticks)):blendCurve("easeOutQuad")
 	end

@@ -39,7 +39,8 @@ local skinParts = charizard:createGroup(function(part) return part:getName():fin
 -- Layer parts
 local layerTypes = {"HAT", "JACKET", "LEFT_SLEEVE", "RIGHT_SLEEVE", "LEFT_PANTS_LEG", "RIGHT_PANTS_LEG", "CAPE", "LOWER_LAYER"}
 local layerParts = {}
-for _, type in pairs(layerTypes) do
+for i = 1, #layerTypes do
+	local type = layerTypes[i]
 	layerParts[type] = charizard:createGroup(function(part) return part:getName():find(type) end)
 end
 

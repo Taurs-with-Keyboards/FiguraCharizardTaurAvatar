@@ -120,7 +120,9 @@ end
 
 -- Bob animations
 local bobs = {}
-for _, child in ipairs(animations:getAnimations()) do
+local allAnims = animations:getAnimations()
+for i = 1, #allAnims do
+	local child = allAnims[i]
 	if child:getName():find("pokeballBob") then
 		table.insert(bobs, child)
 	end
@@ -169,8 +171,8 @@ local function checkBob()
 	
 	if #bobs == 0 then return true end
 	
-	for _, bob in ipairs(bobs) do
-		if bob:isPlaying() then
+	for i = 1, #bobs do
+		if bobs[i]:isPlaying() then
 			playing = true
 			break
 		end

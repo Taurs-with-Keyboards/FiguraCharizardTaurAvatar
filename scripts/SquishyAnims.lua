@@ -68,7 +68,9 @@ function events.RENDER(delta, context)
 	
 	-- Offset smooth torso in various parts
 	-- Note: acts strangely with `parts.group.body`
-	for _, group in ipairs(charizard.outliner.UpperBody:getChildren()) do
+	local bodyChildren = charizard.outliner.UpperBody:getChildren()
+	for i = 1, #bodyChildren do
+		local group = bodyChildren[i]
 		if group ~= charizard.outliner.Body then
 			group:rot(-calculateParentRot(group:getParent()))
 		end
