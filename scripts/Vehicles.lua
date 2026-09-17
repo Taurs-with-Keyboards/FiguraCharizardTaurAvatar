@@ -10,8 +10,10 @@ carrier.rider.controller.setModifyCamera(false)
 carrier.rider.controller.setModifyEye(false)
 carrier.rider.controller.setAimEnabled(false)
 
--- GSCarrier vehicle
-carrier.vehicle.addTag("gscarrier:taur", "gscarrier:land", "gscarrier:air")
+-- GSCarrier vehicle tags
+carrier.vehicle.addTag("gscarrier:taur")
+carrier.vehicle.addTag("gscarrier:land")
+carrier.vehicle.addTag("gscarrier:air")
 
 -- Seat 1
 carrier.vehicle.newSeat("Seat1", parts.group.Seat1, {

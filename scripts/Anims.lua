@@ -68,7 +68,7 @@ function events.TICK()
 	local onGround = ground()
 	
 	-- Directional velocity
-	local fbVel = vel:dot((dir.x_z):normalized())
+	local fbVel = vel:dot((dir.x_z):normalized() --[[@as Vector3]])
 	local udVel = vel.y
 	
 	-- Speed control
