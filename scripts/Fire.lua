@@ -12,12 +12,12 @@ if not fireGroup then return {} end
 -- Synced variables setup
 local effects     = sync.new("FireEffects", true):config()
 local experience  = sync.new("FireExp", true):config()
-local reignite    = sync.new("FireReignite", true):config()
 local maxTimer    = sync.new("FireTimer", 200):config()
 local damage      = sync.new("FireDamage", true):config()
 local damageColor = sync.new("FireDamageColor", "#00FFFF"):config()
 
 -- Variables
+local extinguish = false
 local timer = maxTimer.curr
 local tex = textures["textures.misc.flame"] or textures["CharizardTaur.flame"]
 local grayMat = matrices.mat4(
@@ -36,26 +36,58 @@ fireGroup.Fire
 	:parentType("CAMERA")
 	:secondaryTexture("CUSTOM", tex)
 
--- Fire triggers
-local triggers = {
-	on = {
-		fire = false,
-		lava = false,
-		lit  = false
-	},
-	off = {
-		water  = false,
-		rain   = false,
-		splash = false
-	}
-}
+-- Find angle with variation
+---@return Vector3
+local function smokeAngle()
+	return vec(
+		math.random() * 0.025 - 0.0125,
+		math.random() * 0.05 + 0.025,
+		math.random() * 0.025 - 0.0125
+	)
+end
 
 -- Blocks that count as fire
+---@type table<Minecraft.blockID, boolean>
 local fireBlocks = {
 	["minecraft:fire"]       = true,
 	["minecraft:soul_fire"]  = true,
 	["minecraft:torch"]      = true,
 	["minecraft:soul_torch"] = true
+}
+
+-- Checks for a specific fluid in a blocks tags
+---@param block BlockState #
+-- The block thats tags are being checked.
+---@param fluid string #
+-- The fluid type that will be looked for.
+local function fluidCheck(block, fluid)
+	
+	-- Get fluid tags
+	local fluids = block:getFluidTags()
+	
+	-- Loop through tags. If tag contains specified fluid, return true
+	for i = 1, #fluids do
+		if fluids[i]:find(fluid) then
+			return true
+		end
+	end
+	
+	-- If fluid not found, return false
+	return false
+	
+end
+
+-- Functions that determine if the fire should be extinguished.
+---@type table<integer, fun(block: BlockState): boolean>
+local extinguishChecks = {
+	function(block)
+		local pos = block:getPos()
+		return world.isOpenSky(pos) and world.getBiome(pos):getPrecipitation() == "RAIN" and world.getRainGradient() > 0.2
+	end,
+	-- Checks if the targeted block has a water tag.
+	function(block)
+		return fluidCheck(block, "water")
+	end
 }
 
 -- Check if a splash potion is broken near the fire
@@ -68,26 +100,27 @@ function events.ON_PLAY_SOUND(id, pos, _, _, _, _, path)
 		local firePos  = fireGroup:partToWorldMatrix():apply()
 		local atPos    = pos < firePos + 2 and pos > firePos - 2
 		local splashID = id == "minecraft:entity.splash_potion.break" or id == "minecraft:entity.lingering_potion.break"
-		triggers.off.splash = atPos and splashID and path
+		extinguish = atPos and splashID and path
 	end
 	
 end
 
--- Attempts to play an effect based on a given chance
-local function doChance(chance)
-	return math.random() < chance
-end
-
--- Find angle with variation
-local function smokeAngle()
-	
-	return vec(
-		math.random() * 0.025 - 0.0125,
-		math.random() * 0.05 + 0.025,
-		math.random() * 0.025 - 0.0125
-	)
-	
-end
+-- Functions that determine if the fire should be ignited.
+---@type table<integer, fun(block: BlockState): boolean>
+local igniteChecks = {
+	-- Checks if the targeted block is considered fire.
+	function(block)
+		return fireBlocks[block.id]
+	end,
+	-- Checks if the targeted block has a lit property.
+	function(block)
+		return block.properties.lit == "true"
+	end,
+	-- Checks if the targeted block has a lava tag.
+	function(block)
+		return fluidCheck(block, "lava")
+	end
+}
 
 function events.TICK()
 	
@@ -97,29 +130,19 @@ function events.TICK()
 	-- Variables
 	local firePos = fireGroup:partToWorldMatrix():apply()
 	local block   = world.getBlockState(firePos)
-	local fluids  = block:getFluidTags()
-	local extinguish = false
 	
 	-- Increment timer
-	timer = reignite.curr and math.min(timer + 1, maxTimer.curr) or timer
-	
-	-- Check for water fluid tag
-	for i = 1, #fluids do
-		if fluids[i]:find("water") then
-			triggers.off.water = true
-			break
-		end
+	if maxTimer.curr >= 0 then
+		timer = math.min(timer + 1, maxTimer.curr)
 	end
 	
-	-- Check for rain
-	triggers.off.rain = world.getRainGradient() > 0.2 and world.isOpenSky(firePos) and world.getBiome(firePos):getPrecipitation() == "RAIN"
-	
-	-- Check off triggers
-	for k, v in pairs(triggers.off) do
-		if v then
-			extinguish = true
-			triggers.off[k] = false
-			break
+	-- Check if fire should be extinguished, and set state if it should
+	if not extinguish then
+		for i = 1, #extinguishChecks do
+			if extinguishChecks[i](block) then
+				extinguish = true
+				break
+			end
 		end
 	end
 	
@@ -128,6 +151,9 @@ function events.TICK()
 		
 		-- Reset timer
 		timer = 0
+		
+		-- Reset state
+		extinguish = false
 		
 		-- Prevent event from continuing if already extinguished
 		if scale.target == 0 then return end
@@ -139,7 +165,7 @@ function events.TICK()
 			sounds:playSound("entity.generic.extinguish_fire", firePos, 0.75)
 			
 			-- Spawn particles
-			for _ = 1, math.ceil(math.map(scale.currPos, 0, 2, 0, 30)) do
+			for _ = 1, math.ceil(scale.currPos * 15) do
 				
 				-- Particle attributes
 				particles["campfire_cosy_smoke"]
@@ -155,35 +181,26 @@ function events.TICK()
 		-- Reset scale
 		scale:reset(0)
 		
+		-- Kill event early (because fire is put out)
+		return
+		
 	end
 	
-	-- Check for lava fluid tag
-	for i = 1, #fluids do
-		if fluids[i]:find("lava") then
-			triggers.on.lava = true
-			break
+	-- If timer isn't maxed, check if fire should be reignited, and max out timer if it should.
+	if timer ~= maxTimer.curr then
+		
+		-- Loop through ignition checks
+		for i = 1, #igniteChecks do
+			if igniteChecks[i](block) then
+				timer = maxTimer.curr
+				break
+			end
 		end
+		
+		-- Kill event early (because fire isn't ignited)
+		return
+		
 	end
-	
-	-- Check for fire blocks
-	if fireBlocks[block.id] then
-		triggers.on.fire = true
-	end
-	
-	-- Check block lit tag
-	triggers.on.lit = block.properties.lit == "true"
-	
-	-- Check on triggers
-	for k, v in pairs(triggers.on) do
-		if v then
-			timer = maxTimer.curr
-			triggers.on[k] = false
-			break
-		end
-	end
-	
-	-- Kill script if timer hasn't reached max
-	if timer ~= maxTimer.curr then return end
 	
 	-- Spawn particles and play sounds if conditions are met
 	if effects.curr and not client:isPaused() then
@@ -191,20 +208,20 @@ function events.TICK()
 		-- Chance modifier
 		local weight = scale.currPos
 		
-		-- Campfire sound (0.25%) 
-		if doChance(0.0025 * weight) then
+		-- Campfire sound (0.25%)
+		if math.random() < 0.0025 * weight then
 			sounds:playSound("block.campfire.crackle", firePos, 0.75)
 		end
 		
 		-- Lava bubble (0.5%)
-		if doChance(0.005 * weight) then
+		if math.random() < 0.005 * weight then
 			particles["lava"]
 				:pos(firePos)
 				:spawn()
 		end
 		
 		-- Smoke chance (5%)
-		if doChance(0.05 * weight) then
+		if math.random() < 0.05 * weight then
 			particles["campfire_cosy_smoke"]
 				:pos(firePos)
 				:velocity(smokeAngle())
@@ -219,17 +236,12 @@ function events.TICK()
 	
 	-- Apply experience modifier
 	if experience.curr then
-		
-		local exp = math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.25, 2)
-		scale.target = scale.target * exp
-		
+		scale.target = scale.target * math.map(math.clamp(player:getExperienceLevel(), 0, 30), 0, 30, 0.25, 2)
 	end
 	
 	-- Apply damage color
 	if damage.curr then
-		
 		color.target = math.map(math.clamp(player:getHealth() / player:getMaxHealth(), 0.25, 1), 0.25, 1, 1, 0)
-		
 	end
 	
 	-- Bounce flame back if below 0
@@ -271,9 +283,17 @@ experience:addFunc(function()
 		sounds:playSound("entity.experience_orb.pickup", player:getPos(), 0.75, math.random()*0.7+0.55)
 	end
 end)
-reignite:addFunc(function()
+maxTimer:addFunc(function()
 	if player:isLoaded() then
-		sounds:playSound(reignite.curr and "item.flintandsteel.use" or "entity.generic.extinguish_fire", player:getPos(), 0.75)
+		local sound = nil
+		if maxTimer.curr >= 0 and maxTimer.prev < 0 then
+			sound = "item.flintandsteel.use"
+		elseif maxTimer.curr < 0 and maxTimer.prev >= 0 then
+			sound = "entity.generic.extinguish_fire"
+		end
+		if sound then
+			sounds:playSound(sound, player:getPos(), 0.75)
+		end
 	end
 end)
 damage:addFunc(function()
@@ -321,16 +341,15 @@ acts.fireExpToggle = firePage:newAction()
 	:toggled(experience.curr)
 
 acts.fireReigniteSettings = firePage:newAction()
-	:item("flint")
-	:toggleItem("flint_and_steel")
-	:onToggle(function(bool)
-		reignite:update(bool)
-	end)
-	:onRightClick(function() maxTimer:update(200) end)
+	:item(maxTimer.curr >= 0 and "flint_and_steel" or "flint")
+	:onLeftClick(function() maxTimer:update(200) end)
 	:onScroll(function(x)
-		maxTimer:update(math.clamp(maxTimer.curr + (x * 20), 0, 72000), 20)
+		maxTimer:update(math.clamp(maxTimer.curr + (x * 20), -20, 72000), 20)
 	end)
-	:toggled(reignite.curr)
+
+maxTimer:addFunc(function()
+	acts.fireReigniteSettings:item(maxTimer.curr >= 0 and "flint_and_steel" or "flint")
+end)
 
 acts.fireColorSettings = firePage:newAction()
 	:item("shield")
@@ -390,7 +409,7 @@ function events.RENDER()
 					{text = "Set Fire Reignition & Timer\n\n", bold = true, color = colors.primary},
 					{text = "Control the ability for your tail fire to auto-reignite, as well as how long until it does so.\n\n", color = colors.secondary},
 					{text = "Current timer: ", bold = true, color = colors.secondary},
-					{text = (reignite.curr and (maxTimer.curr / 20).." Seconds" or "Cannot auto-reignite").."\n\n", color = not reignite.curr and "red"},
+					{text = (maxTimer.curr >= 0 and (maxTimer.curr / 20).." Seconds" or "Cannot auto-reignite").."\n\n", color = maxTimer.curr < 0 and "red"},
 					{text = "Scroll to adjust the timer.\nRight click resets timer to 10 seconds.", color = colors.secondary}
 				}
 			))
