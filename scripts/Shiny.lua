@@ -21,8 +21,8 @@ function events.RENDER(delta, context)
 	
 	-- Shiny textures
 	if shiny.curr ~= wasShiny then
-		for _, part in ipairs(shinyParts) do
-			part:primaryTexture("CUSTOM", shiny.curr and shinyTex or normalTex)
+		for i = 1, #shinyParts do
+			shinyParts[i]:primaryTexture("CUSTOM", shiny.curr and shinyTex or normalTex)
 		end
 	end
 	

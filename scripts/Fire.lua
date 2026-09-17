@@ -99,14 +99,15 @@ function events.TICK()
 	-- Variables
 	local firePos = fireGroup:partToWorldMatrix():apply()
 	local block   = world.getBlockState(firePos)
+	local fluids  = block:getFluidTags()
 	local extinguish = false
 	
 	-- Increment timer
 	timer = reignite.curr and math.min(timer + 1, maxTimer.curr) or timer
 	
 	-- Check for water fluid tag
-	for _, v in ipairs(block:getFluidTags()) do
-		if v:find("water") then
+	for i = 1, #fluids do
+		if fluids[i]:find("water") then
 			triggers.off.water = true
 			break
 		end
@@ -159,8 +160,8 @@ function events.TICK()
 	end
 	
 	-- Check for lava fluid tag
-	for _, v in ipairs(block:getFluidTags()) do
-		if v:find("lava") then
+	for i = 1, #fluids do
+		if fluids[i]:find("lava") then
 			triggers.on.lava = true
 			break
 		end

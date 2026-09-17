@@ -33,7 +33,9 @@ end
 -- Deep copy
 local function deepCopy(model)
 	local copy = model:copy(model:getName().."Copy")
-	for _, child in pairs(copy:getChildren()) do
+	local children = copy:getChildren()
+	for i = 1, #children do
+		local child = children[i]
 		copy:removeChild(child):addChild(deepCopy(child))
 	end
 	return copy
@@ -126,7 +128,9 @@ end
 
 -- Bob animations
 local bobs = {}
-for _, child in ipairs(animations:getAnimations()) do
+local allAnims = animations:getAnimations()
+for i = 1, #allAnims do
+	local child = allAnims[i]
 	if child:getName():find("pokeballBob") then
 		table.insert(bobs, child)
 	end
@@ -175,8 +179,8 @@ local function checkBob()
 	
 	if #bobs == 0 then return true end
 	
-	for _, bob in ipairs(bobs) do
-		if bob:isPlaying() then
+	for i = 1, #bobs do
+		if bobs[i]:isPlaying() then
 			playing = true
 			break
 		end
