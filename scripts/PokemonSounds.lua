@@ -39,7 +39,7 @@ local function createCooldown()
 end
 
 -- Setup keybind
-local cryKeybind = keybinds:newKeybind("Pokemon Cry", "key.keyboard.keypad.2")
+keybinds:newKeybind("Pokemon Cry", "key.keyboard.keypad.2")
 	:config("CryKeybind")
 	:onPress(function()
 		
