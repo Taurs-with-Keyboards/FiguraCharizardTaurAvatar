@@ -124,7 +124,7 @@ local allAnims = animations:getAnimations()
 for i = 1, #allAnims do
 	local child = allAnims[i]
 	if child:getName():find("pokeballBob") then
-		table.insert(bobs, child)
+		bobs[#bobs + 1] = child
 	end
 end
 

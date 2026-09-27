@@ -17,7 +17,7 @@ local navMap = {}
 -- Go forward a page
 function pageNav.descend(page)
 	
-	table.insert(navMap, action_wheel:getCurrentPage())
+	navMap[#navMap + 1] = action_wheel:getCurrentPage()
 	action_wheel:setPage(page)
 	
 end
